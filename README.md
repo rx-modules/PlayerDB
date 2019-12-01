@@ -1,4 +1,4 @@
-# MC-PlayerDB - 1.15
+# MC-PlayerDB - 1.15+ Minecraft Versions
 A NBT Custom Player Database (Alpha)
 
 This datapack provides a player database for you to utilize! What is this database? Let me explain:
