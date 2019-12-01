@@ -1,0 +1,10 @@
+{
+    "criteria": {
+        "fish": {
+            "trigger": "minecraft:tick"
+        }
+    },
+    "rewards": {
+        "function": "rx:player/first_join"
+    }
+}
