@@ -54,7 +54,7 @@ The main reason why this datapack was built was to utilize a technique talked ab
 
 Solution: store the bits of the uid alongside the data and use `players[{bit0:0/1}]` nbt searching to filter the list. We can repeat this filter for each bit which will single us down to a single value. This is a static amount of operations no matter how many players we are dealing with! Along with this, this datapack features some optimizations at lower uid values (naturally, those values will be lower) which will also make getting player data from the database very cheap!
 
-The datapack stores all the players @ rx:global root.players in a single list. This makes iteration still very possible, so if you want, you can iterate through and do name matching if you like. You can also use the `filter` function to remove all entries with higher bits set which can give you a much smaller sublist to iterate through.
+The datapack stores all the players @ `rx:global root.players` in a single list. This makes iteration still very possible, so if you want, you can iterate through and do name matching if you like. You can also use the `filter` function to remove all entries with higher bits set which can give you a much smaller sublist to iterate through.
 
 ## Shoutouts
 
