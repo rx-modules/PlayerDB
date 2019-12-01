@@ -16,6 +16,7 @@ This datapack has two main advantages to enderchests:
 This datapack assigns a unique id to each player via a scoreboard: rx.uid. In order to access the data, you need an uid to search the database with (I'll talk later about searching with player names..)
 
 Basic usage as follows:
+
     # set $in.uid rx.io as the number you want to search for
     # for this example, I'll just set it to my own uid
     scoreboard players operations $in.uid rx.io = @s rx.uid
