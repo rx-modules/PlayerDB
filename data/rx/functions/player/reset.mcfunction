@@ -1,11 +1,7 @@
 # By: shraavan97
 # 14 Nov 2019
 # 
-#> Creates Objs. Called from #minecraft:load
-
-scoreboard objectives add rx.constants dummy
-scoreboard objectives add rx.int dummy
-scoreboard objectives add rx.temp dummy
+#> Resets Storage. WARNING: CANNOT UNDO THIS OPERATION
 
 scoreboard players reset * rx.uid
 scoreboard players set $uid.next rx.uid 1
