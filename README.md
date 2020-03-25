@@ -20,13 +20,13 @@ Basic usage as follows:
     # set $in.uid rx.io as the number you want to search for
     # for this example, I'll just set it to my own uid
     scoreboard players operations $in.uid rx.io = @s rx.uid
-    function rx:playerdbs/get
+    function rx:playerdb/get
     
     # now, the data I want to manipulate is in rx:output root.player (if found)
     data modify storage rx:output root.player.data ...
     
     # after we have worked with this, we need to save this
-    function rx:playerdbs/save
+    function rx:playerdb/save
     # aaaand we are done!
     
     # if we only need to read the data, use fast_get as it's more optimized for reading, no need to save afterwards
