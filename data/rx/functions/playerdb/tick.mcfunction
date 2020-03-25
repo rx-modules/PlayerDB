@@ -3,5 +3,5 @@
 # 
 #> Ticks.
 
-scoreboard players add @a rx.time_played 0
-execute as @a[scores={rx.time_played=..0}] run function rx:first_join
+scoreboard players add @a rx.login 0
+execute as @a[scores={rx.login=..0}] run function rx:playerdb/first_join

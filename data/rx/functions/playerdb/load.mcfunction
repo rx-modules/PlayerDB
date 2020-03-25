@@ -6,6 +6,7 @@
 scoreboard objectives add rx.uid dummy
 scoreboard objectives add rx.int dummy
 scoreboard objectives add rx.temp dummy
+scoreboard objectives add rx.login dummy
 scoreboard objectives add rx.io dummy
 
 execute unless score $uid.next rx.uid matches -2147483648.. run scoreboard players set $uid.next rx.uid 1

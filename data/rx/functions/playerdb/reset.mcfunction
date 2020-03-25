@@ -5,11 +5,9 @@
 
 
 scoreboard players reset * rx.uid
-scoreboard players reset * rx.time_played
+scoreboard players reset * rx.login
 scoreboard players set $uid.next rx.uid 1
 
-data modify storage rx:global root set value {}
-data modify storage rx:output root set value {}
-data modify storage rx:temp root set value {}
-
-advancement revoke @a only rx:first_join
+data modify storage rx:global playerdb set value {}
+data modify storage rx:output playerdb set value {}
+data modify storage rx:temp playerdb set value {}

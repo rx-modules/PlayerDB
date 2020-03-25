@@ -3,6 +3,8 @@
 # 
 #> First Join
 
+scoreboard players set @s rx.login 1
+
 scoreboard players operation @s rx.uid = $uid.next rx.uid
 
 data modify storage rx:global playerdb.players append value {}

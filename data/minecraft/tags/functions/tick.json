@@ -1,6 +1,6 @@
 {
     "replace": false,
     "values": [
-        "rx:player/tick"
+        "rx:playerdb/tick"
     ]
 }
