@@ -20,26 +20,26 @@ Basic usage as follows:
     # set $in.uid rx.io as the number you want to search for
     # for this example, I'll just set it to my own uid
     scoreboard players operations $in.uid rx.io = @s rx.uid
-    function rx:players/get
+    function rx:playerdbs/get
     
     # now, the data I want to manipulate is in rx:output root.player (if found)
     data modify storage rx:output root.player.data ...
     
     # after we have worked with this, we need to save this
-    function rx:players/save
+    function rx:playerdbs/save
     # aaaand we are done!
     
     # if we only need to read the data, use fast_get as it's more optimized for reading, no need to save afterwards
-    function rx:player/fast_get
+    function rx:playerdb/fast_get
     
     # if we need to list all the players in the database:
-    function rx:player/list
+    function rx:playerdb/list
     
     # maybe we want to work with @a uuids, let's grab the largest uid we want to filter down to
     execute as @a run scoreboard players operations $in.uid rx.io > @s rx.uid
-    function rx:player/filter
+    function rx:playerdb/filter
     # iterate through sublist @ rx:output root.filtered and do some data operations
-    function rx:player/save
+    function rx:playerdb/save
  
  
 ## Some examples
