@@ -3,5 +3,4 @@
 # 
 #> Ticks.
 
-scoreboard players add @a rx.login 0
-execute as @a[scores={rx.login=..0}] run function rx:playerdb/first_join
+execute as @a unless score @s rx.login matches 1 run function rx:playerdb/first_join
