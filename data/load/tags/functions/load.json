@@ -1,5 +1,5 @@
 {
     "values": [
-        "#load:__init"
+    	"#load:rx/playerdb"
     ]
 }
