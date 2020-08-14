@@ -11,4 +11,4 @@ execute if data storage rx:io playerdb.player run data modify storage rx:temp pl
 execute if data storage rx:io playerdb.player run data modify storage rx:global playerdb.players set from storage rx:temp playerdb.leftover
 
 # reset temp
-# data modify storage rx:temp playerdb set value {}
+data modify storage rx:temp playerdb set value {}

@@ -16,3 +16,6 @@ function rx.playerdb:impl/get/bit0
 # sanity check, output -> playerdb.player
 execute store result score $uid rx.temp run data get storage rx:io playerdb.player.uid
 execute unless score $uid rx.temp = $in.uid rx.io run data modify storage rx:io playerdb.player set value {}
+
+# cleanup
+data modify storage rx:temp playerdb set value {}
