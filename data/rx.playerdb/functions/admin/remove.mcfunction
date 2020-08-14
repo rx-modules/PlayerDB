@@ -9,7 +9,6 @@
 #define storage rx:io
 
 # perform split
-scoreboard players operation $in.uid rx.io = $admin rx.temp
 function rx.playerdb:impl/split
 
 # replace globals w/ leftovers
