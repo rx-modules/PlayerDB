@@ -4,4 +4,4 @@
 #> Save data
 
 scoreboard players operation @s rx.io = @s rx.uid
-function rx:playerdb/save
+function rx.playerdb:impl/save

@@ -58,6 +58,7 @@ The datapack stores all the players @ `rx:global root.players` in a single list.
 
 ## Shoutouts
 
+* nphhpn#0575 - Lots of help on the rewrite! Big optimization help!
 * AmberW#4615 - She threw out the initial idea and I've built on from that
 * vdvman1#9510 - For helping me figure out some of the nbt manipulation nonsense (and some optimizations)
 * [r/minecraftcommands discord](https://discord.gg/QAFXFtZ) - Pretty helpful w/ feedback and good community, chk it out!

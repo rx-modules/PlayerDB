@@ -4,12 +4,12 @@
 #> Save data
 
 data modify storage rx:temp playerdb set value {}
-data modify storage rx:output playerdb.get.player set from storage rx:output playerdb.player
-data modify storage rx:output playerdb.player set value {}
+data modify storage rx:io playerdb.output.get.player set from storage rx:io playerdb.output.player
+data modify storage rx:io playerdb.output.player set value {}
 
 function rx:playerdb/internal_get
 
-execute if data storage rx:output playerdb.player run data modify storage rx:output playerdb.leftover append from storage rx:output playerdb.get.player
-data modify storage rx:global playerdb.players set from storage rx:output playerdb.leftover
+execute if data storage rx:io playerdb.output.player run data modify storage rx:io playerdb.output.leftover append from storage rx:io playerdb.output.get.player
+data modify storage rx:global playerdb.players set from storage rx:io playerdb.output.leftover
 
 data modify storage rx:output playerdb set value {}

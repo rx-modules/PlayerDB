@@ -4,4 +4,4 @@
 #> Get Self Data
 
 scoreboard players operation @s rx.io = @s rx.uid
-function rx:playerdb/get
+function rx.playerdb:impl/get

@@ -1,19 +1,11 @@
 # By: rx97
-# 21 Jul 2020
-
+# Generated on: 14 Aug 20
 
 scoreboard players operation $bit rx.temp = $uid rx.temp
-scoreboard players operation $bit rx.temp %= $3 rx.int
-execute if score $bit rx.temp matches 0 run data modify storage rx:temp playerdb.filtered0 append from storage rx:temp playerdb.filtered[{bit0:0b}]
-execute if score $bit rx.temp matches 0 run data modify storage rx:temp playerdb.leftover append from storage rx:temp playerdb.filtered[{bit0:1b}]
-execute if score $bit rx.temp matches 0 run data modify storage rx:temp playerdb.leftover append from storage rx:temp playerdb.filtered[{bit0:2b}]
-execute if score $bit rx.temp matches 1 run data modify storage rx:temp playerdb.filtered0 append from storage rx:temp playerdb.filtered[{bit0:1b}]
-execute if score $bit rx.temp matches 1 run data modify storage rx:temp playerdb.leftover append from storage rx:temp playerdb.filtered[{bit0:0b}]
-execute if score $bit rx.temp matches 1 run data modify storage rx:temp playerdb.leftover append from storage rx:temp playerdb.filtered[{bit0:2b}]
-execute if score $bit rx.temp matches 2 run data modify storage rx:temp playerdb.filtered0 append from storage rx:temp playerdb.filtered[{bit0:2b}]
-execute if score $bit rx.temp matches 2 run data modify storage rx:temp playerdb.leftover append from storage rx:temp playerdb.filtered[{bit0:0b}]
-execute if score $bit rx.temp matches 2 run data modify storage rx:temp playerdb.leftover append from storage rx:temp playerdb.filtered[{bit0:1b}]
-scoreboard players operation $uid rx.temp /= $3 rx.int
+scoreboard players operation $bit rx.temp %= $64 rx.int
+scoreboard players operation $uid rx.temp /= $64 rx.int
+function rx.playerdb:impl/split/bit0/0_63
+data modify storage rx:temp playerdb.leftover append from storage rx:temp playerdb.filtered0
 execute store result score $size rx.temp if data storage rx:temp playerdb.filtered0[]
-execute if score $size rx.temp matches 0..1 run data modify storage rx:output playerdb.player set from storage rx:temp playerdb.filtered0[0]
-execute if score $size rx.temp matches 2.. run function rx:playerdb/_get/bit1
+execute if score $size rx.temp matches 0..1 run data modify storage rx:temp playerdb.player set from storage rx:temp playerdb.filtered0[0]
+execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/split/bit1

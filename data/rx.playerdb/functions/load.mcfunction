@@ -1,7 +1,13 @@
 # By: rx97
-# 21 Jul 2020
+# 14 Aug 20
 # 
 #> Creates Objs. Called from #minecraft:load
+
+#define entity @s
+#define storage rx:global
+#define storage rx:temp
+#define storage rx:io
+
 
 # Lantern Load
 scoreboard players set rx.playerdb load 1
@@ -15,3 +21,5 @@ execute unless score $uid.next rx.uid matches -2147483648.. run scoreboard playe
 
 scoreboard players set $2 rx.int 2
 scoreboard players set $3 rx.int 3
+scoreboard players set $64 rx.int 64
+scoreboard players set $256 rx.int 256
