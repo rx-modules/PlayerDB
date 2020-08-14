@@ -3,5 +3,5 @@
 # 
 #> Get Self Data
 
-scoreboard players operation @s rx.io = @s rx.uid
+scoreboard players operation $in.uid rx.io = @s rx.uid
 function rx.playerdb:impl/get

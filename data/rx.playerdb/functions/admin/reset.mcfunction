@@ -13,3 +13,5 @@ scoreboard players set $uid.next rx.uid 1
 data modify storage rx:global playerdb set value {}
 data modify storage rx:temp playerdb set value {}
 data modify storage rx:io playerdb set value {}
+
+scoreboard players reset * rx.HasEntry

@@ -17,17 +17,17 @@ ITERATIONS = math.log(MAX_INT, RANGE)
 LINE = 'execute if score $bit rx.temp matches {low}..{high} run function rx.playerdb:impl/get/bit{i}/{low}_{high}'  # noqa: E501
 
 LEAF = (
-    'execute if score $bit rx.temp matches {num} run data modify rx:temp playerdb.filtered{bit1} set from storage rx:temp playerdb.filtered{bit}[{s}]'  # noqa: E501
+    'execute if score $bit rx.temp matches {num} run data modify storage rx:temp playerdb.filtered{bit1} append from storage rx:temp playerdb.filtered{bit}[{s}]'  # noqa: E501
 )
 
 
 BIT = (
     'scoreboard players operation $bit rx.temp = $uid rx.temp\n'
     f'scoreboard players operation $bit rx.temp %= ${RANGE} rx.int\n'
-    f'scoreboard players operation $uid rx.temp /= ${RANGE} rx.int\n'
     'function rx.playerdb:impl/get/bit{bit}/0_' + str(RANGE-1) + '\n'
-    'execute store result score $size rx.temp if data storage rx:temp playerdb.filtered{bit}[]\n'
-    'execute if score $size rx.temp matches 0..1 run data modify storage rx:io playerdb.player set from storage rx:temp playerdb.filtered{bit}[0]\n'  # noqa: E501
+    f'scoreboard players operation $uid rx.temp /= ${RANGE} rx.int\n'
+    'execute store result score $size rx.temp if data storage rx:temp playerdb.filtered{bit1}[]\n'
+    'execute if score $size rx.temp matches 0..1 run data modify storage rx:io playerdb.player set from storage rx:temp playerdb.filtered{bit1}[0]\n'  # noqa: E501
     'execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/get/bit{bit1}\n'  # noqa: E501
 )
 
