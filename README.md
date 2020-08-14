@@ -24,7 +24,7 @@ There are a couple of alternative implementations of player-specific nbt storage
 
 ## Lag?
 
-As previously mentioned, this solution is signifiantly less laggier than other solutions floating around (testing coming soon™). To be specific, at worst, it is O(log(n)) which while not at O(1) like a normal array, is pretty damn close. There are also some optimization tricks done to help cut down on the amount of commands to run when dealing with a player base of less than first 64 players, 4096 players, 262,144 players, etc. This allows the datapack to only take \~30cmds to get an entry for a player and \~40cmds to save an entry for a player.
+As previously mentioned, this solution is signifiantly less laggier than other solutions floating around (testing coming soon™). To be specific, at worst, it is O(log(n)) which while not at O(1) like a normal array, is pretty damn close. There are also some optimization tricks done to help cut down on the amount of commands to run when dealing with a player base of less than first 64 players, 4096 players, 262,144 players, etc. This allows the datapack to only take \~30cmds to get an entry for a player and \~40cmds to save an entry for a player when you are working with players under 64.
 
 ## How to use
 
