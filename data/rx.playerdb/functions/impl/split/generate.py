@@ -16,9 +16,15 @@ ITERATIONS = math.log(MAX_INT, RANGE)
 
 LINE = 'execute if score $bit rx.temp matches {low}..{high} run function rx.playerdb:impl/split/bit{i}/{low}_{high}'  # noqa: E501
 
-LEAF = (
-    'execute if score $bit rx.temp matches {num} run data modify storage rx:temp playerdb.filtered{bit1} merge from storage rx:temp playerdb.filtered{bit}[{s}]\n'  # noqa: E501
+LEAF0 = (
+    'execute if score $bit rx.temp matches {num} run data modify storage rx:temp playerdb.filtered{bit1} append from storage rx:temp playerdb.filtered{bit}[{s}]\n'  # noqa: E501
     'execute if score $bit rx.temp matches {num} run data remove storage rx:temp playerdb.filtered{bit}[{s}]'  # noqa: E501
+)
+
+LEAF = (
+    'execute if score $bit rx.temp matches {num} run data modify storage rx:temp playerdb.filtered{bit1} append from storage rx:temp playerdb.filtered{bit}[{s}]\n'  # noqa: E501
+    'execute if score $bit rx.temp matches {num} run data remove storage rx:temp playerdb.filtered{bit}[{s}]\n'  # noqa: E501
+#    'execute if score $bit rx.temp matches {num} run data modify storage rx:temp playerdb.leftover append from storage rx:temp playerdb.filtered{bit}[]'  # noqa: E501
 )
 
 
@@ -50,8 +56,10 @@ def gen_tree(nums, bit):
 
 
 def gen_leaf(low, high, bit):
+    leaf = LEAF if bit != 0 else LEAF0
+
     return [
-        LEAF.format(num=i, bit1=bit+1, bit=bit, s='{' + f'bit{bit}:{i}b' + '}')
+        leaf.format(num=i, bit1=bit+1, bit=bit, s='{' + f'bit{bit}:{i}b' + '}')
         for i in range(low, high)
     ]
 
