@@ -6,7 +6,6 @@
 # Lantern Load
 scoreboard players set rx.playerdb load 1
 
-# Internals
 scoreboard objectives add rx.uid dummy
 scoreboard objectives add rx.int dummy
 scoreboard objectives add rx.temp dummy
