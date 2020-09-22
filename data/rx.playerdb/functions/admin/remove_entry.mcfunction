@@ -3,10 +3,10 @@
 # 
 #> Removes storage entry only.
 #> input: $in.uid rx.io
-#> DOES NOT REMOVE PLAYER UID, U MUST RESET MANUALLY
+#> MUST RESET @s rx.uid manually!
 
 execute if score $in.uid rx.io < $uid.next rx.uid store result storage rx:temp playerdb.uid int 1 run scoreboard players get $in.uid rx.io
-execute if score $in.uid rx.io < $uid.next rx.uid run data modify storage rx:global playerdb.missing_uids append from storage rx:temp playerdb.uid
+execute if score $in.uid rx.io < $uid.next rx.uid run data modify storage rx:global playerdb.unused_uids append from storage rx:temp playerdb.uid
 
 # perform split
 function rx.playerdb:impl/split

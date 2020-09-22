@@ -5,6 +5,7 @@
 #> input:
 #> * entry to replace : $in.uid rx.io
 #> * entry replacing ^: @s rx.uid
+#> MUST RESET @s rx.uid manually!
 
 # cache score
 scoreboard players operation $admin rx.temp = $in.uid rx.io

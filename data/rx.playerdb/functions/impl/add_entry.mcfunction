@@ -17,7 +17,5 @@ data modify storage rx:global playerdb.players[-1].data set value {}
 scoreboard players operation $uid rx.temp = @s rx.uid
 function rx.playerdb:impl/uid_to_bits
 
-scoreboard players set @s rx.HasEntry 1
-
 # clean up
 kill af-0-0-0-1
