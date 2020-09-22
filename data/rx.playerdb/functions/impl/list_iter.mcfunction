@@ -4,7 +4,7 @@
 #> Iter
 
 # tellraw
-tellraw @s [{"nbt":"playerdb.players[-1].uid", "storage":"rx:temp", "color": "gold"}, {"text": ": "}, {"nbt":"playerdb.players[-1].name", "storage":"rx:temp", "color": "dark_aqua"}]
+tellraw @s [{"nbt":"playerdb.players[-1].uid", "storage":"rx:temp", "color": "gold"}, {"text": ": "}, {"nbt":"playerdb.players[-1].name", "storage":"rx:temp", "color": "#CE4257"}]
 
 # iterate list
 data remove storage rx:temp playerdb.players[-1]

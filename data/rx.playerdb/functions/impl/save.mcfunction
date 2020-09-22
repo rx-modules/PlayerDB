@@ -2,9 +2,7 @@
 # 14 Aug 20
 # 
 #> Save Data
-
-# perform split
-function rx.playerdb:impl/split
+# assumes we have split
 
 # if there is player data, we can insert and replace global!
 execute if data storage rx:io playerdb.player run data modify storage rx:temp playerdb.leftover append from storage rx:io playerdb.player
