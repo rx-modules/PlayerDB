@@ -5,4 +5,4 @@
 
 function rx.playerdb:api/add_entry
 scoreboard players operation $in.uid rx.io = @s rx.uid
-function rx.playerdb:impl/get
+function rx.playerdb:api/get
