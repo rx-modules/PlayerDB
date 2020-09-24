@@ -47,12 +47,13 @@ Basic usage as follows:
     function rx.playerdb:api/save_self
     
     # If we need to list all the players in the database:
-    function rx.playerdb:api/list
+    function rx.playerdb:admin/list
     
     # Now, there are some handy admin tools
-    function rx.playerdb:admin/reset  # WARNING, resets entire db
-    function rx.playerdb:admin/reset_player # resets @s player
-    function rx.playerdb:admin/remove  # removes entry from $in.uid rx.io
+    function rx.playerdb:admin/reset_all  # WARNING, resets entire db
+    function rx.playerdb:admin/delete_player # resets @s player
+    function rx.playerdb:admin/remove_entry  # removes entry from $in.uid rx.io
+    execute as player run function rx.playerdb:admin/replace_entry # replaces entry $in.uid rx.io w/ @s
  
  
 ## Some examples

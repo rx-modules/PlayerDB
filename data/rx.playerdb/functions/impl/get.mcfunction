@@ -1,7 +1,7 @@
 # By: rx97
 # 14 Aug 20
 # 
-#> Get Data: Output in rx:output out.player
+#> Get Data: Output in rx:io out.player
 
 #define entity @s
 
@@ -18,4 +18,4 @@ execute store result score $uid rx.temp run data get storage rx:io playerdb.play
 execute unless score $uid rx.temp = $in.uid rx.io run data modify storage rx:io playerdb.player set value {}
 
 # cleanup
-data modify storage rx:temp playerdb set value {}
+# data modify storage rx:temp playerdb set value {}
