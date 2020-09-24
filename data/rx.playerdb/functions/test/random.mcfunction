@@ -19,9 +19,8 @@ scoreboard players set $increment random 1623164762
 scoreboard players set $modulus random 2147483647
 
 
-execute if entity @s run scoreboard players operation $max random = @s random.range
-
-execute if entity @s run scoreboard players operation $min random = @s random.min
+execute unless score $max random = $max random if entity @s run scoreboard players operation $max random = @s random.range
+execute unless score $min random = $min random if entity @s run scoreboard players operation $min random = @s random.min
 
 scoreboard players operation $range random = $max random
 scoreboard players operation $range random -= $min random
@@ -37,5 +36,8 @@ scoreboard players operation $output random /= $16 rx.int
 scoreboard players operation $output random += $min random
 
 execute if entity @s run scoreboard players operation @s random = $output random
+
+scoreboard players reset $max random
+scoreboard players reset $min random
 
 # execute if entity @s run scoreboard players set @s random.min 0

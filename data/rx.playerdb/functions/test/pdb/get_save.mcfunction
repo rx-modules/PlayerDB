@@ -1,10 +1,10 @@
 # By: rx97
-# 15 Aug 20
+# 14 Aug 20
 # 
-#> 1000 entries
+#> Resets Self uids **FOR DEV**
 
-
-scoreboard players set $in.uid rx.io 1
-scoreboard players operation $loop rx.temp = $n rx.temp
-
-function rx.playerdb:test/pdb/get_save_n
+scoreboard players set $min random 1
+scoreboard players set $max random 200
+function rx.playerdb:api/get
+data modify storage rx:io playerdb.player.data.test set value 1b
+function rx.playerdb:api/save

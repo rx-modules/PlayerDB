@@ -1,11 +1,14 @@
 # By: rx97
-# 15 Aug 20
+# 14 Aug 20
 # 
-#> 1000 entries
+#> Get n times
 
-scoreboard players operation $loop rx.temp = $n rx.temp
+scoreboard players set $max random 200
+scoreboard players set $min random 1
+function rx.playerdb:test/random
 
-scoreboard players set @s random.min 1
-scoreboard players operation @s random.range = $n rx.temp
+scoreboard players operation $loop rx.temp = $output random
+data modify storage rx:temp iter.players set from storage rx:global iter.players
+function rx.playerdb:test/iter/get_loop
 
-function rx.playerdb:test/pdb/get_n
+data modify storage rx:io iter.output set from storage rx:temp iter.players[-1]
