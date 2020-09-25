@@ -17,7 +17,7 @@ ITERATIONS = math.log(MAX_INT, RANGE)
 LINE = 'execute if score $bit rx.temp matches {low}..{high} run function rx.playerdb:impl/get/bit{i}/{low}_{high}'  # noqa: E501
 
 LEAF = (
-    'execute if score $bit rx.temp matches {num} run data modify storage rx:temp playerdb.filtered{bit1} append from storage rx:temp playerdb.filtered{bit}[{s}]'  # noqa: E501
+    'execute unless score $bit rx.temp matches {num} run data modify storage rx:global playerdb.players[{s}].selected set value 0b'  # noqa: E501
 )
 
 
@@ -26,8 +26,8 @@ BIT = (
     f'scoreboard players operation $bit rx.temp %= ${RANGE} rx.int\n'
     'function rx.playerdb:impl/get/bit{bit}/0_' + str(RANGE-1) + '\n'
     f'scoreboard players operation $uid rx.temp /= ${RANGE} rx.int\n'
-    'execute store result score $size rx.temp if data storage rx:temp playerdb.filtered{bit1}[]\n'
-    'execute if score $size rx.temp matches 0..1 run data modify storage rx:io playerdb.player set from storage rx:temp playerdb.filtered{bit1}[0]\n'  # noqa: E501
+    'execute store result score $size rx.temp if data storage rx:playerdb playerdb.players[{selected:1b}]\n'  # noqa: E501
+    'execute if score $size rx.temp matches 0..1 run data modify storage rx:io playerdb.player set from storage rx:global playerdb.players[{selected:1b}]\n'  # noqa: E501
     'execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/get/bit{bit1}\n'  # noqa: E501
 )
 
@@ -49,7 +49,7 @@ def gen_tree(nums, bit):
 
 def gen_leaf(low, high, bit):
     return [
-        LEAF.format(num=i, bit1=bit+1, bit=bit, s='{' + f'bit{bit}:{i}b' + '}')
+        LEAF.format(num=i, s='{' + f'bit{bit}:{i}b' + '}')
         for i in range(low, high)
     ]
 

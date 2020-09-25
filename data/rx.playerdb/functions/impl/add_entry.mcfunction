@@ -13,6 +13,7 @@ execute store result storage rx:global playerdb.players[-1].uid int 1 run scoreb
 data modify storage rx:global playerdb.players[-1].name set from entity af-0-0-0-1 ArmorItems[-1].tag.SkullOwner.Name
 data modify storage rx:global playerdb.players[-1].UUID set from entity @s UUID
 data modify storage rx:global playerdb.players[-1].data set value {}
+data modify storage rx:global playerdb.players[-1].selected set value 0b
 
 scoreboard players operation $uid rx.temp = @s rx.uid
 function rx.playerdb:impl/uid_to_bits
