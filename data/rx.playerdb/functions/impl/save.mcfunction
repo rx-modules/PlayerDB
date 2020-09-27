@@ -4,4 +4,3 @@
 #> Save after Select
 
 data modify storage rx:global playerdb.players[{selected:1b}].data set from storage rx:io playerdb.player.data
-data modify storage rx:global playerdb.players[].selected set value 0b
