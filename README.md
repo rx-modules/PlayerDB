@@ -1,13 +1,13 @@
-# MC-PlayerDB - 1.16+ Minecraft Versions (May work for 1.15)
+# MC-PlayerDB - 1.16+ Minecraft Versions
 A NBT Custom Player Database (Beta)
 
 This datapack provides a player database for you to utilize! What is this database? Let me explain:
 
-Each player has an enderchest where the player can store and retrieve items. With commands, we can also place items, clear items, and even put loot tables in there! Each player has their own individual enderchest storage which is seperate from everyone elses. Essentially, this datapack implements a more feature filled version of a player enderchest. Using the new global nbt `storage` that was intoduced in 1.15, we can now store nbt data in the 'cloud'. This datapack maintains it's own space in this 'cloud' storing each player individually in a list.
+Each player has an enderchest where the player can store and retrieve items. With commands, we can also place items, clear items, and even put loot tables in there! Each player has their own individual enderchest storage which is seperate from everyone elses. Essentially, this datapack implements a more feature filled version of a player enderchest. Using the new global nbt `storage` that was intoduced in 1.15, we can now store nbt data in the 'cloud'. This datapack maintains it's own space in this 'cloud' storing each player individually in a list. Like how scoreboard stores numbers per player, here you can store nbt per player allowing you to manage and manipulate it as you please (even access it when they are offline!)
 
 ## Why?
 
-Atm, the only thing we really have per player are scoreboards which only store numbers and enderchests which store items (mostly for survival). This new system adds another per player storage... custom nbt! This ranges from numbers, floats, strings, lists, and compounds of all these elements combined!
+At the moment, the only thing we really have per player are scoreboards which only store numbers and enderchests which store items (mostly for survival). This new system adds another per player storage... custom nbt! This ranges from numbers, floats, strings, lists, and compounds of all these elements combined!
 
 This datapack has a couple main advantages to enderchests:
 * Accessing enderchest data requires the player to be online. This datapack has offline access.
@@ -15,16 +15,17 @@ This datapack has a couple main advantages to enderchests:
 * This datapack *should* be **much** faster than accessing the enderchest. This is because accessing the enderchest requires **serialization** which incurs steep performance costs. The nbt `storage` does not store serialized, only compressed as nbt.
 
 There are a couple of alternative implementations of player-specific nbt storage:
-* Using a single array and iterating through all the elements until you find the player
+* Using a single array and iterating through all the elements until you find the player.
 * * This is particularly laggy and scales O(1) for each player in the list.
-* * PlayerDB scales O(log(n)) and is even more optimized for a player count less than 64 and 4096
+* * PlayerDB scales O(log(n)) and it many more optimized with lower uid numbers.
 * Creating a custom dimension (or isolating a chunk) for an array of jukeboxes.
 * * Since jukeboxes are BlockEntities, they incur extra lag as well.
-* * I have not yet tested PlayerDB against this method
+* * This is one of the best other solutions which you can check out here: [EntityDB](https://github.com/hqics/entitydb)
+* * From my slight testing, PlayerDB does beat out in terms of lag, but this may vary.
 
 ## Lag?
 
-As previously mentioned, this solution is signifiantly less laggier than other solutions floating around (testing coming soon™). To be specific, at worst, it is O(log(n)) which while not at O(1) like a normal array, is pretty damn close. There are also some optimization tricks done to help cut down on the amount of commands to run when dealing with a player base of less than first 64 players, 4096 players, 262,144 players, etc. This allows the datapack to only take \~30cmds to get an entry for a player and \~40cmds to save an entry for a player when you are working with players under 64.
+As previously mentioned, this solution is an alternative to other solutions which may be laggier. To be specific, at worst, it is O(log(n)) which while not at O(1) like a normal array, is pretty damn close. In terms of minecraft, you can think of this being about 50% less laggier than getting the player nbt via `data get entity @s` (which has been moderately tested so do try yourself). More technical bits on lag will be discussed in a later section.
 
 ## How to use
 
@@ -46,6 +47,9 @@ Basic usage as follows:
     # Afterwards, we can save this data..
     function rx.playerdb:api/save_self
     
+    # And the alternative version for input via fakeplayer
+    function rx.playerdb:api/save
+    
     # If we need to list all the players in the database:
     function rx.playerdb:admin/list
     
@@ -59,14 +63,15 @@ Basic usage as follows:
 ## Some examples
 
 * Store a different inventory per gamemode (creative, adventure, survival) **multiplayer compatible**
-* Create a mailbox system where each player can mail each other items stored and retrievable offline (psst, coming soon)
+* Create a mailbox system where each player can mail each other items stored and retrievable offline
 * Store some stats about each player offline so other players can look you up even when you are offline
+
+I hope to create a project utilizing this lib in the future
 
 ## Technical bits
 
-#> TODO FIX
+Every player is given a unique id scoreboard, `rx.uid`. This is a number that starts counting from 1, `$uid.next rx.uid`, and every player gets an incrementing number. When a player wants to create a new entry via `api/add_entry` or `api/get_self` (which creates an entry for you), a new nbt compound is added a list located at `rx:global playerdb.players`. Each player data is organized as so: `{selected: 0b, info:{name: '<player name>', uid: <scoreboard uid>, UUID: <player UUID>}, data:{...}, bit0: xb, bit1: xb, ..., bitn: xb}`. When a `get` or `save` operation is called, the program will filter down the database to select the correct entry to the input uid via `@s rx.uid` or `$in.uid rx.io`. The system will then 
 
-The main reason why this datapack was built was to utilize a technique talked about in the [r/minecraftcommands discord](https://discord.gg/QAFXFtZ). With nbt lists in minecraft, we don't have the best access to arbiturary values in a list so we are forced to iterate through the entire list and check if we have found our entry we wish to edit. This is really slow and can blow up if the list becomes very, very large. There are some optimizations one can do with iteration, but in the end, it is based on O(n) amount of players (and each iteration requires multiple nbt operations ^^^ cost.
 
 Solution: store the bits of the uid alongside the data and use `players[{bit0:0/1}]` nbt searching to filter the list. We can repeat this filter for each bit which will single us down to a single value. This is a static amount of operations no matter how many players we are dealing with! Along with this, this datapack features some optimizations at lower uid values (naturally, those values will be lower) which will also make getting player data from the database very cheap!
 
@@ -74,13 +79,18 @@ The datapack stores all the players @ `rx:global root.players` in a single list.
 
 ## Shoutouts
 
+* the der discohund#8028 - Even more help on the rewrite!
 * nphhpn#0575 - Lots of help on the rewrite! Big optimization help!
 * AmberW#4615 - She threw out the initial idea and I've built on from that
 * vdvman1#9510 - For helping me figure out some of the nbt manipulation nonsense (and some optimizations)
-* [r/minecraftcommands discord](https://discord.gg/QAFXFtZ) - Pretty helpful w/ feedback and good community, chk it out!
+* [r/minecraftcommands discord](https://discord.gg/QAFXFtZ) - Pretty helpful w/ feedback and good community, check it out!
 
 
 ## Endnote
 
+
+This datapack was a calling to one of the more annoying issues with custom nbt in Minecraft: dynamic list indexing. While 1.14 gave us an amazing command, `data modify`, allowing us to modify the deeper details of nbt, and 1.15 giving us `data storage` allowing us to store arbituary nbt 'in the cloud', we still struggle with a couple of things, namely, indexing. There is no way to index into a NBT List based on a scoreboard value. This means if we needed to store a list of entries tied to a scoreboard, we would be forced to iterate through the entries which is an O(n) solution to a traditionally O(1) solution in most programming languages.
+
+The smart folk over at [r/minecraftcommands discord](https://discord.gg/QAFXFtZ) came up with various solutions to solve this problem and this datapack is one solution that I've grown quite fond over. While I like the usefulness of this library, I've mostly been wanting to understand some of the weird problems that Minecraft throws at us.
+
 This stuff is pretty hard to work through and somewhat hard to envision, but essentially, this is a player database that you can easily use. It's a pretty technical thing, but hopefully the API is not too hard to use. If you have any questions, create a github issue or hit me up on discord @ rx#1284. I'm very active on [r/minecraftcommands discord](https://discord.gg/QAFXFtZ) as well
- 
