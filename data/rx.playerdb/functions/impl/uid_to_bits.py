@@ -1,14 +1,14 @@
+from datetime import datetime
 import math
 
-BASE = 64
+BASE = 2
 MAX_INT = 2**31-1
 DEBUG = True
 
-comment = (
+
+COMMENT = (
     '# By: rx97\n'
-    '# 14 Aug 20\n'
-    '# \n'
-    '#> Make the player entry\n'
+    f"# Generated on: {datetime.now().strftime(r'%d %b %y')}\n\n"
 )
 
 lines = (
@@ -19,7 +19,7 @@ lines = (
 
 debug_line = 'tellraw @s[tag=rx.PDBDebug] [{"text":"", "color":"gold"}, {"text":"bit^: "}, {"score":{"name":"$bit", "objective":"rx.temp"}}]'  # noqa: E501
 
-out = [comment]
+out = [COMMENT]
 for i in range(0, int(math.log(MAX_INT, BASE))):
     if i != 0:
         out.append(lines[0])

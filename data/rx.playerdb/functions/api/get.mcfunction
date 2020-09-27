@@ -3,4 +3,5 @@
 # 
 #> Get Data: Output in rx:io out.player
 
+function rx.playerdb:impl/select
 function rx.playerdb:impl/get

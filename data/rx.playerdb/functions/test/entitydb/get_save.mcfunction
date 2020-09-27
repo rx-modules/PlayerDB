@@ -4,6 +4,8 @@
 #> loop iter
 
 function entitydb:get
-data modify storage entitydb: data.test set value 1b
-# execute as @a[limit=10] run data modify storage entitydb: data.players append from entity @s Inventory
+#data modify storage entitydb: data.test set value 1b
+data modify storage entitydb: data.inv append from entity rx97 Inventory
+data modify storage entitydb: data.inv append from entity rx97 Inventory
+data modify storage entitydb: data.inv append from entity rx97 Inventory
 function entitydb:save
