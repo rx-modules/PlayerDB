@@ -70,12 +70,14 @@ I hope to create a project utilizing this lib in the future
 
 ## Technical bits
 
-Every player is given a unique id scoreboard, `rx.uid`. This is a number that starts counting from 1, `$uid.next rx.uid`, and every player gets an incrementing number. When a player wants to create a new entry via `api/add_entry` or `api/get_self` (which creates an entry for you), a new nbt compound is added a list located at `rx:global playerdb.players`. Each player data is organized as so: `{selected: 0b, info:{name: '<player name>', uid: <scoreboard uid>, UUID: <player UUID>}, data:{...}, bit0: xb, bit1: xb, ..., bitn: xb}`. When a `get` or `save` operation is called, the program will filter down the database to select the correct entry to the input uid via `@s rx.uid` or `$in.uid rx.io`. The system will then 
+Every player is given a unique id scoreboard, `rx.uid`. This is a number that starts counting from 1, `$uid.next rx.uid`, and every player gets an incrementing number. When a player wants to create a new entry via `api/add_entry` or `api/get_self` (which creates an entry for you), a new nbt compound is added a list located at `rx:global playerdb.players`. Each player data is organized as so: `{selected: 0b, info:{name: '<player name>', uid: <scoreboard uid>, UUID: <player UUID>}, data:{...}, bit0: xb, bit1: xb, ..., bitn: xb}`. When a player is given a uid, bits will be generated inside the entry `bit0: xb` based on the binary breakdown of the uid. This is used for the selection/filtering algorithm.
 
+When a `get` or `save` operation is called, the program will filter down the database to select the correct entry to the input uid via `@s rx.uid` or `$in.uid rx.io`. The filtering process is really unique and this is the crux of the entire library so I'll describe it in more detail.
 
-Solution: store the bits of the uid alongside the data and use `players[{bit0:0/1}]` nbt searching to filter the list. We can repeat this filter for each bit which will single us down to a single value. This is a static amount of operations no matter how many players we are dealing with! Along with this, this datapack features some optimizations at lower uid values (naturally, those values will be lower) which will also make getting player data from the database very cheap!
+When you run a `get` or `save`, you will most likely trigger a selection algorithm (`impl/select`). Essentially, this modifies every entry's `selected` nbt to 1b. The system will then call the `bit0` filtering function which determines the first bit of the `uid` and modifies all entries `selected` nbt to 0b if they don't match. If there are more than 1 entries with `selected:1b`, it will continue to the next bit, else it will short-circuit and stop. At the end of the selection process, there should be either 0 or 1 entries in the database with `selected:1b` which u can select via `rx:global playerdb.players[{selected:1b}]`.
 
-The datapack stores all the players @ `rx:global root.players` in a single list. This makes iteration still very possible, so if you want, you can iterate through and do name matching if you like. You can also use the `filter` function to remove all entries with higher bits set which can give you a much smaller sublist to iterate through.
+Saving will usually filter (although there's some optimizations to skip that if you perform a get and a save right next to each other) and then just replace the entry while get just copies the entry into `rx:io`.
+
 
 ## Shoutouts
 
