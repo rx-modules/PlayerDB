@@ -36,9 +36,20 @@ execute if score $size rx.temp matches 1 run scoreboard players operation $in.ui
 execute if score $size rx.temp matches 1 run function rx.playerdb:impl/select
 execute if score $size rx.temp matches 1 run data remove storage rx:global playerdb.players[{selected:1b}]
 
-#> else
+# handle unused_uids / $uid.next
+execute if score $size rx.temp matches 1 run scoreboard players add $swap rx.temp 1
+#>  if @s + 1 != $uid.next: let's cache the uid in unused_uids (append -1 and then replace it)
+execute if score $size rx.temp matches 1 unless score $uid rx.temp = $uid.next rx.uid run data modify storage rx:global playerdb.unused_uids append value -1
+execute if score $size rx.temp matches 1 unless score $uid rx.temp = $uid.next rx.uid store result storage rx:global playerdb.unused_uids[-1] int 1 run scoreboard players get $in.uid rx.io
+
+#>  else:
+execute if score $size rx.temp matches 1 if score $swap rx.temp = $uid.next rx.uid run scoreboard players remove $uid.next rx.uid 1
+
+
+#> else:
 execute unless data storage rx:io playerdb.player run tellraw @a[tag=rx.admin] {"text":"Player unsuccessfully replaced", "color": "#CE4257"}
 
 # reset temp/others
 data remove storage rx:io playerdb.current_player
 scoreboard players reset $admin rx.temp
+scoreboard players reset $swap rx.temp
