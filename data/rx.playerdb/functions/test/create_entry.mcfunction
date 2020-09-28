@@ -3,7 +3,7 @@
 # 
 #> Resets Self uids **FOR DEV**
 
-tellraw @a[tag=rx.admin] {"storage":"rx:global","nbt":"playerdb.players"}
+# tellraw @a[tag=rx.admin] {"storage":"rx:global","nbt":"playerdb.players"}
 function rx.playerdb:test/reset_self
 
 scoreboard players remove $loop rx.temp 1
