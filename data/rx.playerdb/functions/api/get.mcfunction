@@ -3,5 +3,5 @@
 # 
 #> Get Data: Output in rx:io out.player
 
-function rx.playerdb:impl/select
-function rx.playerdb:impl/get
+execute if score $in.uid rx.io < $uid.next rx.uid run function rx.playerdb:impl/select
+execute if score $in.uid rx.io < $uid.next rx.uid run function rx.playerdb:impl/get
