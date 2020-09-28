@@ -21,11 +21,21 @@ function rx.playerdb:impl/select
 
 #> if we found an entry
 # replace player with new data ;D
-execute if score $size rx.temp matches 1 run tellraw @a[tag=rx.admin] [{"text": "Successfully replaced ", "color": "gold"}, {"storage":"rx:global", "nbt": "playerdb.players[{selected:1b}].info.name", "color":"#DAD6D6"}, " with ", {"storage":"rx:io", "nbt":"playerdb.selected_player.info.name", "color":"#DAD6D6"}]
+execute if score $size rx.temp matches 1 run tellraw @a[tag=rx.admin] [{"text": "Successfully replaced ", "color": "gold"}, {"storage":"rx:global", "nbt": "playerdb.players[{selected:1b}].info.name", "color":"#DAD6D6"}, " with ", {"storage":"rx:io", "nbt":"playerdb.current_player.info.name", "color":"#DAD6D6"}]
+execute if score $size rx.temp matches 1 run data modify storage rx:io playerdb.current_player.info.uid set from storage rx:global playerdb.players[{selected:1b}].info.uid
 execute if score $size rx.temp matches 1 run data modify storage rx:global playerdb.players[{selected:1b}].info set from storage rx:io playerdb.current_player.info
 execute if score $size rx.temp matches 1 run data modify storage rx:global playerdb.players[{selected:1b}].data set from storage rx:io playerdb.current_player.data
 execute if score $size rx.temp matches 1 run function rx.playerdb:impl/save
+
+# swap @s and $in.uid
+execute if score $size rx.temp matches 1 run scoreboard players operation $swap rx.temp = @s rx.uid
 execute if score $size rx.temp matches 1 run scoreboard players operation @s rx.uid = $in.uid rx.io
+execute if score $size rx.temp matches 1 run scoreboard players operation $in.uid rx.io = $swap rx.temp
+
+# select current player's old entry and remove it. note, $size changes here but should be fine
+execute if score $size rx.temp matches 1 run function rx.playerdb:impl/select
+execute if score $size rx.temp matches 1 run data remove storage rx:global playerdb.players[{selected:1b}]
+
 #> else
 execute unless data storage rx:io playerdb.player run tellraw @a[tag=rx.admin] {"text":"Player unsuccessfully replaced", "color": "#CE4257"}
 
