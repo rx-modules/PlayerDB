@@ -23,6 +23,7 @@ execute if score $size rx.temp matches 1 if score $uid rx.temp = $uid.next rx.ui
 
 #>  end: success msg and remove selected player
 execute if score $size rx.temp matches 1 run tellraw @a[tag=rx.admin] [{"text": "Successfully removed ", "color": "gold"}, {"storage":"rx:global", "nbt": "playerdb.players[{selected:1b}].info.name", "color":"#DAD6D6"}, "'s entry"]
+execute if score $size rx.temp matches 1 run tellraw @a[tag=rx.admin] [{"text": "Don't forget to reset their rx.pdb.HasEntry score unless you ran admin/delete_player", "color": "gold"}]
 execute if score $size rx.temp matches 1 run data remove storage rx:global playerdb.players[{selected:1b}]
 
 #> else: failed msg
