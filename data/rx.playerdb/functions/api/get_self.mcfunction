@@ -3,19 +3,13 @@
 # 
 #> Get Self Data
 
-#> api add_entry, won't add unless we need to
+#> api add_entry, won't add unless we need to. $entry: 1: we have entry, 0: we don't have entry
+execute store result score $entry rx.temp if score @s rx.pdb.HasEntry = @s rx.pdb.HasEntry
 function rx.playerdb:api/add_entry
 
-#> grab the end uid just incase we *just* added an entry
-scoreboard players operation $in.uid rx.io = @s rx.uid
-execute store result score $uid rx.temp run data get storage rx:global playerdb.players[-1].info.uid
-
-#> if end uid matches, the last entry is the io
-execute if score $uid rx.temp = $in.uid rx.io run data modify storage rx:io playerdb.player.data set from storage rx:global playerdb.players[-1].data
-execute if score $uid rx.temp = $in.uid rx.io run data modify storage rx:io playerdb.player.info set from storage rx:global playerdb.players[-1].info
-# also do selected stuff
-execute if score $uid rx.temp = $in.uid rx.io run data modify storage rx:global playerdb.players[].selected set value 0b
-execute if score $uid rx.temp = $in.uid rx.io run data modify storage rx:global playerdb.players[-1].selected set value 1b
+#> if: we just added an entry, select it
+execute if score $entry rx.temp matches 1.. run data modify storage rx:global playerdb.players[].selected set value 0b
+execute if score $entry rx.temp matches 1.. run data modify storage rx:global playerdb.players[-1].selected set value 1b
 
 #> else: actually get
-execute unless score $uid rx.temp = $in.uid rx.io run function rx.playerdb:api/get
+execute unless score $entry rx.temp matches 1.. run function rx.playerdb:api/get
