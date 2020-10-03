@@ -13,6 +13,7 @@ execute store result score $uid.check rx.temp run data get storage rx:io playerd
 #> - data exists in rx:io
 #> - data uid == input uid
 #> Consume reguardless
-execute unless data storage rx:io playerdb.player if score $uid.check rx.temp = $in.uid rx.io run tellraw @a[tag=rx.admin] {"text":"Save unsuccessful. Data or data uid invalid", "color": "#CE4257"}
+execute unless data storage rx:io playerdb.player run tellraw @a[tag=rx.admin] {"text":"Save unsuccessful. No rx:io data to save.", "color": "#CE4257"}
+execute if data storage rx:io playerdb.player unless score $uid.check rx.temp = $in.uid rx.io run tellraw @a[tag=rx.admin] {"text":"Save unsuccessful. rx:io data uid invalid", "color": "#CE4257"}
 execute if data storage rx:io playerdb.player if score $uid.check rx.temp = $in.uid rx.io run function rx.playerdb:impl/save
-data modify storage rx:io playerdb.player set value {}
+data remove storage rx:io playerdb.player

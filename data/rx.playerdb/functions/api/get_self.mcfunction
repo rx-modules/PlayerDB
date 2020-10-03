@@ -8,8 +8,9 @@ execute store result score $entry rx.temp if score @s rx.pdb.HasEntry = @s rx.pd
 function rx.playerdb:api/add_entry
 
 #> if: we just added an entry, select it
-execute if score $entry rx.temp matches 1.. run data modify storage rx:global playerdb.players[].selected set value 0b
-execute if score $entry rx.temp matches 1.. run data modify storage rx:global playerdb.players[-1].selected set value 1b
+execute if score $entry rx.temp matches ..0 run data modify storage rx:global playerdb.players[].selected set value 0b
+execute if score $entry rx.temp matches ..0 run data modify storage rx:global playerdb.players[-1].selected set value 1b
 
 #> else: actually get
-execute unless score $entry rx.temp matches 1.. run function rx.playerdb:api/get
+execute if score $entry rx.temp matches 1.. run scoreboard players operation $in.uid rx.io = @s rx.uid
+execute if score $entry rx.temp matches 1.. run function rx.playerdb:api/get
