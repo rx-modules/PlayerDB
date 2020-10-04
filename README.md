@@ -81,15 +81,15 @@ Saving will usually filter (although there's some optimizations to skip that if 
 
 ## Shoutouts
 
-* the der discohund#8028 - Even more help on the rewrite!
-* nphhpn#0575 - Lots of help on the rewrite! Big optimization help!
+* Speedy2025#2025 - Helped me test it to make sure I never broke it. Biggest supporter lmao!
+* the der discohund#8028 - Biggest boost on optimization (selection > copying)
+* nphhpn#0575 - Gave me some advice on optimizations!
 * AmberW#4615 - She threw out the initial idea and I've built on from that
 * vdvman1#9510 - For helping me figure out some of the nbt manipulation nonsense (and some optimizations)
 * [r/minecraftcommands discord](https://discord.gg/QAFXFtZ) - Pretty helpful w/ feedback and good community, check it out!
 
 
 ## Endnote
-
 
 This datapack was a calling to one of the more annoying issues with custom nbt in Minecraft: dynamic list indexing. While 1.14 gave us an amazing command, `data modify`, allowing us to modify the deeper details of nbt, and 1.15 giving us `data storage` allowing us to store arbituary nbt 'in the cloud', we still struggle with a couple of things, namely, indexing. There is no way to index into a NBT List based on a scoreboard value. This means if we needed to store a list of entries tied to a scoreboard, we would be forced to iterate through the entries which is an O(n) solution to a traditionally O(1) solution in most programming languages.
 

@@ -4,7 +4,7 @@
 #> Iter
 
 # tellraw
-execute if score $iter rx.temp >= $min.iter rx.temp run tellraw @s [{"nbt":"playerdb.players[0].uid", "storage":"rx:temp", "color": "gold"}, {"text": ": "}, {"nbt":"playerdb.players[0].name", "storage":"rx:temp", "color": "#CE4257"}]
+execute if score $iter rx.temp >= $min.iter rx.temp run tellraw @s [{"nbt":"playerdb.players[0].info.name", "storage":"rx:temp", "color": "gold"}, {"text": ": "}, {"nbt":"playerdb.players[0].info.uid", "storage":"rx:temp", "color": "#DAD6D6"}]
 
 # iterate list
 data remove storage rx:temp playerdb.players[0]
