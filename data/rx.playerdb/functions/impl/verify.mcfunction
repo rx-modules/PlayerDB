@@ -14,7 +14,8 @@ execute store result score $uid.check rx.temp run data get storage rx:global pla
 #> stores 1 in $verified if:
 #> - $size == 1
 #> - $uid == $uid.check
-execute store result score $verified rx.temp if score $size rx.temp matches 1 if score $uid rx.temp = $uid.check rx.temp
+execute store result score $verified rx.temp if score $size rx.temp matches 1
+execute if score $verified rx.temp matches 1 store result score $verified rx.temp if score $uid rx.temp = $uid.check rx.temp
 
 # clean up
 scoreboard players reset $uid.check rx.temp
