@@ -19,4 +19,3 @@ execute if score $verified rx.temp matches 1 store result score $verified rx.tem
 
 # clean up
 scoreboard players reset $uid.check rx.temp
-
