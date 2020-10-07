@@ -62,11 +62,8 @@ Basic usage as follows:
  
 ## Some examples
 
-* Store a different inventory per gamemode (creative, adventure, survival) **multiplayer compatible**
-* Create a mailbox system where each player can mail each other items stored and retrievable offline
-* Store some stats about each player offline so other players can look you up even when you are offline
-
-I hope to create a project utilizing this lib in the future
+[EnderChest+](https://github.com/RitikShah/EnderChestPlus)
+This datapack allows for expandable EnderChests with complete multiplayer compatability!
 
 ## Technical bits
 
