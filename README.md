@@ -16,7 +16,7 @@ This datapack has a couple main advantages to enderchests:
 
 There are a couple of alternative implementations of player-specific nbt storage:
 * Using a single array and iterating through all the elements until you find the player.
-* * This is particularly laggy and scales O(1) for each player in the list.
+* * This is particularly laggy and scales O(n) for the number of players in the list
 * * PlayerDB scales O(log(n)) and it many more optimized with lower uid numbers.
 * Creating a custom dimension (or isolating a chunk) for an array of jukeboxes.
 * * Since jukeboxes are BlockEntities, they incur extra lag as well.
