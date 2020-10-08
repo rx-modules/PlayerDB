@@ -1,0 +1,490 @@
+---- Minecraft Profiler Results ----
+// Now with extra numbers
+
+Version: 1.16.3
+Time span: 26763 ms
+Tick span: 536 ticks
+// This is approximately 20.03 ticks per second. It should be 20 ticks per second
+
+--- BEGIN PROFILE DUMP ---
+
+[00] nextTickWait(535/1) - 84.62%/84.62%
+[01] |   #getEntities 27/0
+[01] |   #runTask 71/0
+[01] |   #getChunk 1377/2
+[01] |   unspecified(535/1) - 98.48%/83.34%
+[01] |   /execute as @a run function rx.playerdb:test/entitydb/get_save(1/0) - 0.57%/0.48%
+[02] |   |   data modify storage entitydb: data.inv append from entity rx97 Inventory(150/0) - 34.77%/0.17%
+[02] |   |   data modify block ~ ~ ~ RecordItem.tag.entities set from storage entitydb: entities(50/0) - 15.92%/0.08%
+[03] |   |   |   #getChunkCacheMiss 5/0
+[03] |   |   |   #getChunk 704/1
+[02] |   |   unspecified(1/0) - 9.74%/0.05%
+[02] |   |   execute positioned as @s in entitydb: run data modify storage entitydb: search.list set from block ~ ~ ~ RecordItem.tag.entities(50/0) - 9.49%/0.05%
+[03] |   |   |   #getChunkCacheMiss 1/0
+[03] |   |   |   #getChunk 50/0
+[02] |   |   data modify storage entitydb: entities[0].data set from storage entitydb: data(50/0) - 8.81%/0.04%
+[02] |   |   data modify storage entitydb: entities set from storage entitydb: search.list(50/0) - 4.30%/0.02%
+[02] |   |   data modify storage entitydb: data set from storage entitydb: entities[0].data(50/0) - 4.19%/0.02%
+[02] |   |   data modify entity @s {} merge from storage entitydb: Pos(50/0) - 2.50%/0.01%
+[02] |   |   execute store result score x entitydb store result score z entitydb run data get storage entitydb: UUID[0] .0000152587890625(50/0) - 1.35%/0.01%
+[02] |   |   execute unless block ~ ~ ~ jukebox run setblock ~ ~ ~ jukebox{RecordItem:{id:"minecraft:jukebox",Count:1b}}(50/0) - 0.63%/0.00%
+[03] |   |   |   #getChunk 50/0
+[02] |   |   execute store result storage entitydb: UUID[0] int 1 run scoreboard players get @s entitydb.uuid0(50/0) - 0.59%/0.00%
+[02] |   |   execute if data storage entitydb: UUID as d28b2115-c99e-84c2-6e45-963d34071d44 run function entitydb:calculate_coordinates_and_get_jukebox_data(50/0) - 0.55%/0.00%
+[02] |   |   execute positioned as d28b2115-c99e-84c2-6e45-963d34071d44 in entitydb: run function entitydb:save_to_jukebox(50/0) - 0.51%/0.00%
+[02] |   |   execute store success score notFinished entitydb run data modify storage entitydb: search.compare set from storage entitydb: search.list[0].id(50/0) - 0.50%/0.00%
+[02] |   |   data remove storage entitydb: data(100/0) - 0.45%/0.00%
+[02] |   |   data modify storage entitydb: search.list insert 1 from storage entitydb: search.list2[](50/0) - 0.38%/0.00%
+[02] |   |   execute store result storage entitydb: Pos.TileX int 1 run scoreboard players operation x entitydb %= 16 entitydb(50/0) - 0.38%/0.00%
+[02] |   |   data modify storage entitydb: UUID set value [I;0,0,0,0](50/0) - 0.33%/0.00%
+[02] |   |   data remove storage entitydb: entities(50/0) - 0.28%/0.00%
+[02] |   |   data remove storage entitydb: Pos(50/0) - 0.28%/0.00%
+[02] |   |   execute store success score not_found entitydb run data modify storage entitydb: search.list[0].id set from storage entitydb: search.searchfor(50/0) - 0.26%/0.00%
+[02] |   |   execute store result storage entitydb: Pos.TileY int 1 run scoreboard players add y entitydb 128(50/0) - 0.26%/0.00%
+[02] |   |   data remove storage entitydb: search.list2(50/0) - 0.26%/0.00%
+[02] |   |   execute store result storage entitydb: UUID[1] int 1 run scoreboard players get @s entitydb.uuid1(50/0) - 0.23%/0.00%
+[02] |   |   execute unless score @s[type=player] entitydb.lg matches 1 store success score @s entitydb.lg run scoreboard players reset @s entitydb.uuid0(50/0) - 0.22%/0.00%
+[02] |   |   data modify storage entitydb: search.searchfor set from storage entitydb: UUID(50/0) - 0.20%/0.00%
+[02] |   |   data modify storage entitydb: search.compare set from storage entitydb: search.searchfor(50/0) - 0.20%/0.00%
+[02] |   |   execute unless data storage entitydb: UUID run function entitydb:get_uuid/get_uuid(50/0) - 0.18%/0.00%
+[02] |   |   execute store result storage entitydb: UUID[2] int 1 run scoreboard players get @s entitydb.uuid2(50/0) - 0.18%/0.00%
+[02] |   |   data remove storage entitydb: entities[0].data(50/0) - 0.16%/0.00%
+[02] |   |   execute unless data storage entitydb: search.list[] run data modify storage entitydb: search.list set value [{}](50/0) - 0.16%/0.00%
+[02] |   |   function entitydb:save(100/0) - 0.16%/0.00%
+[02] |   |   data remove storage entitydb: search(50/0) - 0.16%/0.00%
+[02] |   |   execute store result storage entitydb: UUID[3] int 1 run scoreboard players get @s entitydb.uuid3(50/0) - 0.15%/0.00%
+[02] |   |   function entitydb:get(100/0) - 0.15%/0.00%
+[02] |   |   function entitydb:search/search(100/0) - 0.15%/0.00%
+[02] |   |   execute store result storage entitydb: Pos.TileZ int 1 run scoreboard players operation z entitydb %= 16 entitydb(50/0) - 0.14%/0.00%
+[02] |   |   execute unless data storage entitydb: entities[] run setblock ~ ~ ~ air(50/0) - 0.12%/0.00%
+[02] |   |   execute store result score y entitydb run scoreboard players operation z entitydb /= 16 entitydb(50/0) - 0.12%/0.00%
+[02] |   |   execute if score @s entitydb.uuid0 matches ..2147483647 run function entitydb:get_uuid/from_scoreboard(50/0) - 0.11%/0.00%
+[02] |   |   execute unless data storage entitydb: entities[0].data run data remove storage entitydb: entities[0](50/0) - 0.11%/0.00%
+[02] |   |   data remove storage entitydb: UUID(50/0) - 0.09%/0.00%
+[02] |   |   execute if score notFinished entitydb matches 1 run function entitydb:search/next_element(50/0) - 0.08%/0.00%
+[02] |   |   scoreboard players operation y entitydb /= 16 entitydb(50/0) - 0.05%/0.00%
+[02] |   |   execute unless score @s entitydb.uuid0 matches ..2147483647 run function entitydb:get_uuid/from_nbt_and_save_it_to_scoreboard(50/0) - 0.05%/0.00%
+[02] |   |   function entitydb:search/compare(100/0) - 0.05%/0.00%
+[02] |   |   function entitydb:calculate_coordinates_and_get_jukebox_data(50/0) - 0.02%/0.00%
+[02] |   |   function entitydb:save_to_jukebox(50/0) - 0.01%/0.00%
+[02] |   |   function entitydb:get_uuid/from_scoreboard(50/0) - 0.01%/0.00%
+[02] |   |   function entitydb:get_uuid/get_uuid(50/0) - 0.01%/0.00%
+[01] |   /execute as @a run function rx.playerdb:test/echest/get_save(1/0) - 0.53%/0.45%
+[02] |   |   data modify storage rx:temp echest.items[0].tag.data.inv append from entity rx97 Inventory(150/0) - 39.20%/0.18%
+[02] |   |   data modify block 0 0 0 Items set from storage rx:temp echest.items(50/0) - 25.18%/0.11%
+[03] |   |   |   #getChunk 59/0
+[02] |   |   data modify storage rx:temp echest.items set from entity @s EnderItems(50/0) - 14.12%/0.06%
+[02] |   |   loot replace entity @s enderchest.0 mine 0 0 0 air{drop_contents:1b}(50/0) - 14.04%/0.06%
+[03] |   |   |   #getChunk 100/0
+[02] |   |   unspecified(1/0) - 7.47%/0.03%
+[01] |   /execute as @a run function rx.playerdb:test/modify_save(1/0) - 0.42%/0.35%
+[02] |   |   execute if score $size rx.temp matches 1 run data modify storage rx:io playerdb.player.data set from storage rx:global playerdb.players[{selected:1b}].data(50/0) - 59.72%/0.21%
+[02] |   |   unspecified(1/0) - 11.99%/0.04%
+[02] |   |   data modify storage rx:global playerdb.players[{selected:1b}].data set from storage rx:io playerdb.player.data(50/0) - 7.21%/0.03%
+[02] |   |   execute store result score $size rx.temp if data storage rx:global playerdb.players[{selected:1b}](336/1) - 4.30%/0.02%
+[02] |   |   execute if score $size rx.temp matches 1 run data modify storage rx:io playerdb.player.info set from storage rx:global playerdb.players[{selected:1b}].info(50/0) - 1.11%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit0:0b}] run data modify storage rx:global playerdb.players[{bit0:0b}].selected set value 0b(50/0) - 1.01%/0.00%
+[02] |   |   data modify storage rx:global playerdb.players[].selected set value 1b(50/0) - 1.01%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit0:1b}] run data modify storage rx:global playerdb.players[{bit0:1b}].selected set value 0b(50/0) - 0.88%/0.00%
+[02] |   |   data modify storage rx:global playerdb.players[].selected set value 0b(50/0) - 0.86%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit3:1b}] run data modify storage rx:global playerdb.players[{bit3:1b}].selected set value 0b(50/0) - 0.84%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit1:1b}] run data modify storage rx:global playerdb.players[{bit1:1b}].selected set value 0b(50/0) - 0.82%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit4:1b}] run data modify storage rx:global playerdb.players[{bit4:1b}].selected set value 0b(50/0) - 0.82%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit2:1b}] run data modify storage rx:global playerdb.players[{bit2:1b}].selected set value 0b(50/0) - 0.78%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit1:0b}] run data modify storage rx:global playerdb.players[{bit1:0b}].selected set value 0b(50/0) - 0.74%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit2:0b}] run data modify storage rx:global playerdb.players[{bit2:0b}].selected set value 0b(50/0) - 0.71%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit3:0b}] run data modify storage rx:global playerdb.players[{bit3:0b}].selected set value 0b(50/0) - 0.67%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit4:0b}] run data modify storage rx:global playerdb.players[{bit4:0b}].selected set value 0b(50/0) - 0.64%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit5:0b}] run data modify storage rx:global playerdb.players[{bit5:0b}].selected set value 0b(36/0) - 0.55%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit5:1b}] run data modify storage rx:global playerdb.players[{bit5:1b}].selected set value 0b(36/0) - 0.48%/0.00%
+[02] |   |   execute store result score $uid rx.temp run data get storage rx:io playerdb.player.info.uid(50/0) - 0.45%/0.00%
+[02] |   |   scoreboard players operation $uid rx.temp /= $2 rx.int(286/1) - 0.44%/0.00%
+[02] |   |   scoreboard players operation $bit rx.temp = $uid rx.temp(286/1) - 0.43%/0.00%
+[02] |   |   scoreboard players operation $bit rx.temp %= $2 rx.int(286/1) - 0.35%/0.00%
+[02] |   |   scoreboard players operation $in.uid rx.io = @s rx.uid(100/0) - 0.30%/0.00%
+[02] |   |   execute if score $size rx.temp matches 1 store result score $uid rx.temp run data get storage rx:io playerdb.player.info.uid(50/0) - 0.28%/0.00%
+[02] |   |   execute unless score @s rx.pdb.HasEntry = @s rx.pdb.HasEntry run function rx.playerdb:impl/add_entry(50/0) - 0.27%/0.00%
+[02] |   |   data modify storage rx:io playerdb.player.data.test set value 1b(50/0) - 0.24%/0.00%
+[02] |   |   execute unless score $uid rx.temp = $in.uid rx.io run data modify storage rx:io playerdb.player set value {}(50/0) - 0.18%/0.00%
+[02] |   |   function rx.playerdb:api/get_self(100/0) - 0.15%/0.00%
+[02] |   |   function rx.playerdb:api/save_self(100/0) - 0.15%/0.00%
+[02] |   |   execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit1(50/0) - 0.14%/0.00%
+[02] |   |   execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit2(50/0) - 0.14%/0.00%
+[02] |   |   execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit3(50/0) - 0.13%/0.00%
+[02] |   |   execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit4(50/0) - 0.12%/0.00%
+[02] |   |   execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit5(50/0) - 0.10%/0.00%
+[02] |   |   execute unless score $uid rx.temp = $in.uid rx.io run scoreboard players set $size rx.temp 0(50/0) - 0.10%/0.00%
+[02] |   |   function rx.playerdb:impl/get(100/0) - 0.10%/0.00%
+[02] |   |   scoreboard players operation $uid rx.temp = $in.uid rx.io(50/0) - 0.09%/0.00%
+[02] |   |   function rx.playerdb:impl/save(100/0) - 0.09%/0.00%
+[02] |   |   function rx.playerdb:impl/select/bit0(100/0) - 0.08%/0.00%
+[02] |   |   function rx.playerdb:impl/select(100/0) - 0.08%/0.00%
+[02] |   |   function rx.playerdb:api/get(100/0) - 0.07%/0.00%
+[02] |   |   function rx.playerdb:api/save(100/0) - 0.07%/0.00%
+[02] |   |   function rx.playerdb:api/add_entry(100/0) - 0.07%/0.00%
+[02] |   |   execute if score $size rx.temp matches ..0 run data modify storage rx:io playerdb.player set value {}(50/0) - 0.06%/0.00%
+[02] |   |   execute unless score $size rx.temp matches 1 run function rx.playerdb:impl/select(50/0) - 0.05%/0.00%
+[02] |   |   execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit6(36/0) - 0.04%/0.00%
+[02] |   |   function rx.playerdb:impl/select/bit4(50/0) - 0.02%/0.00%
+[02] |   |   function rx.playerdb:impl/select/bit3(50/0) - 0.02%/0.00%
+[02] |   |   function rx.playerdb:impl/select/bit1(50/0) - 0.02%/0.00%
+[02] |   |   function rx.playerdb:impl/select/bit2(50/0) - 0.02%/0.00%
+[02] |   |   function rx.playerdb:impl/select/bit5(36/0) - 0.01%/0.00%
+[01] |   rest(27/0) - 0.00%/0.00%
+[02] |   |   #getChunk 378/0
+[01] |   move(27/0) - 0.00%/0.00%
+[02] |   |   #getEntities 27/0
+[02] |   |   #getChunk 108/0
+[00] tick(536/1) - 15.38%/15.38%
+[01] |   levels(536/1) - 95.96%/14.76%
+[02] |   |   ServerLevel[Infinity Storage2] minecraft:overworld(536/1) - 97.29%/14.36%
+[03] |   |   |   tick(536/1) - 99.97%/14.36%
+[04] |   |   |   |   entities(536/1) - 77.66%/11.15%
+[05] |   |   |   |   |   tick(26800/50) - 97.68%/10.89%
+[06] |   |   |   |   |   |   minecraft:player(26800/50) - 99.29%/10.81%
+[07] |   |   |   |   |   |   |   #getEntities 78792/147
+[07] |   |   |   |   |   |   |   #tickNonPassenger 26800/50
+[07] |   |   |   |   |   |   |   #getChunkCacheMiss 2646/4
+[07] |   |   |   |   |   |   |   #getChunk 1622341/3026
+[07] |   |   |   |   |   |   |   unspecified(26800/50) - 41.61%/4.50%
+[07] |   |   |   |   |   |   |   travel(26264/49) - 24.54%/2.65%
+[08] |   |   |   |   |   |   |   |   #getChunk 105056/196
+[08] |   |   |   |   |   |   |   |   move(26264/49) - 53.62%/1.42%
+[09] |   |   |   |   |   |   |   |   |   #getEntities 26264/49
+[09] |   |   |   |   |   |   |   |   |   #getChunkCacheMiss 3664/6
+[09] |   |   |   |   |   |   |   |   |   #getChunk 604072/1127
+[08] |   |   |   |   |   |   |   |   rest(26264/49) - 33.97%/0.90%
+[09] |   |   |   |   |   |   |   |   |   #getChunk 262640/490
+[08] |   |   |   |   |   |   |   |   unspecified(26264/49) - 12.41%/0.33%
+[07] |   |   |   |   |   |   |   push(26264/49) - 24.32%/2.63%
+[08] |   |   |   |   |   |   |   |   #getEntities 26264/49
+[08] |   |   |   |   |   |   |   |   #getChunk 1365728/2548
+[07] |   |   |   |   |   |   |   livingEntityBaseTick(26264/49) - 5.38%/0.58%
+[08] |   |   |   |   |   |   |   |   #getChunkCacheMiss 1832/3
+[08] |   |   |   |   |   |   |   |   #getChunk 525280/980
+[07] |   |   |   |   |   |   |   entityBaseTick(26264/49) - 2.68%/0.29%
+[08] |   |   |   |   |   |   |   |   #getChunkCacheMiss 1832/3
+[08] |   |   |   |   |   |   |   |   #getChunk 131320/245
+[07] |   |   |   |   |   |   |   ai(26264/49) - 1.04%/0.11%
+[08] |   |   |   |   |   |   |   |   unspecified(26264/49) - 86.24%/0.10%
+[08] |   |   |   |   |   |   |   |   newAi(26264/49) - 13.76%/0.02%
+[07] |   |   |   |   |   |   |   headTurn(26264/49) - 0.23%/0.03%
+[07] |   |   |   |   |   |   |   rangeChecks(26264/49) - 0.10%/0.01%
+[07] |   |   |   |   |   |   |   jump(26264/49) - 0.10%/0.01%
+[06] |   |   |   |   |   |   unspecified(26800/50) - 0.71%/0.08%
+[05] |   |   |   |   |   unspecified(536/1) - 1.98%/0.22%
+[05] |   |   |   |   |   checkDespawn(26800/50) - 0.13%/0.01%
+[05] |   |   |   |   |   blockEntities(536/1) - 0.10%/0.01%
+[06] |   |   |   |   |   |   unspecified(536/1) - 54.71%/0.01%
+[06] |   |   |   |   |   |   minecraft:shulker_box(536/1) - 45.29%/0.01%
+[07] |   |   |   |   |   |   |   #getChunkCacheMiss 27/0
+[07] |   |   |   |   |   |   |   #getChunk 536/1
+[05] |   |   |   |   |   remove(26800/50) - 0.10%/0.01%
+[05] |   |   |   |   |   pendingBlockEntities(536/1) - 0.00%/0.00%
+[05] |   |   |   |   |   fabricWorldTick(536/1) - 0.00%/0.00%
+[04] |   |   |   |   chunkSource(536/1) - 22.05%/3.17%
+[05] |   |   |   |   |   chunks(536/1) - 96.19%/3.05%
+[06] |   |   |   |   |   |   pollingChunks(536/1) - 98.02%/2.98%
+[07] |   |   |   |   |   |   |   unspecified(536/1) - 87.16%/2.60%
+[07] |   |   |   |   |   |   |   iceandsnow(111488/208) - 5.25%/0.16%
+[08] |   |   |   |   |   |   |   |   #getChunkCacheMiss 14067/26
+[08] |   |   |   |   |   |   |   |   #getChunk 14086/26
+[07] |   |   |   |   |   |   |   broadcast(236376/441) - 4.23%/0.13%
+[08] |   |   |   |   |   |   |   |   #getChunkCacheMiss 1/0
+[08] |   |   |   |   |   |   |   |   #getChunk 2/0
+[07] |   |   |   |   |   |   |   thunder(111488/208) - 1.49%/0.04%
+[07] |   |   |   |   |   |   |   tickBlocks(111488/208) - 1.46%/0.04%
+[07] |   |   |   |   |   |   |   naturalSpawnCount(536/1) - 0.40%/0.01%
+[07] |   |   |   |   |   |   |   customSpawners(536/1) - 0.01%/0.00%
+[06] |   |   |   |   |   |   unspecified(536/1) - 1.98%/0.06%
+[05] |   |   |   |   |   purge(536/1) - 3.25%/0.10%
+[05] |   |   |   |   |   unspecified(536/1) - 0.32%/0.01%
+[05] |   |   |   |   |   unload(536/1) - 0.25%/0.01%
+[06] |   |   |   |   |   |   unspecified(536/1) - 68.62%/0.01%
+[06] |   |   |   |   |   |   chunk_unload(536/1) - 23.22%/0.00%
+[06] |   |   |   |   |   |   poi(536/1) - 8.16%/0.00%
+[04] |   |   |   |   unspecified(536/1) - 0.15%/0.02%
+[04] |   |   |   |   weather(536/1) - 0.06%/0.01%
+[04] |   |   |   |   tickPending(536/1) - 0.06%/0.01%
+[05] |   |   |   |   |   unspecified(536/1) - 85.94%/0.01%
+[05] |   |   |   |   |   ticking(1072/2) - 8.91%/0.00%
+[05] |   |   |   |   |   cleaning(1072/2) - 5.15%/0.00%
+[04] |   |   |   |   raid(536/1) - 0.01%/0.00%
+[04] |   |   |   |   world border(536/1) - 0.00%/0.00%
+[04] |   |   |   |   blockEvents(536/1) - 0.00%/0.00%
+[04] |   |   |   |   fabricStartServerWorldTick_minecraft:overworld(536/1) - 0.00%/0.00%
+[03] |   |   |   timeSync(27/0) - 0.02%/0.00%
+[03] |   |   |   unspecified(536/1) - 0.02%/0.00%
+[02] |   |   ServerLevel[Infinity Storage2] entitydb:(536/1) - 1.77%/0.26%
+[03] |   |   |   tick(536/1) - 99.34%/0.26%
+[04] |   |   |   |   chunkSource(536/1) - 82.95%/0.22%
+[05] |   |   |   |   |   chunks(536/1) - 93.09%/0.20%
+[06] |   |   |   |   |   |   pollingChunks(536/1) - 97.60%/0.20%
+[07] |   |   |   |   |   |   |   unspecified(536/1) - 96.82%/0.19%
+[07] |   |   |   |   |   |   |   broadcast(4824/9) - 1.82%/0.00%
+[08] |   |   |   |   |   |   |   |   #getChunk 54/0
+[07] |   |   |   |   |   |   |   naturalSpawnCount(536/1) - 1.25%/0.00%
+[07] |   |   |   |   |   |   |   customSpawners(536/1) - 0.11%/0.00%
+[06] |   |   |   |   |   |   unspecified(536/1) - 2.40%/0.00%
+[05] |   |   |   |   |   unspecified(536/1) - 2.67%/0.01%
+[05] |   |   |   |   |   purge(536/1) - 2.15%/0.00%
+[05] |   |   |   |   |   unload(536/1) - 2.10%/0.00%
+[06] |   |   |   |   |   |   unspecified(536/1) - 69.44%/0.00%
+[06] |   |   |   |   |   |   chunk_unload(536/1) - 18.10%/0.00%
+[06] |   |   |   |   |   |   poi(536/1) - 12.45%/0.00%
+[04] |   |   |   |   entities(536/1) - 8.27%/0.02%
+[05] |   |   |   |   |   unspecified(536/1) - 54.33%/0.01%
+[05] |   |   |   |   |   tick(536/1) - 38.50%/0.01%
+[06] |   |   |   |   |   |   unspecified(536/1) - 63.78%/0.01%
+[06] |   |   |   |   |   |   minecraft:item_frame(536/1) - 35.31%/0.00%
+[07] |   |   |   |   |   |   |   #tickNonPassenger 536/1
+[06] |   |   |   |   |   |   chunkCheck(1/0) - 0.91%/0.00%
+[07] |   |   |   |   |   |   |   #getChunkCacheMiss 1/0
+[07] |   |   |   |   |   |   |   #getChunk 2/0
+[05] |   |   |   |   |   checkDespawn(536/1) - 2.26%/0.00%
+[05] |   |   |   |   |   blockEntities(536/1) - 1.88%/0.00%
+[05] |   |   |   |   |   fabricWorldTick(536/1) - 1.11%/0.00%
+[05] |   |   |   |   |   pendingBlockEntities(536/1) - 0.98%/0.00%
+[05] |   |   |   |   |   remove(536/1) - 0.95%/0.00%
+[04] |   |   |   |   unspecified(536/1) - 4.73%/0.01%
+[04] |   |   |   |   tickPending(536/1) - 2.72%/0.01%
+[05] |   |   |   |   |   unspecified(536/1) - 87.81%/0.01%
+[05] |   |   |   |   |   ticking(1072/2) - 6.25%/0.00%
+[05] |   |   |   |   |   cleaning(1072/2) - 5.94%/0.00%
+[04] |   |   |   |   weather(536/1) - 0.96%/0.00%
+[04] |   |   |   |   raid(536/1) - 0.11%/0.00%
+[04] |   |   |   |   world border(536/1) - 0.09%/0.00%
+[04] |   |   |   |   blockEvents(536/1) - 0.08%/0.00%
+[04] |   |   |   |   fabricStartServerWorldTick_entitydb:(536/1) - 0.08%/0.00%
+[03] |   |   |   unspecified(536/1) - 0.63%/0.00%
+[03] |   |   |   timeSync(27/0) - 0.03%/0.00%
+[02] |   |   ServerLevel[Infinity Storage2] minecraft:the_nether(536/1) - 0.48%/0.07%
+[03] |   |   |   tick(536/1) - 97.10%/0.07%
+[04] |   |   |   |   chunkSource(536/1) - 52.43%/0.04%
+[05] |   |   |   |   |   chunks(536/1) - 54.63%/0.02%
+[06] |   |   |   |   |   |   pollingChunks(536/1) - 71.97%/0.01%
+[07] |   |   |   |   |   |   |   unspecified(536/1) - 68.97%/0.01%
+[07] |   |   |   |   |   |   |   naturalSpawnCount(536/1) - 29.37%/0.00%
+[07] |   |   |   |   |   |   |   customSpawners(536/1) - 1.66%/0.00%
+[06] |   |   |   |   |   |   unspecified(536/1) - 28.03%/0.01%
+[05] |   |   |   |   |   unspecified(536/1) - 20.76%/0.01%
+[05] |   |   |   |   |   unload(536/1) - 16.93%/0.01%
+[06] |   |   |   |   |   |   unspecified(536/1) - 68.35%/0.00%
+[06] |   |   |   |   |   |   chunk_unload(536/1) - 21.27%/0.00%
+[06] |   |   |   |   |   |   poi(536/1) - 10.38%/0.00%
+[05] |   |   |   |   |   purge(536/1) - 7.68%/0.00%
+[04] |   |   |   |   unspecified(536/1) - 27.39%/0.02%
+[04] |   |   |   |   tickPending(536/1) - 10.55%/0.01%
+[05] |   |   |   |   |   unspecified(536/1) - 83.62%/0.01%
+[05] |   |   |   |   |   ticking(1072/2) - 10.52%/0.00%
+[05] |   |   |   |   |   cleaning(1072/2) - 5.86%/0.00%
+[04] |   |   |   |   weather(536/1) - 5.24%/0.00%
+[04] |   |   |   |   entities(536/1) - 2.51%/0.00%
+[04] |   |   |   |   raid(536/1) - 0.66%/0.00%
+[04] |   |   |   |   world border(536/1) - 0.61%/0.00%
+[04] |   |   |   |   blockEvents(536/1) - 0.31%/0.00%
+[04] |   |   |   |   fabricStartServerWorldTick_minecraft:the_nether(536/1) - 0.30%/0.00%
+[03] |   |   |   unspecified(536/1) - 2.52%/0.00%
+[03] |   |   |   timeSync(27/0) - 0.37%/0.00%
+[02] |   |   ServerLevel[Infinity Storage2] minecraft:the_end(536/1) - 0.30%/0.04%
+[03] |   |   |   tick(536/1) - 95.96%/0.04%
+[04] |   |   |   |   chunkSource(536/1) - 47.70%/0.02%
+[05] |   |   |   |   |   chunks(536/1) - 44.31%/0.01%
+[06] |   |   |   |   |   |   pollingChunks(536/1) - 67.04%/0.01%
+[07] |   |   |   |   |   |   |   unspecified(536/1) - 74.78%/0.00%
+[07] |   |   |   |   |   |   |   naturalSpawnCount(536/1) - 21.47%/0.00%
+[07] |   |   |   |   |   |   |   customSpawners(536/1) - 3.74%/0.00%
+[06] |   |   |   |   |   |   unspecified(536/1) - 32.96%/0.00%
+[05] |   |   |   |   |   unspecified(536/1) - 24.84%/0.00%
+[05] |   |   |   |   |   unload(536/1) - 23.21%/0.00%
+[06] |   |   |   |   |   |   unspecified(536/1) - 72.00%/0.00%
+[06] |   |   |   |   |   |   chunk_unload(536/1) - 15.61%/0.00%
+[06] |   |   |   |   |   |   poi(536/1) - 12.39%/0.00%
+[05] |   |   |   |   |   purge(536/1) - 7.64%/0.00%
+[04] |   |   |   |   unspecified(536/1) - 30.93%/0.01%
+[04] |   |   |   |   tickPending(536/1) - 14.87%/0.01%
+[05] |   |   |   |   |   unspecified(536/1) - 86.17%/0.01%
+[05] |   |   |   |   |   ticking(1072/2) - 7.11%/0.00%
+[05] |   |   |   |   |   cleaning(1072/2) - 6.71%/0.00%
+[04] |   |   |   |   weather(536/1) - 2.64%/0.00%
+[04] |   |   |   |   raid(536/1) - 1.09%/0.00%
+[04] |   |   |   |   world border(536/1) - 0.93%/0.00%
+[04] |   |   |   |   entities(536/1) - 0.85%/0.00%
+[04] |   |   |   |   blockEvents(536/1) - 0.50%/0.00%
+[04] |   |   |   |   fabricStartServerWorldTick_minecraft:the_end(536/1) - 0.49%/0.00%
+[03] |   |   |   unspecified(536/1) - 3.85%/0.00%
+[03] |   |   |   timeSync(27/0) - 0.19%/0.00%
+[02] |   |   unspecified(536/1) - 0.16%/0.02%
+[01] |   commandFunctions(536/1) - 2.12%/0.33%
+[02] |   |   minecraft:tick(536/1) - 98.76%/0.32%
+[03] |   |   |   execute as @a unless score @s rx.uid matches 1.. run function rx.playerdb:impl/new_uid(536/1) - 65.00%/0.21%
+[03] |   |   |   scoreboard players enable @a rx.List(536/1) - 13.31%/0.04%
+[03] |   |   |   execute as @a[scores={rx.List=1..}] run function rx.playerdb:admin/list(536/1) - 8.82%/0.03%
+[03] |   |   |   execute as @a[scores={rx.List=..-1}] run function rx.playerdb:admin/list(536/1) - 7.04%/0.02%
+[03] |   |   |   unspecified(536/1) - 5.82%/0.02%
+[02] |   |   unspecified(536/1) - 1.24%/0.00%
+[01] |   connection(536/1) - 1.67%/0.26%
+[02] |   |   #getEntities 1608/3
+[02] |   |   #getChunkCacheMiss 54/0
+[02] |   |   #getChunk 44365/82
+[02] |   |   unspecified(536/1) - 54.45%/0.14%
+[02] |   |   travel(536/1) - 29.82%/0.08%
+[03] |   |   |   #getChunk 2144/4
+[03] |   |   |   move(536/1) - 46.92%/0.04%
+[04] |   |   |   |   #getEntities 536/1
+[04] |   |   |   |   #getChunk 15544/29
+[03] |   |   |   rest(536/1) - 41.96%/0.03%
+[04] |   |   |   |   #getChunk 7504/14
+[03] |   |   |   unspecified(536/1) - 11.13%/0.01%
+[02] |   |   livingEntityBaseTick(536/1) - 7.49%/0.02%
+[03] |   |   |   #getChunkCacheMiss 81/0
+[03] |   |   |   #getChunk 15544/29
+[02] |   |   entityBaseTick(536/1) - 3.89%/0.01%
+[03] |   |   |   #getChunk 4824/9
+[02] |   |   push(536/1) - 2.69%/0.01%
+[03] |   |   |   #getEntities 536/1
+[03] |   |   |   #getChunk 2144/4
+[02] |   |   ai(536/1) - 0.94%/0.00%
+[03] |   |   |   unspecified(536/1) - 87.25%/0.00%
+[03] |   |   |   newAi(536/1) - 12.75%/0.00%
+[02] |   |   headTurn(536/1) - 0.28%/0.00%
+[02] |   |   keepAlive(536/1) - 0.28%/0.00%
+[02] |   |   rangeChecks(536/1) - 0.09%/0.00%
+[02] |   |   jump(536/1) - 0.08%/0.00%
+[01] |   unspecified(536/1) - 0.22%/0.03%
+[01] |   tallying(536/1) - 0.01%/0.00%
+[01] |   players(536/1) - 0.01%/0.00%
+[01] |   snooper(536/1) - 0.00%/0.00%
+[01] |   server gui refresh(536/1) - 0.00%/0.00%
+[01] |   fabricStartServerTick(536/1) - 0.00%/0.00%
+[01] |   fabricServerTick(536/1) - 0.00%/0.00%
+--- END PROFILE DUMP ---
+
+--- BEGIN COUNTER DUMP ---
+
+-- Counter: getChunk --
+[00] root total:0/4726012 average: 0/8817
+[01] |   tick total:0/4723186 average: 0/8811
+[02] |   |   levels total:0/4631117 average: 0/8640
+[03] |   |   |   ServerLevel[Infinity Storage2] minecraft:overworld total:0/4631061 average: 0/8640
+[04] |   |   |   |   tick total:0/4631061 average: 0/8640
+[05] |   |   |   |   |   entities total:0/4616973 average: 0/8613
+[06] |   |   |   |   |   |   tick total:0/4616437 average: 0/8612
+[07] |   |   |   |   |   |   |   minecraft:player total:1622341/4616437 average: 3026/8612
+[08] |   |   |   |   |   |   |   |   push total:1365728/1365728 average: 2548/2548
+[08] |   |   |   |   |   |   |   |   travel total:105056/971768 average: 196/1813
+[09] |   |   |   |   |   |   |   |   |   move total:604072/604072 average: 1127/1127
+[09] |   |   |   |   |   |   |   |   |   rest total:262640/262640 average: 490/490
+[08] |   |   |   |   |   |   |   |   livingEntityBaseTick total:525280/525280 average: 980/980
+[08] |   |   |   |   |   |   |   |   entityBaseTick total:131320/131320 average: 245/245
+[06] |   |   |   |   |   |   blockEntities total:0/536 average: 0/1
+[07] |   |   |   |   |   |   |   minecraft:shulker_box total:536/536 average: 1/1
+[05] |   |   |   |   |   chunkSource total:0/14088 average: 0/26
+[06] |   |   |   |   |   |   chunks total:0/14088 average: 0/26
+[07] |   |   |   |   |   |   |   pollingChunks total:0/14088 average: 0/26
+[08] |   |   |   |   |   |   |   |   iceandsnow total:14086/14086 average: 26/26
+[08] |   |   |   |   |   |   |   |   broadcast total:2/2 average: 0/0
+[03] |   |   |   ServerLevel[Infinity Storage2] entitydb: total:0/56 average: 0/0
+[04] |   |   |   |   tick total:0/56 average: 0/0
+[05] |   |   |   |   |   chunkSource total:0/54 average: 0/0
+[06] |   |   |   |   |   |   chunks total:0/54 average: 0/0
+[07] |   |   |   |   |   |   |   pollingChunks total:0/54 average: 0/0
+[08] |   |   |   |   |   |   |   |   broadcast total:54/54 average: 0/0
+[05] |   |   |   |   |   entities total:0/2 average: 0/0
+[06] |   |   |   |   |   |   tick total:0/2 average: 0/0
+[07] |   |   |   |   |   |   |   chunkCheck total:2/2 average: 0/0
+[02] |   |   connection total:44365/92069 average: 82/171
+[03] |   |   |   travel total:2144/25192 average: 4/47
+[04] |   |   |   |   move total:15544/15544 average: 29/29
+[04] |   |   |   |   rest total:7504/7504 average: 14/14
+[03] |   |   |   livingEntityBaseTick total:15544/15544 average: 29/29
+[03] |   |   |   entityBaseTick total:4824/4824 average: 9/9
+[03] |   |   |   push total:2144/2144 average: 4/4
+[01] |   nextTickWait total:1377/2826 average: 2/5
+[02] |   |   /execute as @a run function rx.playerdb:test/entitydb/get_save total:0/804 average: 0/1
+[03] |   |   |   data modify block ~ ~ ~ RecordItem.tag.entities set from storage entitydb: entities total:704/704 average: 1/1
+[03] |   |   |   execute unless block ~ ~ ~ jukebox run setblock ~ ~ ~ jukebox{RecordItem:{id:"minecraft:jukebox",Count:1b}} total:50/50 average: 0/0
+[03] |   |   |   execute positioned as @s in entitydb: run data modify storage entitydb: search.list set from block ~ ~ ~ RecordItem.tag.entities total:50/50 average: 0/0
+[02] |   |   rest total:378/378 average: 0/0
+[02] |   |   /execute as @a run function rx.playerdb:test/echest/get_save total:0/159 average: 0/0
+[03] |   |   |   loot replace entity @s enderchest.0 mine 0 0 0 air{drop_contents:1b} total:100/100 average: 0/0
+[03] |   |   |   data modify block 0 0 0 Items set from storage rx:temp echest.items total:59/59 average: 0/0
+[02] |   |   move total:108/108 average: 0/0
+
+
+-- Counter: getChunkCacheMiss --
+[00] root total:0/24211 average: 0/45
+[01] |   tick total:0/24205 average: 0/45
+[02] |   |   levels total:0/24070 average: 0/44
+[03] |   |   |   ServerLevel[Infinity Storage2] minecraft:overworld total:0/24069 average: 0/44
+[04] |   |   |   |   tick total:0/24069 average: 0/44
+[05] |   |   |   |   |   chunkSource total:0/14068 average: 0/26
+[06] |   |   |   |   |   |   chunks total:0/14068 average: 0/26
+[07] |   |   |   |   |   |   |   pollingChunks total:0/14068 average: 0/26
+[08] |   |   |   |   |   |   |   |   iceandsnow total:14067/14067 average: 26/26
+[08] |   |   |   |   |   |   |   |   broadcast total:1/1 average: 0/0
+[05] |   |   |   |   |   entities total:0/10001 average: 0/18
+[06] |   |   |   |   |   |   tick total:0/9974 average: 0/18
+[07] |   |   |   |   |   |   |   minecraft:player total:2646/9974 average: 4/18
+[08] |   |   |   |   |   |   |   |   travel total:0/3664 average: 0/6
+[09] |   |   |   |   |   |   |   |   |   move total:3664/3664 average: 6/6
+[08] |   |   |   |   |   |   |   |   entityBaseTick total:1832/1832 average: 3/3
+[08] |   |   |   |   |   |   |   |   livingEntityBaseTick total:1832/1832 average: 3/3
+[06] |   |   |   |   |   |   blockEntities total:0/27 average: 0/0
+[07] |   |   |   |   |   |   |   minecraft:shulker_box total:27/27 average: 0/0
+[03] |   |   |   ServerLevel[Infinity Storage2] entitydb: total:0/1 average: 0/0
+[04] |   |   |   |   tick total:0/1 average: 0/0
+[05] |   |   |   |   |   entities total:0/1 average: 0/0
+[06] |   |   |   |   |   |   tick total:0/1 average: 0/0
+[07] |   |   |   |   |   |   |   chunkCheck total:1/1 average: 0/0
+[02] |   |   connection total:54/135 average: 0/0
+[03] |   |   |   livingEntityBaseTick total:81/81 average: 0/0
+[01] |   nextTickWait total:0/6 average: 0/0
+[02] |   |   /execute as @a run function rx.playerdb:test/entitydb/get_save total:0/6 average: 0/0
+[03] |   |   |   data modify block ~ ~ ~ RecordItem.tag.entities set from storage entitydb: entities total:5/5 average: 0/0
+[03] |   |   |   execute positioned as @s in entitydb: run data modify storage entitydb: search.list set from block ~ ~ ~ RecordItem.tag.entities total:1/1 average: 0/0
+
+
+-- Counter: getEntities --
+[00] root total:0/134054 average: 0/250
+[01] |   tick total:0/134000 average: 0/250
+[02] |   |   levels total:0/131320 average: 0/245
+[03] |   |   |   ServerLevel[Infinity Storage2] minecraft:overworld total:0/131320 average: 0/245
+[04] |   |   |   |   tick total:0/131320 average: 0/245
+[05] |   |   |   |   |   entities total:0/131320 average: 0/245
+[06] |   |   |   |   |   |   tick total:0/131320 average: 0/245
+[07] |   |   |   |   |   |   |   minecraft:player total:78792/131320 average: 147/245
+[08] |   |   |   |   |   |   |   |   travel total:0/26264 average: 0/49
+[09] |   |   |   |   |   |   |   |   |   move total:26264/26264 average: 49/49
+[08] |   |   |   |   |   |   |   |   push total:26264/26264 average: 49/49
+[02] |   |   connection total:1608/2680 average: 3/5
+[03] |   |   |   travel total:0/536 average: 0/1
+[04] |   |   |   |   move total:536/536 average: 1/1
+[03] |   |   |   push total:536/536 average: 1/1
+[01] |   nextTickWait total:27/54 average: 0/0
+[02] |   |   move total:27/27 average: 0/0
+
+
+-- Counter: runTask --
+[00] root total:0/71 average: 0/0
+[01] |   nextTickWait total:71/71 average: 0/0
+
+
+-- Counter: tickNonPassenger --
+[00] root total:0/27336 average: 0/51
+[01] |   tick total:0/27336 average: 0/51
+[02] |   |   levels total:0/27336 average: 0/51
+[03] |   |   |   ServerLevel[Infinity Storage2] minecraft:overworld total:0/26800 average: 0/50
+[04] |   |   |   |   tick total:0/26800 average: 0/50
+[05] |   |   |   |   |   entities total:0/26800 average: 0/50
+[06] |   |   |   |   |   |   tick total:0/26800 average: 0/50
+[07] |   |   |   |   |   |   |   minecraft:player total:26800/26800 average: 50/50
+[03] |   |   |   ServerLevel[Infinity Storage2] entitydb: total:0/536 average: 0/1
+[04] |   |   |   |   tick total:0/536 average: 0/1
+[05] |   |   |   |   |   entities total:0/536 average: 0/1
+[06] |   |   |   |   |   |   tick total:0/536 average: 0/1
+[07] |   |   |   |   |   |   |   minecraft:item_frame total:536/536 average: 1/1
+
+
+--- END COUNTER DUMP ---
+
