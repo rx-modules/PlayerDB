@@ -10,8 +10,7 @@
 
 
 # Rx Load
-scoreboard objectives add rx.mods dummy
-scoreboard players set PlayerDB rx.mods 1
+scoreboard players set PlayerDB load 1
 
 scoreboard objectives add rx.uid dummy
 scoreboard objectives add rx.int dummy
