@@ -60,6 +60,24 @@ Basic usage as follows:
     execute as player run function rx.playerdb:admin/replace_entry # replaces entry $in.uid rx.io w/ @s
  
  
+## Lantern Load
+
+This project uses [Lantern Load](https://github.com/LanternMC/Load). This allows you to ensure your datapack loads after library to ensure you are able to use everything this datapack provides. You can also detect whether this library is loaded by checking `if score PlayerDB load matches 1..`. Note: You don't necessarily need to use Lantern Load for your pack, since using this pack is more often happening in a ticking function instead of on load.  
+
+### Example
+
+Once you've copied `Load` into your datapack, navigate to the `#load:load` function tag. This should simulate the contents of the function tag (note, you can add more dependancies if you have them):
+
+    {
+        "values": [
+            "#load:rx/playerdb",
+            "#load:<namespace>/<datapack>"
+        ]
+    }
+
+Then, make sure you have defined an empty `#load:rx/playerdb` and in your own `#load` tag, you should define your personal load function. This will ensure PlayerDB's load will occur before yours. If PlayerDB does not exist, load will continue and you can detect this by checking the `PlayerDB load` score. For an example of all of this, checkout [EnderChest+](https://github.com/RitikShah/EnderChestPlus/tree/master/data/load) as an example of a datapack relying on PlayerDB.
+
+
 ## Some examples
 
 [EnderChest+](https://github.com/RitikShah/EnderChestPlus)
