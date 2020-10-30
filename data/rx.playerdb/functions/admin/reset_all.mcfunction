@@ -8,6 +8,10 @@
 #define storage rx:io
 
 scoreboard players reset * rx.uid
+scoreboard players reset * rx.uuid0
+scoreboard players reset * rx.uuid1
+scoreboard players reset * rx.uuid2
+scoreboard players reset * rx.uuid3
 scoreboard players reset * rx.pdb.HasEntry
 scoreboard players set $uid.next rx.uid 1
 
@@ -17,3 +21,4 @@ data modify storage rx:io playerdb set value {}
 
 data modify storage rx:global playerdb.unused_uids set value []
 data modify storage rx:global playerdb.players set value []
+data modify storage rx:global playerdb.uuid set value []

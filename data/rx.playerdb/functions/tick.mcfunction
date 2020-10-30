@@ -8,6 +8,7 @@
 
 # check if uuid0 has been set
 execute as @a unless score @s rx.uuid0 = @s rx.uuid0 run function rx.playerdb:impl/uuid/set
+execute as @a[scores={rx.login=1..}] run function rx.playerdb:impl/uuid/check
 
 # list bullshit
 scoreboard players enable @a rx.List

@@ -7,4 +7,4 @@ execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.u
 execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.uuid[{bit21:1b}] run data modify storage rx:global playerdb.uuid[{bit21:1b}].selected set value 0b
 scoreboard players operation $uid rx.temp /= $2 rx.int
 execute store result score $size rx.temp if data storage rx:global playerdb.uuid[{selected:1b}]
-execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit22
+execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/uuid/select/bit22

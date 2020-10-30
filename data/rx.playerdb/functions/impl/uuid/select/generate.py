@@ -27,7 +27,7 @@ BIT = (
     'execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.uuid[{bit@:1b}] run data modify storage rx:global playerdb.uuid[{bit@:1b}].selected set value 0b\n'  # noqa: E501
     f'scoreboard players operation $uid rx.temp /= ${BASE} rx.int\n'
     'execute store result score $size rx.temp if data storage rx:global playerdb.uuid[{selected:1b}]\n'  # noqa: E501
-    'execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit&\n'  # noqa: E501
+    'execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/uuid/select/bit&\n'  # noqa: E501
 )
 
 
