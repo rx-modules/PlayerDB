@@ -27,6 +27,11 @@ execute if score $size rx.temp matches 1 run data modify storage rx:global playe
 execute if score $size rx.temp matches 1 run data modify storage rx:global playerdb.players[{selected:1b}].data set from storage rx:io playerdb.current_player.data
 execute if score $size rx.temp matches 1 run function rx.playerdb:impl/save
 
+# UUID removal
+execute if score $size rx.temp matches 1 run scoreboard players operation $uid rx.temp = $in.uid rx.io
+execute if score $size rx.temp matches 1 run function rx.playerdb:impl/uuid/select
+execute if score $size rx.temp matches 1 run data remove storage rx:global playerdb.uuid[{selected:1b}].entries[-1]
+
 # swap @s and $in.uid
 execute if score $size rx.temp matches 1 run scoreboard players operation $swap rx.temp = @s rx.uid
 execute if score $size rx.temp matches 1 run scoreboard players operation @s rx.uid = $in.uid rx.io

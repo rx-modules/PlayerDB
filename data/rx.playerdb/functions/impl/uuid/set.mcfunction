@@ -18,27 +18,21 @@ execute store result score @s rx.uuid1 run data get storage rx:temp playerdb.UUI
 execute store result score @s rx.uuid2 run data get storage rx:temp playerdb.UUID[2]
 execute store result score @s rx.uuid3 run data get storage rx:temp playerdb.UUID[3]
 
-#> select UUID
-execute if data storage rx:global playerdb.uuid[] run scoreboard players operation $uid rx.temp = @s rx.uuid0
-execute if data storage rx:global playerdb.uuid[] run data modify storage rx:global playerdb.uuid[].selected set value 1b
-execute if data storage rx:global playerdb.uuid[] run function rx.playerdb:impl/uuid/select/bit0
-
-#> selected or not
-execute unless data storage rx:global playerdb.uuid[{selected:1b}] run scoreboard players set $found rx.temp 0
-execute if data storage rx:global playerdb.uuid[{selected:1b}] store result score $loop rx.temp if data storage rx:global playerdb.uuid[{selected:1b}].entries[]
-execute if data storage rx:global playerdb.uuid[{selected:1b}] run function rx.playerdb:impl/uuid/iter
+#> select UUID + iterations
+scoreboard players operation $uid rx.temp = @s rx.uuid0
+function rx.playerdb:impl/uuid/select
 
 #> if not found: gen a uid if we don't have one
 execute if score $found rx.temp matches 0 unless score @s rx.uid = @s rx.uid run function rx.playerdb:impl/new_uid
 
-#> gen a UUID entry if we don't have a UUID entry
+#> gen a UUID entry since we don't have a UUID entry
 execute if score $found rx.temp matches 0 run function rx.playerdb:impl/uuid/new
 
 #> else: grab our uid and our hasEntry
 execute if score $found rx.temp matches 1 store result score @s rx.uid run data get storage rx:global playerdb.uuid[{selected:1b}].entries[-1].uid
 execute if score $found rx.temp matches 1 store result score @s rx.pdb.HasEntry run data get storage rx:global playerdb.uuid[{selected:1b}].entries[-1].hasEntry
 
-#> blehhh name
+#> update name, but this is ugly
 execute if score $found rx.temp matches 1 if score @s rx.pdb.HasEntry matches 1 run function rx.playerdb:api/get_self
 execute if score $found rx.temp matches 1 if score @s rx.pdb.HasEntry matches 1 unless entity af-0-0-0-1 at @s run summon minecraft:armor_stand ~ ~ ~ {CustomName:'{"text":"PlayerDB Stand"}',NoGravity:1b,Silent:1b,Invulnerable:1b,UUID:[I;175,0,0,1],CustomNameVisible:0b,NoAI:1b,AbsorptionAmount:1e8f, Marker:1b, Small:1b, ShowArms:1b, Invisible:1b,Tags:['rx.pdb.stupid']}
 execute if score $found rx.temp matches 1 if score @s rx.pdb.HasEntry matches 1 run loot replace entity af-0-0-0-1 armor.head loot rx:player_head
