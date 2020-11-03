@@ -4,7 +4,7 @@
 
 I put on some heavy load to test the generic tps lag from calling the library every tick. This image is testing a 3.1mb storage file (5 copies of player nbt w/ all recipes unlocked on 50 entries). There are 10-20 players online (carpet players) and there is a command block calling `api/get_self` for a random set of 10 players.
 
-![result](nov3/10-random-calls)
+![result](nov3/10-random-calls.png)
 
 While there is definitely an easy to see load, most of the processing is actually spent on the copy to `rx:io`. Since we have a ton of data stored, this results in noticable lag.
 
