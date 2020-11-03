@@ -36,6 +36,9 @@ scoreboard players set $19 rx.int 19
 scoreboard players set $64 rx.int 64
 scoreboard players set $256 rx.int 256
 
+data modify storage rx:global playerdb.version.major set value 0
+data modify storage rx:global playerdb.version.minor set value 8
+
 schedule function rx.playerdb:tick 1t replace
 
 tellraw @a[tag=rx.admin] {"text":"PlayerDB Loaded"}

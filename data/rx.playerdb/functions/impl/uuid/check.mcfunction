@@ -31,3 +31,5 @@ execute if score $success rx.temp matches 0 run scoreboard players reset @s rx.u
 execute if score $success rx.temp matches 0 run scoreboard players reset @s rx.uuid3
 execute if score $success rx.temp matches 0 run scoreboard players reset @s rx.pdb.list 
 execute if score $success rx.temp matches 0 run function rx.playerdb:impl/uuid/set
+
+scoreboard players set @s rx.login 0

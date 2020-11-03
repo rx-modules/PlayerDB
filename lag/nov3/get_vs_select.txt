@@ -1,0 +1,427 @@
+---- Minecraft Profiler Results ----
+// Am I not running fast enough? :(
+
+Version: 1.16.3
+Time span: 5205 ms
+Tick span: 105 ticks
+// This is approximately 20.17 ticks per second. It should be 20 ticks per second
+
+--- BEGIN PROFILE DUMP ---
+
+[00] nextTickWait(104/1) - 88.85%/88.85%
+[01] |   #getEntities 5/0
+[01] |   #runTask 6/0
+[01] |   #getChunk 245/2
+[01] |   unspecified(104/1) - 100.00%/88.94%
+[01] |   rest(5/0) - 0.00%/0.00%
+[02] |   |   #getChunk 70/0
+[01] |   move(5/0) - 0.00%/0.00%
+[02] |   |   #getEntities 5/0
+[02] |   |   #getChunk 10/0
+[00] tick(105/1) - 11.15%/11.15%
+[01] |   levels(105/1) - 98.45%/10.99%
+[02] |   |   ServerLevel[Infinity Storage] minecraft:overworld(105/1) - 99.91%/10.98%
+[03] |   |   |   tick(105/1) - 99.98%/10.97%
+[04] |   |   |   |   tickPending(105/1) - 55.71%/6.11%
+[05] |   |   |   |   |   ticking(210/2) - 99.65%/6.09%
+[06] |   |   |   |   |   |   #getChunkCacheMiss 210/2
+[06] |   |   |   |   |   |   #getChunk 2520/24
+[06] |   |   |   |   |   |   execute as @a[sort=random,limit=10] run function rx.playerdb:test/pdb/get_save(105/1) - 59.58%/3.63%
+[07] |   |   |   |   |   |   |   #getChunk 525/5
+[07] |   |   |   |   |   |   |   unspecified(105/1) - 25.48%/0.93%
+[07] |   |   |   |   |   |   |   execute store result score $size rx.temp if data storage rx:global playerdb.players[{selected:1b}](3968/38) - 12.91%/0.47%
+[07] |   |   |   |   |   |   |   data modify storage rx:global playerdb.players[{selected:1b}].data set from storage rx:io playerdb.player.data(525/5) - 3.99%/0.14%
+[07] |   |   |   |   |   |   |   execute if score $size rx.temp matches 1 run data modify storage rx:io playerdb.player.data set from storage rx:global playerdb.players[{selected:1b}].data(525/5) - 3.56%/0.13%
+[07] |   |   |   |   |   |   |   execute store result score $uid.check rx.temp run data get storage rx:global playerdb.players[{selected:1b}].info.uid(1050/10) - 3.43%/0.12%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit1:1b}] run data modify storage rx:global playerdb.players[{bit1:1b}].selected set value 0b(503/5) - 3.06%/0.11%
+[07] |   |   |   |   |   |   |   execute if score $verified rx.temp matches 0 if data storage rx:global playerdb.players[] run data modify storage rx:global playerdb.players[].selected set value 1b(1050/10) - 2.91%/0.11%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit4:1b}] run data modify storage rx:global playerdb.players[{bit4:1b}].selected set value 0b(503/5) - 2.85%/0.10%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit0:0b}] run data modify storage rx:global playerdb.players[{bit0:0b}].selected set value 0b(503/5) - 2.64%/0.10%
+[07] |   |   |   |   |   |   |   scoreboard players reset $uid.check rx.temp(1050/10) - 2.39%/0.09%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit3:1b}] run data modify storage rx:global playerdb.players[{bit3:1b}].selected set value 0b(503/5) - 2.39%/0.09%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit2:0b}] run data modify storage rx:global playerdb.players[{bit2:0b}].selected set value 0b(503/5) - 2.26%/0.08%
+[07] |   |   |   |   |   |   |   execute if score $size rx.temp matches 1 run data modify storage rx:io playerdb.player.info set from storage rx:global playerdb.players[{selected:1b}].info(525/5) - 2.18%/0.08%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit0:1b}] run data modify storage rx:global playerdb.players[{bit0:1b}].selected set value 0b(503/5) - 1.81%/0.07%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit5:0b}] run data modify storage rx:global playerdb.players[{bit5:0b}].selected set value 0b(403/4) - 1.68%/0.06%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit3:0b}] run data modify storage rx:global playerdb.players[{bit3:0b}].selected set value 0b(503/5) - 1.60%/0.06%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit2:1b}] run data modify storage rx:global playerdb.players[{bit2:1b}].selected set value 0b(503/5) - 1.59%/0.06%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit5:1b}] run data modify storage rx:global playerdb.players[{bit5:1b}].selected set value 0b(403/4) - 1.57%/0.06%
+[07] |   |   |   |   |   |   |   scoreboard players operation $uid rx.temp /= $2 rx.int(2918/28) - 1.18%/0.04%
+[07] |   |   |   |   |   |   |   execute if score $verified rx.temp matches 1 store result score $verified rx.temp if score $uid rx.temp = $uid.check rx.temp(1050/10) - 1.13%/0.04%
+[07] |   |   |   |   |   |   |   scoreboard players operation $bit rx.temp = $uid rx.temp(2918/28) - 1.12%/0.04%
+[07] |   |   |   |   |   |   |   execute if score $verified rx.temp matches 0 unless data storage rx:global playerdb.players[] run tellraw @a[tag=rx.admin] {"text":"Selection failed. No players in database to select", "color": "#CE4257"}(1050/10) - 1.04%/0.04%
+[07] |   |   |   |   |   |   |   scoreboard players operation $bit rx.temp %= $2 rx.int(2918/28) - 1.01%/0.04%
+[07] |   |   |   |   |   |   |   execute if score $verified rx.temp matches 0 if data storage rx:global playerdb.players[] run function rx.playerdb:impl/select/bit0(1050/10) - 0.96%/0.04%
+[07] |   |   |   |   |   |   |   data modify storage rx:io playerdb.player.data.test set value 1b(525/5) - 0.93%/0.03%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit1:0b}] run data modify storage rx:global playerdb.players[{bit1:0b}].selected set value 0b(503/5) - 0.90%/0.03%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit4:0b}] run data modify storage rx:global playerdb.players[{bit4:0b}].selected set value 0b(503/5) - 0.87%/0.03%
+[07] |   |   |   |   |   |   |   execute store result score $entry rx.temp if score @s rx.pdb.HasEntry = @s rx.pdb.HasEntry(525/5) - 0.76%/0.03%
+[07] |   |   |   |   |   |   |   execute if score $entry rx.temp matches 1.. run scoreboard players operation $in.uid rx.io = @s rx.uid(525/5) - 0.60%/0.02%
+[07] |   |   |   |   |   |   |   data remove storage rx:io playerdb.player(525/5) - 0.60%/0.02%
+[07] |   |   |   |   |   |   |   execute store result score $verified rx.temp if score $size rx.temp matches 1(1050/10) - 0.60%/0.02%
+[07] |   |   |   |   |   |   |   execute store result score $uid rx.temp run data get storage rx:io playerdb.player.info.uid(525/5) - 0.55%/0.02%
+[07] |   |   |   |   |   |   |   execute if score $in.uid rx.io < $uid.next rx.uid run function rx.playerdb:impl/get(525/5) - 0.55%/0.02%
+[07] |   |   |   |   |   |   |   execute if score $in.uid rx.io < $uid.next rx.uid run function rx.playerdb:impl/select(525/5) - 0.55%/0.02%
+[07] |   |   |   |   |   |   |   execute if data storage rx:io playerdb.player if score $uid.check rx.temp = $in.uid rx.io run function rx.playerdb:impl/save(525/5) - 0.52%/0.02%
+[07] |   |   |   |   |   |   |   execute store result score $uid.check rx.temp run data get storage rx:io playerdb.player.info.uid(525/5) - 0.47%/0.02%
+[07] |   |   |   |   |   |   |   scoreboard players operation $uid rx.temp = $in.uid rx.io(1050/10) - 0.43%/0.02%
+[07] |   |   |   |   |   |   |   execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit1(503/5) - 0.37%/0.01%
+[07] |   |   |   |   |   |   |   execute if data storage rx:io playerdb.player unless score $uid.check rx.temp = $in.uid rx.io run tellraw @a[tag=rx.admin] {"text":"Save unsuccessful. rx:io data uid invalid", "color": "#CE4257"}(525/5) - 0.37%/0.01%
+[07] |   |   |   |   |   |   |   execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit4(503/5) - 0.37%/0.01%
+[07] |   |   |   |   |   |   |   function rx.playerdb:impl/verify(2100/20) - 0.35%/0.01%
+[07] |   |   |   |   |   |   |   execute if score $entry rx.temp matches 1.. run function rx.playerdb:api/get(525/5) - 0.35%/0.01%
+[07] |   |   |   |   |   |   |   execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit5(503/5) - 0.34%/0.01%
+[07] |   |   |   |   |   |   |   function rx.playerdb:api/get_self(1050/10) - 0.34%/0.01%
+[07] |   |   |   |   |   |   |   execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit2(503/5) - 0.33%/0.01%
+[07] |   |   |   |   |   |   |   scoreboard players operation $in.uid rx.io = @s rx.uid(525/5) - 0.33%/0.01%
+[07] |   |   |   |   |   |   |   execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit3(503/5) - 0.33%/0.01%
+[07] |   |   |   |   |   |   |   execute if score $in.uid rx.io >= $uid.next rx.uid run data remove storage rx:io playerdb.player(525/5) - 0.30%/0.01%
+[07] |   |   |   |   |   |   |   execute unless score @s rx.uid matches 1.. run function rx.playerdb:impl/new_uid(525/5) - 0.28%/0.01%
+[07] |   |   |   |   |   |   |   function rx.playerdb:api/save_self(1050/10) - 0.28%/0.01%
+[07] |   |   |   |   |   |   |   execute unless score $uid rx.temp = $in.uid rx.io run data modify storage rx:io playerdb.player set value {}(525/5) - 0.28%/0.01%
+[07] |   |   |   |   |   |   |   execute unless score @s rx.pdb.HasEntry = @s rx.pdb.HasEntry run function rx.playerdb:impl/add_entry(525/5) - 0.23%/0.01%
+[07] |   |   |   |   |   |   |   function rx.playerdb:api/add_entry(1050/10) - 0.21%/0.01%
+[07] |   |   |   |   |   |   |   execute unless data storage rx:io playerdb.player run tellraw @a[tag=rx.admin] {"text":"Save unsuccessful. No rx:io data to save.", "color": "#CE4257"}(525/5) - 0.20%/0.01%
+[07] |   |   |   |   |   |   |   function rx.playerdb:impl/select(1575/15) - 0.20%/0.01%
+[07] |   |   |   |   |   |   |   function rx.playerdb:api/save(1050/10) - 0.20%/0.01%
+[07] |   |   |   |   |   |   |   execute if score $size rx.temp matches ..0 run data modify storage rx:io playerdb.player set value {}(525/5) - 0.18%/0.01%
+[07] |   |   |   |   |   |   |   execute if score $entry rx.temp matches ..0 run data modify storage rx:global playerdb.players[].selected set value 0b(525/5) - 0.16%/0.01%
+[07] |   |   |   |   |   |   |   execute if score $in.uid rx.io >= $uid.next rx.uid run tellraw @a[tag=rx.admin] {"text":"Unsuccessful get. Input uid above max uid", "color": "#CE4257"}(525/5) - 0.15%/0.01%
+[07] |   |   |   |   |   |   |   execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit6(403/4) - 0.12%/0.00%
+[07] |   |   |   |   |   |   |   execute if score $entry rx.temp matches ..0 run data modify storage rx:io playerdb.player.data set from storage rx:global playerdb.players[{selected:1b}].data(525/5) - 0.11%/0.00%
+[07] |   |   |   |   |   |   |   execute if score $entry rx.temp matches ..0 run data modify storage rx:global playerdb.players[-1].selected set value 1b(525/5) - 0.11%/0.00%
+[07] |   |   |   |   |   |   |   execute if score $entry rx.temp matches ..0 run data modify storage rx:io playerdb.player.info set from storage rx:global playerdb.players[{selected:1b}].info(525/5) - 0.11%/0.00%
+[07] |   |   |   |   |   |   |   function rx.playerdb:impl/select/bit0(503/5) - 0.04%/0.00%
+[07] |   |   |   |   |   |   |   function rx.playerdb:impl/select/bit4(503/5) - 0.04%/0.00%
+[07] |   |   |   |   |   |   |   function rx.playerdb:impl/get(525/5) - 0.04%/0.00%
+[07] |   |   |   |   |   |   |   function rx.playerdb:impl/select/bit1(503/5) - 0.04%/0.00%
+[07] |   |   |   |   |   |   |   function rx.playerdb:impl/select/bit2(503/5) - 0.04%/0.00%
+[07] |   |   |   |   |   |   |   function rx.playerdb:impl/select/bit3(503/5) - 0.04%/0.00%
+[07] |   |   |   |   |   |   |   function rx.playerdb:api/get(525/5) - 0.04%/0.00%
+[07] |   |   |   |   |   |   |   function rx.playerdb:impl/save(525/5) - 0.03%/0.00%
+[07] |   |   |   |   |   |   |   function rx.playerdb:impl/select/bit5(403/4) - 0.03%/0.00%
+[06] |   |   |   |   |   |   execute as @a[sort=random,limit=10] run function rx.playerdb:test/pdb/select_save(105/1) - 35.12%/2.14%
+[07] |   |   |   |   |   |   |   #getChunk 525/5
+[07] |   |   |   |   |   |   |   unspecified(105/1) - 22.93%/0.49%
+[07] |   |   |   |   |   |   |   execute store result score $size rx.temp if data storage rx:global playerdb.players[{selected:1b}](3442/33) - 16.60%/0.36%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit1:1b}] run data modify storage rx:global playerdb.players[{bit1:1b}].selected set value 0b(503/5) - 4.79%/0.10%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit4:1b}] run data modify storage rx:global playerdb.players[{bit4:1b}].selected set value 0b(503/5) - 4.63%/0.10%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit0:0b}] run data modify storage rx:global playerdb.players[{bit0:0b}].selected set value 0b(503/5) - 3.93%/0.08%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit3:1b}] run data modify storage rx:global playerdb.players[{bit3:1b}].selected set value 0b(503/5) - 3.71%/0.08%
+[07] |   |   |   |   |   |   |   execute if score $verified rx.temp matches 0 if data storage rx:global playerdb.players[] run data modify storage rx:global playerdb.players[].selected set value 1b(525/5) - 3.70%/0.08%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit2:0b}] run data modify storage rx:global playerdb.players[{bit2:0b}].selected set value 0b(503/5) - 3.66%/0.08%
+[07] |   |   |   |   |   |   |   data modify storage rx:global playerdb.players[{selected:1b}].data.test set value 1b(525/5) - 3.08%/0.07%
+[07] |   |   |   |   |   |   |   execute store result score $uid.check rx.temp run data get storage rx:global playerdb.players[{selected:1b}].info.uid(525/5) - 2.66%/0.06%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit0:1b}] run data modify storage rx:global playerdb.players[{bit0:1b}].selected set value 0b(503/5) - 2.65%/0.06%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit5:0b}] run data modify storage rx:global playerdb.players[{bit5:0b}].selected set value 0b(402/4) - 2.64%/0.06%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit2:1b}] run data modify storage rx:global playerdb.players[{bit2:1b}].selected set value 0b(503/5) - 2.49%/0.05%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit3:0b}] run data modify storage rx:global playerdb.players[{bit3:0b}].selected set value 0b(503/5) - 2.49%/0.05%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit5:1b}] run data modify storage rx:global playerdb.players[{bit5:1b}].selected set value 0b(402/4) - 2.37%/0.05%
+[07] |   |   |   |   |   |   |   scoreboard players operation $uid rx.temp /= $2 rx.int(2917/28) - 1.78%/0.04%
+[07] |   |   |   |   |   |   |   scoreboard players reset $uid.check rx.temp(525/5) - 1.70%/0.04%
+[07] |   |   |   |   |   |   |   scoreboard players operation $bit rx.temp = $uid rx.temp(2917/28) - 1.61%/0.03%
+[07] |   |   |   |   |   |   |   scoreboard players operation $bit rx.temp %= $2 rx.int(2917/28) - 1.47%/0.03%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit4:0b}] run data modify storage rx:global playerdb.players[{bit4:0b}].selected set value 0b(503/5) - 1.40%/0.03%
+[07] |   |   |   |   |   |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit1:0b}] run data modify storage rx:global playerdb.players[{bit1:0b}].selected set value 0b(503/5) - 1.32%/0.03%
+[07] |   |   |   |   |   |   |   execute if score $verified rx.temp matches 0 if data storage rx:global playerdb.players[] run function rx.playerdb:impl/select/bit0(525/5) - 1.28%/0.03%
+[07] |   |   |   |   |   |   |   execute if score $verified rx.temp matches 0 unless data storage rx:global playerdb.players[] run tellraw @a[tag=rx.admin] {"text":"Selection failed. No players in database to select", "color": "#CE4257"}(525/5) - 1.17%/0.02%
+[07] |   |   |   |   |   |   |   execute if score $verified rx.temp matches 1 store result score $verified rx.temp if score $uid rx.temp = $uid.check rx.temp(525/5) - 0.96%/0.02%
+[07] |   |   |   |   |   |   |   scoreboard players operation $in.uid rx.io = @s rx.uid(525/5) - 0.54%/0.01%
+[07] |   |   |   |   |   |   |   execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit4(503/5) - 0.54%/0.01%
+[07] |   |   |   |   |   |   |   execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit1(503/5) - 0.53%/0.01%
+[07] |   |   |   |   |   |   |   execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit3(503/5) - 0.50%/0.01%
+[07] |   |   |   |   |   |   |   execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit2(503/5) - 0.50%/0.01%
+[07] |   |   |   |   |   |   |   execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit5(503/5) - 0.47%/0.01%
+[07] |   |   |   |   |   |   |   execute store result score $verified rx.temp if score $size rx.temp matches 1(525/5) - 0.45%/0.01%
+[07] |   |   |   |   |   |   |   function rx.playerdb:impl/select(1050/10) - 0.35%/0.01%
+[07] |   |   |   |   |   |   |   function rx.playerdb:impl/verify(1050/10) - 0.29%/0.01%
+[07] |   |   |   |   |   |   |   scoreboard players operation $uid rx.temp = $in.uid rx.io(525/5) - 0.27%/0.01%
+[07] |   |   |   |   |   |   |   execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit6(402/4) - 0.17%/0.00%
+[07] |   |   |   |   |   |   |   function rx.playerdb:impl/select/bit0(503/5) - 0.08%/0.00%
+[07] |   |   |   |   |   |   |   function rx.playerdb:impl/select/bit1(503/5) - 0.06%/0.00%
+[07] |   |   |   |   |   |   |   function rx.playerdb:impl/select/bit2(503/5) - 0.06%/0.00%
+[07] |   |   |   |   |   |   |   function rx.playerdb:impl/select/bit3(503/5) - 0.06%/0.00%
+[07] |   |   |   |   |   |   |   function rx.playerdb:impl/select/bit4(503/5) - 0.06%/0.00%
+[07] |   |   |   |   |   |   |   function rx.playerdb:impl/select/bit5(402/4) - 0.05%/0.00%
+[06] |   |   |   |   |   |   data merge block ~ ~1 ~ {Text1:'["$in.idx: ", {"score":{"name":"$in.idx", "objective": "rx.io"}}]', Text2:'["list_name: ", {"storage":"rx:io","nbt":"listdb.list_name"}]', Text3:'["$success: ", {"score":{"name":"$success", "objective": "rx.io"}}]'}(105/1) - 4.60%/0.28%
+[07] |   |   |   |   |   |   |   #getChunk 945/9
+[06] |   |   |   |   |   |   unspecified(210/2) - 0.70%/0.04%
+[05] |   |   |   |   |   unspecified(105/1) - 0.19%/0.01%
+[05] |   |   |   |   |   cleaning(210/2) - 0.16%/0.01%
+[04] |   |   |   |   weather(105/1) - 20.33%/2.23%
+[05] |   |   |   |   |   execute store result score $items rx.temp run clear @s minecraft:player_head{rx:{ec:{gui:1b}}} 0(525/5) - 47.77%/1.07%
+[05] |   |   |   |   |   clear @s minecraft:player_head{rx:{ec:{gui:1b}}}(525/5) - 38.72%/0.86%
+[05] |   |   |   |   |   unspecified(105/1) - 4.61%/0.10%
+[05] |   |   |   |   |   scoreboard players enable @a rx.List(105/1) - 1.59%/0.04%
+[05] |   |   |   |   |   execute as @a run function rx.playerdb:player(105/1) - 1.45%/0.03%
+[05] |   |   |   |   |   execute in minecraft:overworld as @a run function rx.ec:player(105/1) - 1.32%/0.03%
+[05] |   |   |   |   |   schedule function rx.playerdb:tick 1t replace(105/1) - 0.77%/0.02%
+[05] |   |   |   |   |   execute unless score @s rx.uuid0 = @s rx.uuid0 run function rx.playerdb:impl/uuid/set(525/5) - 0.74%/0.02%
+[05] |   |   |   |   |   kill @e[type=item,nbt={Item:{tag:{rx:{ec:{gui:1b}}}}}](105/1) - 0.52%/0.01%
+[05] |   |   |   |   |   execute if entity @s[scores={rx.ec.openChest=1}] run function rx.ec:setup(525/5) - 0.46%/0.01%
+[05] |   |   |   |   |   execute if score $items rx.temp matches 1.. run function rx.ec:gui/root(525/5) - 0.46%/0.01%
+[05] |   |   |   |   |   schedule function rx.ec:tick 1t replace(105/1) - 0.43%/0.01%
+[05] |   |   |   |   |   execute if entity @s[scores={rx.ec.headDrop=1..}] run function rx.ec:gui/fix(525/5) - 0.41%/0.01%
+[05] |   |   |   |   |   execute if score @s rx.login matches 1.. run function rx.playerdb:impl/uuid/check(525/5) - 0.36%/0.01%
+[05] |   |   |   |   |   execute unless score @s rx.List matches 0 run function rx.playerdb:admin/list(525/5) - 0.24%/0.01%
+[05] |   |   |   |   |   function rx.ec:player(525/5) - 0.07%/0.00%
+[05] |   |   |   |   |   function rx.playerdb:player(525/5) - 0.07%/0.00%
+[04] |   |   |   |   chunkSource(105/1) - 17.18%/1.88%
+[05] |   |   |   |   |   chunks(105/1) - 96.66%/1.82%
+[06] |   |   |   |   |   |   pollingChunks(105/1) - 98.40%/1.79%
+[07] |   |   |   |   |   |   |   unspecified(105/1) - 82.24%/1.47%
+[07] |   |   |   |   |   |   |   broadcast(47250/450) - 9.56%/0.17%
+[08] |   |   |   |   |   |   |   |   #getChunkCacheMiss 180/1
+[08] |   |   |   |   |   |   |   |   #getChunk 420/4
+[07] |   |   |   |   |   |   |   iceandsnow(21525/205) - 5.00%/0.09%
+[08] |   |   |   |   |   |   |   |   #getChunkCacheMiss 2713/25
+[08] |   |   |   |   |   |   |   |   #getChunk 2734/26
+[07] |   |   |   |   |   |   |   thunder(21525/205) - 1.45%/0.03%
+[07] |   |   |   |   |   |   |   tickBlocks(21525/205) - 1.39%/0.02%
+[07] |   |   |   |   |   |   |   naturalSpawnCount(105/1) - 0.33%/0.01%
+[07] |   |   |   |   |   |   |   customSpawners(105/1) - 0.03%/0.00%
+[06] |   |   |   |   |   |   unspecified(105/1) - 1.60%/0.03%
+[05] |   |   |   |   |   purge(105/1) - 2.57%/0.05%
+[05] |   |   |   |   |   unspecified(105/1) - 0.47%/0.01%
+[05] |   |   |   |   |   unload(105/1) - 0.30%/0.01%
+[06] |   |   |   |   |   |   unspecified(105/1) - 76.24%/0.00%
+[06] |   |   |   |   |   |   chunk_unload(105/1) - 13.93%/0.00%
+[06] |   |   |   |   |   |   poi(105/1) - 9.83%/0.00%
+[04] |   |   |   |   entities(105/1) - 6.59%/0.72%
+[05] |   |   |   |   |   tick(630/6) - 92.27%/0.67%
+[06] |   |   |   |   |   |   minecraft:player(525/5) - 87.39%/0.58%
+[07] |   |   |   |   |   |   |   #getEntities 1260/12
+[07] |   |   |   |   |   |   |   #tickNonPassenger 525/5
+[07] |   |   |   |   |   |   |   #getChunkCacheMiss 42/0
+[07] |   |   |   |   |   |   |   #getChunk 43995/419
+[07] |   |   |   |   |   |   |   unspecified(525/5) - 43.54%/0.25%
+[07] |   |   |   |   |   |   |   travel(420/4) - 38.98%/0.23%
+[08] |   |   |   |   |   |   |   |   #getChunk 1680/16
+[08] |   |   |   |   |   |   |   |   rest(420/4) - 48.75%/0.11%
+[09] |   |   |   |   |   |   |   |   |   #getChunk 9240/88
+[08] |   |   |   |   |   |   |   |   move(420/4) - 41.67%/0.09%
+[09] |   |   |   |   |   |   |   |   |   #getEntities 420/4
+[09] |   |   |   |   |   |   |   |   |   #getChunk 15120/144
+[08] |   |   |   |   |   |   |   |   unspecified(420/4) - 9.58%/0.02%
+[07] |   |   |   |   |   |   |   livingEntityBaseTick(420/4) - 7.21%/0.04%
+[08] |   |   |   |   |   |   |   |   #getChunk 12180/116
+[07] |   |   |   |   |   |   |   entityBaseTick(420/4) - 4.21%/0.02%
+[08] |   |   |   |   |   |   |   |   #getChunkCacheMiss 121/1
+[08] |   |   |   |   |   |   |   |   #getChunk 7140/68
+[07] |   |   |   |   |   |   |   push(420/4) - 3.99%/0.02%
+[08] |   |   |   |   |   |   |   |   #getEntities 420/4
+[08] |   |   |   |   |   |   |   |   #getChunk 1785/17
+[07] |   |   |   |   |   |   |   ai(420/4) - 1.48%/0.01%
+[08] |   |   |   |   |   |   |   |   unspecified(420/4) - 77.11%/0.01%
+[08] |   |   |   |   |   |   |   |   newAi(420/4) - 22.89%/0.00%
+[07] |   |   |   |   |   |   |   headTurn(420/4) - 0.39%/0.00%
+[07] |   |   |   |   |   |   |   rangeChecks(420/4) - 0.12%/0.00%
+[07] |   |   |   |   |   |   |   jump(420/4) - 0.08%/0.00%
+[06] |   |   |   |   |   |   minecraft:armor_stand(105/1) - 10.46%/0.07%
+[07] |   |   |   |   |   |   |   #tickNonPassenger 105/1
+[07] |   |   |   |   |   |   |   unspecified(105/1) - 52.69%/0.04%
+[07] |   |   |   |   |   |   |   entityBaseTick(105/1) - 23.34%/0.02%
+[08] |   |   |   |   |   |   |   |   #getChunkCacheMiss 105/1
+[08] |   |   |   |   |   |   |   |   #getChunk 525/5
+[07] |   |   |   |   |   |   |   livingEntityBaseTick(105/1) - 9.21%/0.01%
+[08] |   |   |   |   |   |   |   |   #getChunk 105/1
+[07] |   |   |   |   |   |   |   push(105/1) - 9.05%/0.01%
+[08] |   |   |   |   |   |   |   |   #getEntities 105/1
+[08] |   |   |   |   |   |   |   |   #getChunkCacheMiss 105/1
+[08] |   |   |   |   |   |   |   |   #getChunk 210/2
+[07] |   |   |   |   |   |   |   travel(105/1) - 2.32%/0.00%
+[07] |   |   |   |   |   |   |   ai(105/1) - 1.66%/0.00%
+[07] |   |   |   |   |   |   |   headTurn(105/1) - 1.23%/0.00%
+[07] |   |   |   |   |   |   |   rangeChecks(105/1) - 0.32%/0.00%
+[07] |   |   |   |   |   |   |   jump(105/1) - 0.18%/0.00%
+[06] |   |   |   |   |   |   unspecified(630/6) - 2.15%/0.01%
+[05] |   |   |   |   |   unspecified(105/1) - 4.20%/0.03%
+[05] |   |   |   |   |   blockEntities(105/1) - 2.91%/0.02%
+[06] |   |   |   |   |   |   unspecified(105/1) - 38.43%/0.01%
+[06] |   |   |   |   |   |   minecraft:shulker_box(105/1) - 27.16%/0.01%
+[07] |   |   |   |   |   |   |   #getChunkCacheMiss 105/1
+[07] |   |   |   |   |   |   |   #getChunk 105/1
+[06] |   |   |   |   |   |   minecraft:chest(210/2) - 20.85%/0.00%
+[07] |   |   |   |   |   |   |   #getChunkCacheMiss 105/1
+[07] |   |   |   |   |   |   |   #getChunk 210/2
+[06] |   |   |   |   |   |   minecraft:ender_chest(105/1) - 13.56%/0.00%
+[07] |   |   |   |   |   |   |   #getChunkCacheMiss 16/0
+[07] |   |   |   |   |   |   |   #getChunk 105/1
+[05] |   |   |   |   |   checkDespawn(630/6) - 0.43%/0.00%
+[05] |   |   |   |   |   remove(630/6) - 0.16%/0.00%
+[05] |   |   |   |   |   fabricWorldTick(105/1) - 0.02%/0.00%
+[05] |   |   |   |   |   pendingBlockEntities(105/1) - 0.02%/0.00%
+[04] |   |   |   |   unspecified(105/1) - 0.15%/0.02%
+[04] |   |   |   |   blockEvents(105/1) - 0.01%/0.00%
+[05] |   |   |   |   |   #getChunkCacheMiss 5/0
+[05] |   |   |   |   |   #getChunk 10/0
+[04] |   |   |   |   world border(105/1) - 0.01%/0.00%
+[04] |   |   |   |   raid(105/1) - 0.01%/0.00%
+[04] |   |   |   |   fabricStartServerWorldTick_minecraft:overworld(105/1) - 0.00%/0.00%
+[03] |   |   |   unspecified(105/1) - 0.01%/0.00%
+[03] |   |   |   timeSync(5/0) - 0.01%/0.00%
+[02] |   |   unspecified(105/1) - 0.09%/0.01%
+[01] |   connection(105/1) - 1.09%/0.12%
+[02] |   |   #getEntities 315/3
+[02] |   |   #getChunkCacheMiss 10/0
+[02] |   |   #getChunk 8255/78
+[02] |   |   unspecified(105/1) - 58.56%/0.07%
+[02] |   |   travel(105/1) - 26.05%/0.03%
+[03] |   |   |   #getChunk 420/4
+[03] |   |   |   rest(105/1) - 41.70%/0.01%
+[04] |   |   |   |   #getChunk 1470/14
+[03] |   |   |   move(105/1) - 41.42%/0.01%
+[04] |   |   |   |   #getEntities 105/1
+[04] |   |   |   |   #getChunk 2940/28
+[03] |   |   |   unspecified(105/1) - 16.88%/0.01%
+[02] |   |   livingEntityBaseTick(105/1) - 8.62%/0.01%
+[03] |   |   |   #getChunkCacheMiss 89/0
+[03] |   |   |   #getChunk 3045/29
+[02] |   |   entityBaseTick(105/1) - 3.34%/0.00%
+[03] |   |   |   #getChunk 945/9
+[02] |   |   push(105/1) - 1.57%/0.00%
+[03] |   |   |   #getEntities 105/1
+[03] |   |   |   #getChunk 210/2
+[02] |   |   ai(105/1) - 1.11%/0.00%
+[03] |   |   |   unspecified(105/1) - 81.71%/0.00%
+[03] |   |   |   newAi(105/1) - 18.29%/0.00%
+[02] |   |   keepAlive(105/1) - 0.28%/0.00%
+[02] |   |   headTurn(105/1) - 0.26%/0.00%
+[02] |   |   rangeChecks(105/1) - 0.10%/0.00%
+[02] |   |   jump(105/1) - 0.10%/0.00%
+[01] |   unspecified(105/1) - 0.29%/0.03%
+[01] |   fabricEndServerTick(105/1) - 0.11%/0.01%
+[02] |   |   unspecified(105/1) - 50.77%/0.01%
+[02] |   |   net.fabricmc.fabric.impl.event.lifecycle.LegacyEventInvokers$$Lambda$2409/1469269927(105/1) - 23.72%/0.00%
+[03] |   |   |   unspecified(105/1) - 94.46%/0.00%
+[03] |   |   |   fabricServerTick(105/1) - 5.54%/0.00%
+[02] |   |   net.cavoj.servertick.ServerTick$$Lambda$2369/1534401451(105/1) - 13.02%/0.00%
+[02] |   |   com.sk89q.worldedit.fabric.ThreadSafeCache(105/1) - 12.49%/0.00%
+[01] |   commandFunctions(105/1) - 0.03%/0.00%
+[02] |   |   unspecified(105/1) - 88.43%/0.00%
+[02] |   |   minecraft:tick(105/1) - 11.57%/0.00%
+[01] |   tallying(105/1) - 0.02%/0.00%
+[01] |   snooper(105/1) - 0.01%/0.00%
+[01] |   players(105/1) - 0.00%/0.00%
+[01] |   server gui refresh(105/1) - 0.00%/0.00%
+[01] |   fabricStartServerTick(105/1) - 0.00%/0.00%
+--- END PROFILE DUMP ---
+
+--- BEGIN COUNTER DUMP ---
+
+-- Counter: getChunk --
+[00] root total:0/117689 average: 0/1120
+[01] |   tick total:0/117364 average: 0/1117
+[02] |   |   levels total:0/100079 average: 0/953
+[03] |   |   |   ServerLevel[Infinity Storage] minecraft:overworld total:0/100079 average: 0/953
+[04] |   |   |   |   tick total:0/100079 average: 0/953
+[05] |   |   |   |   |   entities total:0/92400 average: 0/880
+[06] |   |   |   |   |   |   tick total:0/91980 average: 0/876
+[07] |   |   |   |   |   |   |   minecraft:player total:43995/91140 average: 419/868
+[08] |   |   |   |   |   |   |   |   travel total:1680/26040 average: 16/248
+[09] |   |   |   |   |   |   |   |   |   move total:15120/15120 average: 144/144
+[09] |   |   |   |   |   |   |   |   |   rest total:9240/9240 average: 88/88
+[08] |   |   |   |   |   |   |   |   livingEntityBaseTick total:12180/12180 average: 116/116
+[08] |   |   |   |   |   |   |   |   entityBaseTick total:7140/7140 average: 68/68
+[08] |   |   |   |   |   |   |   |   push total:1785/1785 average: 17/17
+[07] |   |   |   |   |   |   |   minecraft:armor_stand total:0/840 average: 0/8
+[08] |   |   |   |   |   |   |   |   entityBaseTick total:525/525 average: 5/5
+[08] |   |   |   |   |   |   |   |   push total:210/210 average: 2/2
+[08] |   |   |   |   |   |   |   |   livingEntityBaseTick total:105/105 average: 1/1
+[06] |   |   |   |   |   |   blockEntities total:0/420 average: 0/4
+[07] |   |   |   |   |   |   |   minecraft:chest total:210/210 average: 2/2
+[07] |   |   |   |   |   |   |   minecraft:ender_chest total:105/105 average: 1/1
+[07] |   |   |   |   |   |   |   minecraft:shulker_box total:105/105 average: 1/1
+[05] |   |   |   |   |   tickPending total:0/4515 average: 0/43
+[06] |   |   |   |   |   |   ticking total:2520/4515 average: 24/43
+[07] |   |   |   |   |   |   |   data merge block ~ ~1 ~ {Text1:'["$in.idx: ", {"score":{"name":"$in.idx", "objective": "rx.io"}}]', Text2:'["list_name: ", {"storage":"rx:io","nbt":"listdb.list_name"}]', Text3:'["$success: ", {"score":{"name":"$success", "objective": "rx.io"}}]'} total:945/945 average: 9/9
+[07] |   |   |   |   |   |   |   execute as @a[sort=random,limit=10] run function rx.playerdb:test/pdb/get_save total:525/525 average: 5/5
+[07] |   |   |   |   |   |   |   execute as @a[sort=random,limit=10] run function rx.playerdb:test/pdb/select_save total:525/525 average: 5/5
+[05] |   |   |   |   |   chunkSource total:0/3154 average: 0/30
+[06] |   |   |   |   |   |   chunks total:0/3154 average: 0/30
+[07] |   |   |   |   |   |   |   pollingChunks total:0/3154 average: 0/30
+[08] |   |   |   |   |   |   |   |   iceandsnow total:2734/2734 average: 26/26
+[08] |   |   |   |   |   |   |   |   broadcast total:420/420 average: 4/4
+[05] |   |   |   |   |   blockEvents total:10/10 average: 0/0
+[02] |   |   connection total:8255/17285 average: 78/164
+[03] |   |   |   travel total:420/4830 average: 4/46
+[04] |   |   |   |   move total:2940/2940 average: 28/28
+[04] |   |   |   |   rest total:1470/1470 average: 14/14
+[03] |   |   |   livingEntityBaseTick total:3045/3045 average: 29/29
+[03] |   |   |   entityBaseTick total:945/945 average: 9/9
+[03] |   |   |   push total:210/210 average: 2/2
+[01] |   nextTickWait total:245/325 average: 2/3
+[02] |   |   rest total:70/70 average: 0/0
+[02] |   |   move total:10/10 average: 0/0
+
+
+-- Counter: getChunkCacheMiss --
+[00] root total:0/3806 average: 0/36
+[01] |   tick total:0/3806 average: 0/36
+[02] |   |   levels total:0/3707 average: 0/35
+[03] |   |   |   ServerLevel[Infinity Storage] minecraft:overworld total:0/3707 average: 0/35
+[04] |   |   |   |   tick total:0/3707 average: 0/35
+[05] |   |   |   |   |   chunkSource total:0/2893 average: 0/27
+[06] |   |   |   |   |   |   chunks total:0/2893 average: 0/27
+[07] |   |   |   |   |   |   |   pollingChunks total:0/2893 average: 0/27
+[08] |   |   |   |   |   |   |   |   iceandsnow total:2713/2713 average: 25/25
+[08] |   |   |   |   |   |   |   |   broadcast total:180/180 average: 1/1
+[05] |   |   |   |   |   entities total:0/599 average: 0/5
+[06] |   |   |   |   |   |   tick total:0/373 average: 0/3
+[07] |   |   |   |   |   |   |   minecraft:armor_stand total:0/210 average: 0/2
+[08] |   |   |   |   |   |   |   |   entityBaseTick total:105/105 average: 1/1
+[08] |   |   |   |   |   |   |   |   push total:105/105 average: 1/1
+[07] |   |   |   |   |   |   |   minecraft:player total:42/163 average: 0/1
+[08] |   |   |   |   |   |   |   |   entityBaseTick total:121/121 average: 1/1
+[06] |   |   |   |   |   |   blockEntities total:0/226 average: 0/2
+[07] |   |   |   |   |   |   |   minecraft:shulker_box total:105/105 average: 1/1
+[07] |   |   |   |   |   |   |   minecraft:chest total:105/105 average: 1/1
+[07] |   |   |   |   |   |   |   minecraft:ender_chest total:16/16 average: 0/0
+[05] |   |   |   |   |   tickPending total:0/210 average: 0/2
+[06] |   |   |   |   |   |   ticking total:210/210 average: 2/2
+[05] |   |   |   |   |   blockEvents total:5/5 average: 0/0
+[02] |   |   connection total:10/99 average: 0/0
+[03] |   |   |   livingEntityBaseTick total:89/89 average: 0/0
+
+
+-- Counter: getEntities --
+[00] root total:0/2740 average: 0/26
+[01] |   tick total:0/2730 average: 0/26
+[02] |   |   levels total:0/2205 average: 0/21
+[03] |   |   |   ServerLevel[Infinity Storage] minecraft:overworld total:0/2205 average: 0/21
+[04] |   |   |   |   tick total:0/2205 average: 0/21
+[05] |   |   |   |   |   entities total:0/2205 average: 0/21
+[06] |   |   |   |   |   |   tick total:0/2205 average: 0/21
+[07] |   |   |   |   |   |   |   minecraft:player total:1260/2100 average: 12/20
+[08] |   |   |   |   |   |   |   |   travel total:0/420 average: 0/4
+[09] |   |   |   |   |   |   |   |   |   move total:420/420 average: 4/4
+[08] |   |   |   |   |   |   |   |   push total:420/420 average: 4/4
+[07] |   |   |   |   |   |   |   minecraft:armor_stand total:0/105 average: 0/1
+[08] |   |   |   |   |   |   |   |   push total:105/105 average: 1/1
+[02] |   |   connection total:315/525 average: 3/5
+[03] |   |   |   travel total:0/105 average: 0/1
+[04] |   |   |   |   move total:105/105 average: 1/1
+[03] |   |   |   push total:105/105 average: 1/1
+[01] |   nextTickWait total:5/10 average: 0/0
+[02] |   |   move total:5/5 average: 0/0
+
+
+-- Counter: runTask --
+[00] root total:0/6 average: 0/0
+[01] |   nextTickWait total:6/6 average: 0/0
+
+
+-- Counter: tickNonPassenger --
+[00] root total:0/630 average: 0/6
+[01] |   tick total:0/630 average: 0/6
+[02] |   |   levels total:0/630 average: 0/6
+[03] |   |   |   ServerLevel[Infinity Storage] minecraft:overworld total:0/630 average: 0/6
+[04] |   |   |   |   tick total:0/630 average: 0/6
+[05] |   |   |   |   |   entities total:0/630 average: 0/6
+[06] |   |   |   |   |   |   tick total:0/630 average: 0/6
+[07] |   |   |   |   |   |   |   minecraft:player total:525/525 average: 5/5
+[07] |   |   |   |   |   |   |   minecraft:armor_stand total:105/105 average: 1/1
+
+
+--- END COUNTER DUMP ---
+
