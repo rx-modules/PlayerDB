@@ -11,7 +11,7 @@ COMMENT = (
 BASE = 2
 MAX_INT = 2**31-1
 
-ITERATIONS = math.log(MAX_INT, BASE)
+ITERATIONS = math.log(MAX_INT, BASE) + 1
 
 # LINE = 'execute if score $bit rx.temp matches {low}..{high} run function rx.playerdb:impl/get/bit{i}/{low}_{high}'  # noqa: E501
 

@@ -3,7 +3,7 @@ import math
 
 BASE = 2
 MAX_INT = 2**31-1
-DEBUG = True
+DEBUG = False
 
 
 COMMENT = (
@@ -20,7 +20,7 @@ lines = (
 debug_line = 'tellraw @s[tag=rx.PDBDebug] [{"text":"", "color":"gold"}, {"text":"bit^: "}, {"score":{"name":"$bit", "objective":"rx.temp"}}]'  # noqa: E501
 
 out = [COMMENT]
-for i in range(0, int(math.log(MAX_INT, BASE))):
+for i in range(0, int(math.log(MAX_INT, BASE)) + 2):
     if i != 0:
         out.append(lines[0])
     out.append(lines[1])
