@@ -3,7 +3,7 @@ import math
 
 BASE = 2
 MAX_INT = 2**31-1
-DEBUG = True
+DEBUG = False
 
 
 COMMENT = (
