@@ -1,5 +1,5 @@
 # By: rx97
-# Generated on: 27 Sep 20
+# Generated on: 02 Nov 20
 
 scoreboard players operation $bit rx.temp = $uid rx.temp
 scoreboard players operation $bit rx.temp %= $2 rx.int

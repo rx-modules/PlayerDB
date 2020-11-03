@@ -16,5 +16,5 @@ data remove storage rx:global playerdb.players[-1]
 #> other info
 data modify storage rx:global playerdb.uuid[-1].entries append value {}
 execute store result storage rx:global playerdb.uuid[-1].entries[-1].uid int 1 run scoreboard players get @s rx.uid
-execute store result storage rx:global playerdb.uuid[-1].entries[-1].hasEntry int 1 run scoreboard players get @s rx.pdb.HasEntry
+execute store result storage rx:global playerdb.uuid[-1].entries[-1].hasEntry byte 1 run scoreboard players get @s rx.pdb.HasEntry
 data modify storage rx:global playerdb.uuid[-1].entries[-1].UUID set from storage rx:temp playerdb.UUID

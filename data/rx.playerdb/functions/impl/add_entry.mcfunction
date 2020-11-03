@@ -23,7 +23,11 @@ data modify storage rx:global playerdb.players[-1].selected set value 0b
 scoreboard players operation $uid rx.temp = @s rx.uid
 function rx.playerdb:impl/uid_to_bits
 
+#> update uuidDB
+data modify storage rx:temp playerdb.UUID set from storage rx:global playerdb.players[-1].info.UUID
+function rx.playerdb:impl/uuid/select
+data modify storage rx:global playerdb.uuid[{selected:1b}].entries[-1].hasEntry set value 1b
 scoreboard players set @s rx.pdb.HasEntry 1
 
-#> better ?
+#> better ? fml
 execute as 000000af-0000-0000-0000-000000000001 if entity @s[tag=rx.pdb.stupid] run tp af-0-0-0-1 ~ -1000 ~

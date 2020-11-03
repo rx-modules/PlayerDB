@@ -11,7 +11,7 @@ COMMENT = (
 BASE = 2
 MAX_INT = 2**31-1
 
-ITERATIONS = math.log(MAX_INT, BASE)
+ITERATIONS = math.log(MAX_INT, BASE) + 1
 
 # LINE = 'execute if score $bit rx.temp matches {low}..{high} run function rx.playerdb:impl/get/bit{i}/{low}_{high}'  # noqa: E501
 
@@ -27,6 +27,7 @@ BIT = (
     'execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.uuid[{bit@:1b}] run data modify storage rx:global playerdb.uuid[{bit@:1b}].selected set value 0b\n'  # noqa: E501
     f'scoreboard players operation $uid rx.temp /= ${BASE} rx.int\n'
     'execute store result score $size rx.temp if data storage rx:global playerdb.uuid[{selected:1b}]\n'  # noqa: E501
+    # 'tellraw rx97 {"score": {"name": "$size", "objective":"rx.temp"}}\n'
     'execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/uuid/select/bit&\n'  # noqa: E501
 )
 

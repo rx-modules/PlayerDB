@@ -6,6 +6,7 @@
 #> input -> $uid, output -> $found
 
 #> select UUID
+execute store result score $uid rx.temp run data get storage rx:temp playerdb.UUID[0]
 execute if data storage rx:global playerdb.uuid[] run data modify storage rx:global playerdb.uuid[].selected set value 1b
 execute if data storage rx:global playerdb.uuid[] run function rx.playerdb:impl/uuid/select/bit0
 

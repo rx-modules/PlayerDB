@@ -1,5 +1,5 @@
 # By: rx97
-# Generated on: 26 Sep 20
+# Generated on: 02 Nov 20
 
 
 scoreboard players operation $bit rx.temp = $uid rx.temp
@@ -179,4 +179,16 @@ scoreboard players operation $uid rx.temp /= $2 rx.int
 scoreboard players operation $bit rx.temp = $uid rx.temp
 execute store result storage rx:global playerdb.players[-1].bit29 byte 1 run scoreboard players operation $bit rx.temp %= $2 rx.int
 tellraw @s[tag=rx.PDBDebug] [{"text":"", "color":"gold"}, {"text":"bit29: "}, {"score":{"name":"$bit", "objective":"rx.temp"}}]
+
+
+scoreboard players operation $uid rx.temp /= $2 rx.int
+scoreboard players operation $bit rx.temp = $uid rx.temp
+execute store result storage rx:global playerdb.players[-1].bit30 byte 1 run scoreboard players operation $bit rx.temp %= $2 rx.int
+tellraw @s[tag=rx.PDBDebug] [{"text":"", "color":"gold"}, {"text":"bit30: "}, {"score":{"name":"$bit", "objective":"rx.temp"}}]
+
+
+scoreboard players operation $uid rx.temp /= $2 rx.int
+scoreboard players operation $bit rx.temp = $uid rx.temp
+execute store result storage rx:global playerdb.players[-1].bit31 byte 1 run scoreboard players operation $bit rx.temp %= $2 rx.int
+tellraw @s[tag=rx.PDBDebug] [{"text":"", "color":"gold"}, {"text":"bit31: "}, {"score":{"name":"$bit", "objective":"rx.temp"}}]
 
