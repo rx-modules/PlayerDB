@@ -1,0 +1,52 @@
+###
+# [ Datapack Builder ]
+# This config file describes your datapack and the releases
+###
+# Options:
+# 	title = <title>
+#   version = <version>
+#   name-format = <string w/ {} denotating output naming format>
+#      ex: '{title}-{version}-{release_name}'
+#   output-folder = <folder name to output>
+
+title = 'PlayerDB'
+version = 'v0.8-beta'
+name-format = '{title} {version} {release_name}'
+
+[global]
+
+###
+# This defines rules for all releases
+# Note that all options are optional
+###
+# Options:
+# 	exclude = [<list of patterns>]
+#  	only-allow = [<list of patterns>]
+###
+
+	ignore = ['releases/*', 'docs/*', 'fabric.mod.json', '*.paper.*', 'test/*']
+	whitelist = ['*.json', '*.mcfunction', 'pack.png', 'pack.mcmeta']
+
+[releases]
+
+###
+# This defines rules per release.
+# Note that all options are optional.
+###
+# [releases.<name>]
+#   name = <override name of zipfile>
+#   ending = <alternative zip ext (.zip is default)>
+# 	ignore = [<list of patterns>]
+#	replacer = {<if pat matches>: <replace contents of this file>}
+#	include = ['<list of included items'] (overrides ignore)
+#	[releases.<name>.replace] 
+#	   <pattern> = <replace>
+#	   <pattern> = <replace>
+#	   ...
+###
+
+	[releases.standard]
+		name = ''
+
+	[releases.dev]
+		include = ['test/*']

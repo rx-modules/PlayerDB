@@ -23,7 +23,7 @@ scoreboard players operation $uid rx.temp = @s rx.uuid0
 function rx.playerdb:impl/uuid/select
 
 #> if not found: gen a uid if we don't have one
-execute if score $found rx.temp matches 0 unless score @s rx.uid = @s rx.uid run function rx.playerdb:impl/new_uid
+execute if score $found rx.temp matches 0 unless score @s rx.uid matches 1.. run function rx.playerdb:impl/new_uid
 
 #> gen a UUID entry since we don't have a UUID entry
 execute if score $found rx.temp matches 0 run function rx.playerdb:impl/uuid/new
@@ -42,4 +42,4 @@ execute if score $found rx.temp matches 1 if score @s rx.pdb.HasEntry matches 1 
 
 #> admin :P
 execute if score $found rx.temp matches 1 run tellraw @a[tag=rx.admin] ["", {"selector": "@s"}, " has changed their name!"]
-execute if score $found rx.temp matches 1 run function #rx.playerdb:api/name_change
+execute if score $found rx.temp matches 1 run function #rx.playerdb:api/on_name_change

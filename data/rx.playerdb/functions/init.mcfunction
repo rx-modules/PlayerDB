@@ -36,4 +36,4 @@ data modify storage rx:info playerdb.version.minor set value 8
 
 schedule function rx.playerdb:tick 1t replace
 
-tellraw @a[tag=rx.admin] {"text":"PlayerDB Loaded"}
+tellraw @a[tag=rx.admin] ["", {"text":"P","color":"#dd9b14"},{"text":"l","color":"#df9412"},{"text":"a","color":"#e18e10"},{"text":"y","color":"#e3880e"},{"text":"e","color":"#e5810c"},{"text":"r","color":"#e77b0a"},{"text":"D","color":"#e97508"},{"text":"B","color":"#eb6f07"}, " ", {"text":"L","color":"#dd9b14"},{"text":"o","color":"#df9211"},{"text":"a","color":"#e2890e"},{"text":"d","color":"#e5800c"},{"text":"e","color":"#e87709"},{"text":"d","color":"#eb6f07"}]
