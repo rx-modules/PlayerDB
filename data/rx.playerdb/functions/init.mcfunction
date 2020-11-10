@@ -5,7 +5,7 @@
 #> Does actual init
 
 # Rx Load
-scoreboard players set PlayerDB load 1
+scoreboard players set rx.PlayerDB load 1
 
 scoreboard objectives add rx.uid dummy
 scoreboard objectives add rx.int dummy
