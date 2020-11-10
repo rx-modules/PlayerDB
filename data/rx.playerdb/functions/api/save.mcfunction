@@ -4,7 +4,7 @@
 #> Save data
 
 # optimization baked in
-function rx.playerdb:impl/select
+function rx.playerdb:api/select
 
 # verify that rx:io is proper player
 execute store result score $uid.check rx.temp run data get storage rx:io playerdb.player.info.uid

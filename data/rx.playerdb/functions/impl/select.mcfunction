@@ -5,9 +5,6 @@
 
 #define entity @s
 
-# set input / reset temp
-scoreboard players operation $uid rx.temp = $in.uid rx.io
-
 # verification
 function rx.playerdb:impl/verify
 

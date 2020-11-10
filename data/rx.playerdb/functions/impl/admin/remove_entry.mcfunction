@@ -6,7 +6,7 @@
 #> MUST RESET @s rx.pdb.HasEntry manually!
 
 #> perform select as long as input is less than $uid.next
-execute if score $in.uid rx.io < $uid.next rx.uid run function rx.playerdb:impl/select
+execute if score $in.uid rx.io < $uid.next rx.uid run function rx.playerdb:api/select
 execute unless score $in.uid rx.io < $uid.next rx.uid run scoreboard players set $size rx.temp 0
 
 #> if $size = 1, this means an entry was found

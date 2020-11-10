@@ -6,8 +6,8 @@
 #define entity @s
 
 # size leftover from select
-execute if score $size rx.temp matches 1 run data modify storage rx:io playerdb.player.data set from storage rx:global playerdb.players[{selected:1b}].data
-execute if score $size rx.temp matches 1 run data modify storage rx:io playerdb.player.info set from storage rx:global playerdb.players[{selected:1b}].info
+execute if score $size rx.temp matches 1 run data modify storage rx:io playerdb.player set from storage rx:global playerdb.players[{selected:1b}]
+execute if score $size rx.temp matches 1 run data remove storage rx:io playerdb.player.bits
 execute if score $size rx.temp matches ..0 run data modify storage rx:io playerdb.player set value {}
 
 # sanity check, output -> playerdb.player

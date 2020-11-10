@@ -1,20 +1,20 @@
 from datetime import datetime
 import math
 
-BASE = 2
+BASE = 64
 MAX_INT = 2**31-1
 DEBUG = False
 
 
 COMMENT = (
     '# By: rx97\n'
-    f"# Generated on: {datetime.now().strftime(r'%d %b %y')}\n\n"
+    # f"# Generated on: {datetime.now().strftime(r'%d %b %y')}\n\n"
 )
 
 lines = (
     f'scoreboard players operation $uid rx.temp /= ${BASE} rx.int',
     'scoreboard players operation $bit rx.temp = $uid rx.temp',
-    'execute store result storage rx:global playerdb.players[-1].bit{bit} byte 1 run scoreboard players operation $bit rx.temp %= ${base} rx.int',  # noqa: E501
+    'execute store result storage rx:global playerdb.players[-1].bits.b{bit} byte 1 run scoreboard players operation $bit rx.temp %= ${base} rx.int',  # noqa: E501
 )
 
 debug_line = 'tellraw @s[tag=rx.PDBDebug] [{"text":"", "color":"gold"}, {"text":"bit^: "}, {"score":{"name":"$bit", "objective":"rx.temp"}}]'  # noqa: E501
