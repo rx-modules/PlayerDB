@@ -1,5 +1,5 @@
 {
     "values": [
-    	"#load:rx"
+    	"rx:pre_load"
     ]
 }
