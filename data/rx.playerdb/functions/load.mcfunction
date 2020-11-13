@@ -9,12 +9,12 @@
 #define storage rx:info
 #define storage rx:io
 
+#> Info!
+data modify storage rx:info playerdb.name set value 'PlayerDB'
+data modify storage rx:info playerdb.pretty_name set value '[{"text":"P","color":"#dd9b14"},{"text":"l","color":"#df9412"},{"text":"a","color":"#e18e10"},{"text":"y","color":"#e3880e"},{"text":"e","color":"#e5810c"},{"text":"r","color":"#e77b0a"},{"text":"D","color":"#e97508"},{"text":"B","color":"#eb6f07"}]'
 
-#> Check if PlayerDB exists before us
-execute if data storage rx:info playerdb.version run tellraw @a[tag=rx.admin] "Duplicate PlayerDB found, checking version"
-
-#> Check exact version
-execute if data storage rx:info playerdb.version unless data storage rx:info playerdb.version{major:0, minor:8} run tellraw @a "Old PlayerDB version found. Please remove all PlayerDB versions except one. The current version is PlayerDB v0.8-beta"
+#> Upgrade? I chk the $256 bc none of my other datapacks have that
+execute unless data storage rx:info playerdb.version if score $256 rx.int matches 256 run function rx.playerdb:impl/update/v07tov08
 
 #> If PlayerDB doesn't exist, good to go!
 execute unless data storage rx:info playerdb.version run function rx.playerdb:init

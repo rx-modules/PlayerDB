@@ -17,5 +17,5 @@ execute if score @s rx.pdb.HasEntry matches 1 as 000000af-0000-0000-0000-0000000
 execute if score @s rx.pdb.HasEntry matches 1 run function rx.playerdb:api/save_self
 
 #> admin :P
-tellraw @a[tag=rx.admin] [{"selector": "@s"}, " has changed their name!"]
+tellraw @a[tag=rx.admin] [{"text": "", "color": "gray"}, {"nbt": "playerdb.pretty_name", "storage": "rx:info", "interpret": true}, ": ", {"selector": "@s"}, " has changed their name!"]
 function #rx.playerdb:api/on_name_change

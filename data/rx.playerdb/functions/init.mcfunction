@@ -7,14 +7,16 @@
 #> LL Load
 scoreboard players set rx.PlayerDB load 1
 
+scoreboard objectives add rx.io dummy
 scoreboard objectives add rx.uid dummy
 scoreboard objectives add rx.int dummy
 scoreboard objectives add rx.temp dummy
-scoreboard objectives add rx.io dummy
-scoreboard objectives add rx.login minecraft.custom:minecraft.leave_game
-scoreboard objectives add rx.List trigger
+
 scoreboard objectives add rx.pdb.list dummy
 scoreboard objectives add rx.pdb.HasEntry dummy
+
+scoreboard objectives add rx.List trigger
+scoreboard objectives add rx.login minecraft.custom:minecraft.leave_game
 
 #> 0.8: uuid storage
 scoreboard objectives add rx.uuid0 dummy
@@ -33,11 +35,10 @@ scoreboard players set $64 rx.int 64
 scoreboard players set $256 rx.int 256
 
 #> semver!
-data modify storage rx:info playerdb.version.major set value 0
-data modify storage rx:info playerdb.version.minor set value 8
+data modify storage rx:info playerdb.version set value {major: 0, minor: 8}
 
 #> start our tick loop
 schedule function rx.playerdb:tick 1t replace
 
 #> cool admin msg is cool
-tellraw @a[tag=rx.admin] ["", {"text":"P","color":"#dd9b14"},{"text":"l","color":"#df9412"},{"text":"a","color":"#e18e10"},{"text":"y","color":"#e3880e"},{"text":"e","color":"#e5810c"},{"text":"r","color":"#e77b0a"},{"text":"D","color":"#e97508"},{"text":"B","color":"#eb6f07"}, " ", {"text":"L","color":"#dd9b14"},{"text":"o","color":"#df9211"},{"text":"a","color":"#e2890e"},{"text":"d","color":"#e5800c"},{"text":"e","color":"#e87709"},{"text":"d","color":"#eb6f07"}]
+tellraw @a[tag=rx.admin] [{"nbt": "playerdb.pretty_name", "storage": "rx:info", "interpret": true}, " ", {"text":"L","color":"#dd9b14"},{"text":"o","color":"#df9211"},{"text":"a","color":"#e2890e"},{"text":"d","color":"#e5800c"},{"text":"e","color":"#e87709"},{"text":"d","color":"#eb6f07"}]
