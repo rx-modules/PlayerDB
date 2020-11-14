@@ -16,5 +16,4 @@ data modify storage rx:info playerdb.pretty_name set value '[{"text":"P","color"
 #> Upgrade? I chk the $256 bc none of my other datapacks have that
 execute unless data storage rx:info playerdb.version if score $256 rx.int matches 256 run function rx.playerdb:impl/update/v07tov08
 
-#> If PlayerDB doesn't exist, good to go!
-execute unless data storage rx:info playerdb.version run function rx.playerdb:init
+function rx.playerdb:init

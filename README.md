@@ -75,12 +75,12 @@ Once you've copied `Load` into your datapack, navigate to the `#load:load` funct
         ]
     }
 
-Then, make sure you have defined an empty `#load:rx/playerdb` and in your own `#load` tag, you should define your personal load function. This will ensure PlayerDB's load will occur before yours. If PlayerDB does not exist, load will continue and you can detect this by checking the `PlayerDB load` score. For an example of all of this, checkout [EnderChest+](https://github.com/RitikShah/EnderChestPlus/tree/master/data/load) as an example of a datapack relying on PlayerDB.
+Then, make sure you have defined an empty `#load:rx/playerdb` and in your own `#load` tag, you should define your personal load function. This will ensure PlayerDB's load will occur before yours. If PlayerDB does not exist, load will continue and you can detect this by checking the `PlayerDB load` score. For an example of all of this, checkout [EnderChest+](https://github.com/rx-modules/EnderChestPlus/tree/master/data/load) as an example of a datapack relying on PlayerDB.
 
 
 ## Some examples
 
-[EnderChest+](https://github.com/RitikShah/EnderChestPlus)
+[EnderChest+](https://github.com/rx-modules/EnderChestPlus)
 This datapack allows for expandable EnderChests with complete multiplayer compatability!
 
 ## Technical bits
