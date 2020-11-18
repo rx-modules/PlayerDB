@@ -15,11 +15,12 @@ ITERATIONS = math.log(MAX_INT, BASE) + 1
 TREE = 'execute if score $bit rx.temp matches {low}..{high} run function rx.playerdb:impl/select/bit{num}/{low}_{high}'  # noqa: E501
 
 LEAF = (
-    'execute if score $bit rx.temp matches @ if data storage rx:global playerdb.players[{bits:{b%:@b}}] run data modify storage rx:global playerdb.players[{bits:{b%:@b}}].bits.select set value 1b'  # noqa: E501
+    'execute if score $bit rx.temp matches @ if data storage rx:global playerdb.players[{bits:{b%:@b}}] store result score $size rx.temp run data modify storage rx:global playerdb.players[{selected:1b, bits:{b%:@b}}].bits.select set value 1b'  # noqa: E501
 )
 
 
 def make_file(path, content):
+    global file_count, cmd_count
     if isinstance(content, list) or isinstance(content, tuple):
         content = '\n'.join(content)
 
@@ -37,7 +38,7 @@ def gen_bit(bit_num):
         f'function rx.playerdb:impl/select/bit{bit_num}/0_{BASE-1}\n'
         f'scoreboard players operation $uid rx.temp /= ${BASE} rx.int\n'
         'data modify storage rx:global playerdb.players[{bits:{select:0b}}].selected set value 0b\n'
-        'execute store result score $size rx.temp if data storage rx:global playerdb.players[{selected:1b}]\n'  # noqa: E501
+        # 'execute store result score $size rx.temp if data storage rx:global playerdb.players[{selected:1b}]\n'  # noqa: E501
         f'execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit{bit_num+1}\n'  # noqa: E501
     )
     fname = Path(f'bit{bit_num}.mcfunction')

@@ -35,7 +35,7 @@ scoreboard players set $64 rx.int 64
 scoreboard players set $256 rx.int 256
 
 #> semver!
-data modify storage rx:info playerdb.version set value {major: 0, minor: 8}
+data modify storage rx:info playerdb.version set value {major: 0, minor: 9}
 
 #> start our tick loop
 schedule function rx.playerdb:tick 1t replace

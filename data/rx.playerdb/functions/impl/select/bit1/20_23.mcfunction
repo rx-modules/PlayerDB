@@ -1,5 +1,5 @@
 # By: rx97
-execute if score $bit rx.temp matches 20 if data storage rx:global playerdb.players[{bits:{b1:20b}}] run data modify storage rx:global playerdb.players[{bits:{b1:20b}}].bits.select set value 1b
-execute if score $bit rx.temp matches 21 if data storage rx:global playerdb.players[{bits:{b1:21b}}] run data modify storage rx:global playerdb.players[{bits:{b1:21b}}].bits.select set value 1b
-execute if score $bit rx.temp matches 22 if data storage rx:global playerdb.players[{bits:{b1:22b}}] run data modify storage rx:global playerdb.players[{bits:{b1:22b}}].bits.select set value 1b
-execute if score $bit rx.temp matches 23 if data storage rx:global playerdb.players[{bits:{b1:23b}}] run data modify storage rx:global playerdb.players[{bits:{b1:23b}}].bits.select set value 1b
+execute if score $bit rx.temp matches 20 if data storage rx:global playerdb.players[{bits:{b1:20b}}] store result score $size rx.temp run data modify storage rx:global playerdb.players[{selected:1b, bits:{b1:20b}}].bits.select set value 1b
+execute if score $bit rx.temp matches 21 if data storage rx:global playerdb.players[{bits:{b1:21b}}] store result score $size rx.temp run data modify storage rx:global playerdb.players[{selected:1b, bits:{b1:21b}}].bits.select set value 1b
+execute if score $bit rx.temp matches 22 if data storage rx:global playerdb.players[{bits:{b1:22b}}] store result score $size rx.temp run data modify storage rx:global playerdb.players[{selected:1b, bits:{b1:22b}}].bits.select set value 1b
+execute if score $bit rx.temp matches 23 if data storage rx:global playerdb.players[{bits:{b1:23b}}] store result score $size rx.temp run data modify storage rx:global playerdb.players[{selected:1b, bits:{b1:23b}}].bits.select set value 1b
