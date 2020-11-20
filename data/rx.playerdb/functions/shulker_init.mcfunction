@@ -16,8 +16,8 @@ scoreboard objectives add rx.temp dummy
 scoreboard objectives add rx.pdb.list dummy
 scoreboard objectives add rx.pdb.HasEntry dummy
 
-scoreboard objectives add rx.List trigger
-scoreboard objectives add rx.login minecraft.custom:minecraft.leave_game
+scoreboard objectives add rx.pdb.LT trigger
+scoreboard objectives add rx.pbb.login minecraft.custom:minecraft.leave_game
 
 #> 0.8: uuid storage
 scoreboard objectives add rx.uuid0 dummy
@@ -36,7 +36,7 @@ scoreboard players set $64 rx.int 64
 scoreboard players set $256 rx.int 256
 
 #> semver!
-data modify storage rx:info playerdb.version set value {major: 0, minor: 8}
+data modify storage rx:info playerdb.version set value {major: 0, minor: 9}
 
 #> cool admin msg is cool
 tellraw @a[tag=rx.admin] [{"nbt": "playerdb.pretty_name", "storage": "rx:info", "interpret": true}, " ", {"text":"L","color":"#dd9b14"},{"text":"o","color":"#df9211"},{"text":"a","color":"#e2890e"},{"text":"d","color":"#e5800c"},{"text":"e","color":"#e87709"},{"text":"d","color":"#eb6f07"}]

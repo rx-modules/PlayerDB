@@ -3,5 +3,5 @@
 # 
 #> Checks Logins. Called from #minecraft:tick
 
-scoreboard players enable @a rx.List
+scoreboard players enable @a rx.pdb.LT
 execute as @a run function rx.playerdb:player

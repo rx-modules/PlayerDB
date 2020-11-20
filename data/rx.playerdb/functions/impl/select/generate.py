@@ -7,6 +7,7 @@ COMMENT = (
 )
 
 BASE = 64
+BRANCHES = 8
 MAX_INT = 2**31-1
 
 ITERATIONS = math.log(MAX_INT, BASE) + 1
@@ -46,26 +47,33 @@ def gen_bit(bit_num):
 
 
 def gen_tree(bit_num, low, high):
-    change = (high - low) // 4
-    if low + 4 < high:
-        tree = (
-            TREE.format(low=low, high=low+change-1, num=bit_num),
-            TREE.format(low=low+change, high=low+change*2-1, num=bit_num),
-            TREE.format(low=low+change*2, high=low+change*3-1, num=bit_num),
-            TREE.format(low=low+change*3, high=high-1, num=bit_num),
+    change = (high - low) // BRANCHES
+
+    low_values = [low + change * i for i in range(BRANCHES)]
+    high_values = [(low + change * (i+1)) for i in range(BRANCHES)]
+
+    # print(low_values)
+    # print(high_values)
+
+    values = list(zip(low_values, high_values))
+
+    if low + BRANCHES < high:
+        tree = tuple(
+            TREE.format(low=value[0], high=value[1]-1, num=bit_num)
+            for value in values
         )
+
         make_file(Path(f'bit{bit_num}/{low}_{high-1}.mcfunction'), tree)
-        gen_tree(bit_num, low, change)
-        gen_tree(bit_num, low+change, low+change*2)
-        gen_tree(bit_num, low+change*2, low+change*3)
-        gen_tree(bit_num, low+change*3, high)
+
+        for value in values:
+            gen_tree(bit_num, value[0], value[1])
 
     else:
         leaf = tuple(
             LEAF.replace('@', str(low+i)).replace('%', str(bit_num))
-            for i in range(4)
+            for i in range(BRANCHES)
         )
-        make_file(Path(f'bit{bit_num}/{low}_{low+3}.mcfunction'), leaf)
+        make_file(Path(f'bit{bit_num}/{low}_{low+BRANCHES-1}.mcfunction'), leaf)
 
 
 def main():
