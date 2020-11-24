@@ -1,4 +1,3 @@
-from datetime import datetime
 import math
 
 BASE = 64
@@ -29,5 +28,5 @@ for i in range(0, int(math.log(MAX_INT, BASE)) + 2):
         out.append(debug_line.replace('^', str(i)))
     out.append('\n')
 
-with open(f'uid_to_bits.mcfunction', 'w') as file:
+with open('uid_to_bits.mcfunction', 'w') as file:
     file.write('\n'.join(out))
