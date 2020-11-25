@@ -13,15 +13,32 @@ execute store result score $uuid1 rx.temp run data get storage rx:temp playerdb.
 execute store result score $uuid2 rx.temp run data get storage rx:temp playerdb.UUID[2]
 execute store result score $uuid3 rx.temp run data get storage rx:temp playerdb.UUID[3]
 
+#> select uuid since we'll need it later
+scoreboard players operation $uid rx.temp = @s rx.uuid0
+function rx.playerdb:impl/uuid/select
+
+#> get player name as we'll also need it later
+function rx.playerdb:impl/get_name
+
+#> chk if name is actually stored :P backwards compat !
+execute unless data storage rx:global playerdb.uuid[{selected:1b}].name run data modify storage rx:global playerdb.uuid[{selected:1b}].name set from storage rx:temp playerdb.player_name
+
 #> test fakeplayer against scoreboard scores
 scoreboard players set $success rx.temp 0
 execute if score $uuid0 rx.temp = @s rx.uuid0 if score $uuid1 rx.temp = @s rx.uuid1 if score $uuid2 rx.temp = @s rx.uuid2 if score $uuid3 rx.temp = @s rx.uuid3 run scoreboard players set $success rx.temp 1
 
 #> if $success == 1:
-#>   do nothing
+#>   store name in UUID onto name in cache temp
+#>   if copy succeeded:
+#>     the name changed, 0 -> $success
+#>   else:
+#>     $success remains 1
+execute if score $success rx.temp matches 1 run data modify storage rx:temp playerdb.name_cache set from storage rx:temp playerdb.player_name
+execute if score $success rx.temp matches 1 store result score $copy rx.temp run data modify storage rx:temp playerdb.name_cache set from storage rx:global playerdb.uuid[{selected:1b}].name
+execute if score $success rx.temp matches 1 if score $copy rx.temp matches 1 run scoreboard players set $success rx.temp 0
 
 #> elif $success == 0:
-#>   name change!
+#>   name has changed!
 #>   reset the scores like they should be and let's do our normal name change stuff
 execute if score $success rx.temp matches 0 run scoreboard players reset @s rx.uid
 execute if score $success rx.temp matches 0 run scoreboard players reset @s rx.pdb.HasEntry
@@ -32,4 +49,4 @@ execute if score $success rx.temp matches 0 run scoreboard players reset @s rx.u
 execute if score $success rx.temp matches 0 run scoreboard players reset @s rx.pdb.list 
 execute if score $success rx.temp matches 0 run function rx.playerdb:impl/uuid/set
 
-scoreboard players set @s rx.login 0
+scoreboard players reset @s rx.login

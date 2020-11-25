@@ -13,8 +13,11 @@ function rx.playerdb:impl/uid_to_bits
 data modify storage rx:global playerdb.uuid append from storage rx:global playerdb.players[-1]
 data remove storage rx:global playerdb.players[-1]
 
+function rx.playerdb:impl/get_name
+
 #> other info
 data modify storage rx:global playerdb.uuid[-1].entries append value {}
 execute store result storage rx:global playerdb.uuid[-1].entries[-1].uid int 1 run scoreboard players get @s rx.uid
 execute store result storage rx:global playerdb.uuid[-1].entries[-1].hasEntry byte 1 run scoreboard players get @s rx.pdb.HasEntry
+data modify storage rx:global playerdb.uuid[-1].entries[-1].name set from storage rx:temp playerdb.player_name 
 data modify storage rx:global playerdb.uuid[-1].entries[-1].UUID set from storage rx:temp playerdb.UUID
