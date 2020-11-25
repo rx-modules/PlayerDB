@@ -39,7 +39,7 @@ def gen_bit(bit_num):
         'scoreboard players set $size rx.temp 0\n'
         f'function rx.playerdb:impl/select/bit{bit_num}/0_{BASE-1}\n'
         f'scoreboard players operation $uid rx.temp /= ${BASE} rx.int\n'
-        'data modify storage rx:global playerdb.players[{bits:{select:0b}}].selected set value 0b\n'
+        'execute if data storage rx:global playerdb.players[{bits:{select:0b}}] run data modify storage rx:global playerdb.players[{bits:{select:0b}}].selected set value 0b\n'  # noqa
         f'execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit{bit_num+1}\n'  # noqa: E501
     )
     fname = Path(f'bit{bit_num}.mcfunction')

@@ -34,7 +34,7 @@ execute if score $uuid0 rx.temp = @s rx.uuid0 if score $uuid1 rx.temp = @s rx.uu
 #>   else:
 #>     $success remains 1
 execute if score $success rx.temp matches 1 run data modify storage rx:temp playerdb.name_cache set from storage rx:temp playerdb.player_name
-execute if score $success rx.temp matches 1 store result score $copy rx.temp run data modify storage rx:temp playerdb.name_cache set from storage rx:global playerdb.uuid[{selected:1b}].name
+execute if score $success rx.temp matches 1 store result score $copy rx.temp run data modify storage rx:temp playerdb.name_cache set from storage rx:global playerdb.uuid[{selected:1b}].entries[-1].name
 execute if score $success rx.temp matches 1 if score $copy rx.temp matches 1 run scoreboard players set $success rx.temp 0
 
 #> elif $success == 0:
@@ -49,4 +49,4 @@ execute if score $success rx.temp matches 0 run scoreboard players reset @s rx.u
 execute if score $success rx.temp matches 0 run scoreboard players reset @s rx.pdb.list 
 execute if score $success rx.temp matches 0 run function rx.playerdb:impl/uuid/set
 
-scoreboard players reset @s rx.login
+scoreboard players reset @s rx.pdb.login

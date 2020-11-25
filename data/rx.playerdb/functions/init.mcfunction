@@ -15,6 +15,7 @@ scoreboard objectives add rx.temp dummy
 scoreboard objectives add rx.pdb.list dummy
 scoreboard objectives add rx.pdb.HasEntry dummy
 
+# list trigger
 scoreboard objectives add rx.pdb.LT trigger
 scoreboard objectives add rx.pdb.login minecraft.custom:minecraft.leave_game
 

@@ -1,38 +1,35 @@
 # By: rx97
-# 23 Nov 20
-# 
-#> generates the bits for the last entry
 
 scoreboard players operation $bit rx.temp = $uid rx.temp
-execute store result storage rx:global playerdb.players[-1].bits.b0 byte 1 run scoreboard players operation $bit rx.temp %= $64 rx.int
+execute store result storage rx:temp playerdb.bits.b0 byte 1 run scoreboard players operation $bit rx.temp %= $64 rx.int
 
 
 scoreboard players operation $uid rx.temp /= $64 rx.int
 scoreboard players operation $bit rx.temp = $uid rx.temp
-execute store result storage rx:global playerdb.players[-1].bits.b1 byte 1 run scoreboard players operation $bit rx.temp %= $64 rx.int
+execute store result storage rx:temp playerdb.bits.b1 byte 1 run scoreboard players operation $bit rx.temp %= $64 rx.int
 
 
 scoreboard players operation $uid rx.temp /= $64 rx.int
 scoreboard players operation $bit rx.temp = $uid rx.temp
-execute store result storage rx:global playerdb.players[-1].bits.b2 byte 1 run scoreboard players operation $bit rx.temp %= $64 rx.int
+execute store result storage rx:temp playerdb.bits.b2 byte 1 run scoreboard players operation $bit rx.temp %= $64 rx.int
 
 
 scoreboard players operation $uid rx.temp /= $64 rx.int
 scoreboard players operation $bit rx.temp = $uid rx.temp
-execute store result storage rx:global playerdb.players[-1].bits.b3 byte 1 run scoreboard players operation $bit rx.temp %= $64 rx.int
+execute store result storage rx:temp playerdb.bits.b3 byte 1 run scoreboard players operation $bit rx.temp %= $64 rx.int
 
 
 scoreboard players operation $uid rx.temp /= $64 rx.int
 scoreboard players operation $bit rx.temp = $uid rx.temp
-execute store result storage rx:global playerdb.players[-1].bits.b4 byte 1 run scoreboard players operation $bit rx.temp %= $64 rx.int
+execute store result storage rx:temp playerdb.bits.b4 byte 1 run scoreboard players operation $bit rx.temp %= $64 rx.int
 
 
 scoreboard players operation $uid rx.temp /= $64 rx.int
 scoreboard players operation $bit rx.temp = $uid rx.temp
-execute store result storage rx:global playerdb.players[-1].bits.b5 byte 1 run scoreboard players operation $bit rx.temp %= $64 rx.int
+execute store result storage rx:temp playerdb.bits.b5 byte 1 run scoreboard players operation $bit rx.temp %= $64 rx.int
 
 
 scoreboard players operation $uid rx.temp /= $64 rx.int
 scoreboard players operation $bit rx.temp = $uid rx.temp
-execute store result storage rx:global playerdb.players[-1].bits.b6 byte 1 run scoreboard players operation $bit rx.temp %= $64 rx.int
+execute store result storage rx:temp playerdb.bits.b6 byte 1 run scoreboard players operation $bit rx.temp %= $64 rx.int
 

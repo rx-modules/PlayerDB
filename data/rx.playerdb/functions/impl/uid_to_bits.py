@@ -13,7 +13,7 @@ COMMENT = (
 lines = (
     f'scoreboard players operation $uid rx.temp /= ${BASE} rx.int',
     'scoreboard players operation $bit rx.temp = $uid rx.temp',
-    'execute store result storage rx:global playerdb.players[-1].bits.b{bit} byte 1 run scoreboard players operation $bit rx.temp %= ${base} rx.int',  # noqa: E501
+    'execute store result storage rx:temp playerdb.bits.b{bit} byte 1 run scoreboard players operation $bit rx.temp %= ${base} rx.int',  # noqa: E501
 )
 
 debug_line = 'tellraw @s[tag=rx.PDBDebug] [{"text":"", "color":"gold"}, {"text":"bit^: "}, {"score":{"name":"$bit", "objective":"rx.temp"}}]'  # noqa: E501

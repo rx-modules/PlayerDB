@@ -25,6 +25,9 @@ data modify storage rx:global playerdb.players[-1].selected set value 1b
 scoreboard players operation $uid rx.temp = @s rx.uid
 function rx.playerdb:impl/uid_to_bits
 
+#> copy bits
+data modify storage rx:global playerdb.players[-1].bits set from storage rx:temp playerdb.bits
+
 #> update uuidDB
 data modify storage rx:temp playerdb.UUID set from storage rx:global playerdb.players[-1].info.UUID
 function rx.playerdb:impl/uuid/select

@@ -11,4 +11,4 @@ execute unless score @s rx.uuid0 = @s rx.uuid0 run function rx.playerdb:impl/uui
 execute if score @s rx.pdb.login matches 1.. run function rx.playerdb:impl/uuid/check
 
 # list bs
-execute unless score @s rx.List matches 0 run function rx.playerdb:admin/list
+execute unless score @s rx.pdb.LT matches 0 run function rx.playerdb:admin/list
