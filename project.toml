@@ -60,9 +60,3 @@ name-format = '{title} {version} {release_name}'
 			]
 		[[releases.shulker.rules]]
 			regex = {'rx.uid' = 'UUID'}
-
-	[releases.dev]
-		[[releases.shulker.rules]]
-			include = ['test/*']
-		[[releases.shulker.rules]]
-			ignore = ['.DS_Store']
