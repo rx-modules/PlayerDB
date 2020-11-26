@@ -32,7 +32,7 @@ As previously mentioned, this solution is an alternative to other solutions whic
 This datapack assigns a unique id to each player via a scoreboard: rx.uid. In order to access the data, you need an uid to search the database with. Secondly, the database only creates an entry when it is requested or explicitly created. I've listed some examples ranging from easy to complex.
 
 <details>
-<summary>**Storing simple data**</summary>
+<summary>Storing simple data</summary>
 <br>
 
 This will get `@s`'s database entry. If it does not exist, it'll dynamically create it
@@ -52,7 +52,7 @@ Finally, let's save our data!
 </details>
 
 <details>
-<summary>**Getting some previously stored data**</summary>
+<summary>Getting some previously stored data</summary>
 <br>
 
     function rx.playerdb:api/get_self
@@ -63,7 +63,7 @@ Finally, let's save our data!
 </details>
 
 <details>
-<summary>**Getting someone else's data**</summary>
+<summary>Getting someone else's data</summary>
 <br>
     
 Sometimes, we don't want to get our own data, but someone elses. Let's say that we have someone else's id stored in author.obj
@@ -83,7 +83,7 @@ Sometimes, we don't want to get our own data, but someone elses. Let's say that 
 </details>
 
 <details>
-<summary>**Misc Things**</summary>
+<summary>Misc Things</summary>
 <br>
     
 We can manually add a player entry for `@s` via
@@ -112,7 +112,7 @@ This will provide more debug information and a cool load message (*Note that I u
 </details>
 
 <details>
-<summary>**Listing all the players stored in the database**</summary>
+<summary>Listing all the players stored in the database</summary>
 <br>
     
 This just pulls up a clickable tellraw menu for player `@s` in chat
@@ -124,7 +124,7 @@ Note that anyone can click these buttons, but only an operator can run this func
 </details>
 
 <details>
-<summary>**Admin tools for testing and for servers**</summary>
+<summary>Admin tools for testing and for servers</summary>
 <br>
     
     function rx.playerdb:admin/reset_all      # This will nuke the database and all ids, no warning!
@@ -134,7 +134,7 @@ Note that anyone can click these buttons, but only an operator can run this func
 </details>
 
 <details>
-<summary>**Dynamically prepping entries when they are added**</summary>
+<summary>Dynamically prepping entries when they are added</summary>
 <br>
     
 The function tag, `#rx.playerdb:api/on_entry_add`, allows a function to be ran when an entry is added. Just plop a function tag with the function you want to fire. This function will fire before a `api/get_self` completes allowing you to intercept the creation ;)
@@ -146,7 +146,7 @@ The player data will already be stored in rx:io playerdb.player.data and will au
 </details>
 
 <details>
-<summary>**Name changes: how to handle them**</summary>
+<summary>Name changes: how to handle them</summary>
 <br>
     
 PlayerDB has a nifty feature of having data persist on a name change (no leftover data, etc), This allows you to cache your scoreboard scores, which are name specific, in the database. 
