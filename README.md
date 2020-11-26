@@ -29,17 +29,17 @@ As previously mentioned, this solution is an alternative to other solutions whic
 
 ## How to use
 
-This datapack assigns a unique id to each player via a scoreboard: rx.uid. In order to access the data, you need an uid to search the database with. Secondly, the database only creates an entry when it is requested or explicitly created. I've listed some examples ranging from easy to complex.
+This datapack assigns a unique id to each player via a scoreboard: `rx.uid`. In order to access the data, you need an uid to search the database with. Secondly, the database only creates an entry when it is requested or explicitly created. I've listed some examples ranging from easy to complex.
 
 <details>
 <summary><b>Storing simple data</b></summary>
 <br>
 
-This will get `@s`'s database entry. If it does not exist, it'll dynamically create it
+This will get `@s`'s database entry. If it does not exist, it'll dynamically create it.
 
     function rx.playerdb:api/get_self
 
-Our data is available at rx:io playerdb.player.data. We should write some data, notice how we organized our data by author.cool_pack
+Our data is available at `rx:io playerdb.player.data`. We should write some data, notice how we organized our data by `author.cool_pack`.
 
     data modify storage rx:io playerdb.player.data.author.cool_pack set value {eggs: 3b}
 
@@ -68,7 +68,7 @@ Finally, let's save our data!
 <summary><b>Getting someone else's data</b></summary>
 <br>
     
-Sometimes, we don't want to get our own data, but someone elses. Let's say that we have someone else's id stored in author.obj
+Sometimes, we don't want to get our own data, but someone elses. Let's say that we have someone else's id stored in `author.obj`.
 
     scoreboard players operation $in.uid rx.io = @s author.obj
 
@@ -89,13 +89,12 @@ Sometimes, we don't want to get our own data, but someone elses. Let's say that 
 <summary><b>Misc Things</b></summary>
 <br>
     
-We can manually add a player entry for `@s` via
+We can manually add a player entry for `@s` via:
     
     function rx.playerdb:api/add_entry
 
 We can also 'select' our data for `$in.uid rx:io`
-This exposing some internal logic, essentially outputs an entry @ rx:global playerdb.players[{selected:1b}]
-This does interface with the live database, so you'll wanna becareful if you are using this
+This exposing some internal logic, essentially outputs an entry @ `rx:global playerdb.players[{selected:1b}]`. This does interface with the live database, so you'll wanna be careful if you are using this.
 
     scoreboard players operation $in.uid rx.io = @s rx.uid
     function rx.playerdb:api/select
@@ -119,11 +118,11 @@ This will provide more debug information and a cool load message (*Note that I u
 <summary><b>Listing all the players stored in the database</b></summary>
 <br>
     
-This just pulls up a clickable tellraw menu for player `@s` in chat
+This just pulls up a clickable tellraw menu for player `@s` in chat.
 
     function rx.playerdb:admin/list
 
-Note that anyone can click these buttons, but only an operator can run this function
+Note that anyone can click these buttons, but only an operator can run this function.
 
 <br>
 </details>
@@ -162,7 +161,7 @@ There are two great ways of doing this:
 1. Caching scores on a slow clock (maybe every 5 minutes)
 2. Caching scores when they change
 
-I prefer 2 since it leaves little to no room for error. If you wish to see an example of this, check out [Enderchest+](https://github.com/rx-modules/EnderChestPlus/blob/master/data/rx.ec/functions/setup.mcfunction)
+I prefer 2 since it leaves little to no room for error. If you wish to see an example of this, check out [Enderchest+](https://github.com/rx-modules/EnderChestPlus/blob/master/data/rx.ec/functions/setup.mcfunction).
 
     # I like to store the scores in a specific `scores` object so they are easy to identify
     function rx.playerdb:api/get_self
@@ -174,7 +173,7 @@ The function tag, `#rx.playerdb:api/on_name_change`, allows a function to be ran
     execute if score @s rx.pdb.HasEntry matches 1 store result score @s eggs run data get storage rx:io playerdb.player.data.author.cool_pack.eggs
     tellraw @a ["Yo, ", {"selector": "@s"}, " changed their name from ", {"storage": "rx:io", "nbt": "playerdb.old_name"}]
 
-Make sure you prepend `execute if score @s rx.pdb.HasEntry matches 1` to any `data get` you perform otherwise, you might just be getting null data (which automatically gives 0 in minecraft)
+Make sure you prepend `execute if score @s rx.pdb.HasEntry matches 1` to any `data get` you perform otherwise, you might just be getting null data (*which automatically gives 0 in minecraft*).
 
 <br>
 </details>
@@ -216,12 +215,13 @@ Saving will usually filter (although there's some optimizations to skip that if 
 
 ## Shoutouts
 
-* Speedy2025#2025 - Helped me test it to make sure I never broke it. Biggest supporter lmao!
+* You :) - For checking out my GH page :D!
+* Speedy2025#2025 - Helped me test it to make sure I never broke it.
 * the der discohund#8028 - Biggest boost on optimization (selection > copying)
 * nphhpn#0575 - Gave me some advice on optimizations!
-* AmberW#4615 - She threw out the initial idea and I've built on from that
-* vdvman1#9510 - For helping me figure out some of the nbt manipulation nonsense (and some optimizations)
-* [r/minecraftcommands discord](https://discord.gg/QAFXFtZ) - Pretty helpful w/ feedback and good community, check it out!
+* AmberW#4615 - She threw out the initial idea and I've built on from that.
+* vdvman1#9510 - For helping me figure out some of the nbt manipulation nonsense (and some optimizations).
+* [r/minecraftcommands discord](https://discord.gg/QAFXFtZ) - Pretty helpful w/ feedback and a great community, check it out!
 
 
 ## Endnote
