@@ -1,7 +1,7 @@
 # By: rx97
 # 21 Sept 20
 # 
-#> Removes player entry + their uid from system
+#> Removes player entry
 #> input:
 #> * player to delete: @s
 

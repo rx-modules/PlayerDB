@@ -35,4 +35,6 @@ data modify storage rx:global playerdb.uuid[{selected:1b}].entries[-1].hasEntry 
 scoreboard players set @s rx.pdb.HasEntry 1
 
 #> api
+data modify storage rx:io playerdb.player set from storage rx:global playerdb.players[{selected:1b}]
 function #rx.playerdb:api/on_entry_add
+data modify storage rx:global playerdb.players[{selected:1b}].data set from storage rx:io playerdb.player.data

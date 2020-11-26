@@ -29,37 +29,142 @@ As previously mentioned, this solution is an alternative to other solutions whic
 
 ## How to use
 
-This datapack assigns a unique id to each player via a scoreboard: rx.uid. In order to access the data, you need an uid to search the database with. Secondly, the database only creates an entry when it is requested or explicitly created.
+This datapack assigns a unique id to each player via a scoreboard: rx.uid. In order to access the data, you need an uid to search the database with. Secondly, the database only creates an entry when it is requested or explicitly created. I've listed some examples ranging from easy to complex.
 
-Basic usage as follows:
+<details>
+<summary>Storing simple data</summary>
 
-    # This function will get `@s`'s current database entry
-    # If you do not have an entry, it will create one for you
+This will get `@s`'s database entry. If it does not exist, it'll dynamically create it
+
     function rx.playerdb:api/get_self
 
-    # You can also get a different player's entry via a similiar method
-    scoreboard players set $in.uid rx.io #
-    function rx.playerdb:api/get
-    
-    # Now, the data I want to manipulate is in rx:io playerdb.player
-    data modify storage rx:io playerdb.player.data set value {test:1b}
-    
-    # Afterwards, we can save this data..
+Our data is available at rx:io playerdb.player.data. We should write some data, notice how we organized our data by author.cool_pack
+
+    data modify storage rx:io playerdb.player.data.author.cool_pack set value {eggs: 3b}
+
+Note that we stored our data in `author.cool_pack`. Namespacing our data allows us to have better compatibility with other packs!
+
+Finally, let's save our data!
+
     function rx.playerdb:api/save_self
+
+</details>
+
+<details>
+<summary>Getting some previously stored data</summary>
+
+    function rx.playerdb:api/get_self
+    execute store result score @s eggs run data get storage rx:io playerdb.player.data.author.cool_pack.eggs
+
+    # No need to save, we are just reading
+
+</details>
+
+<details>
+<summary>Getting someone else's data</summary>
     
-    # And the alternative version for input via fakeplayer
-    function rx.playerdb:api/save
+Sometimes, we don't want to get our own data, but someone elses. Let's say that we have someone else's id stored in author.obj
+
+    scoreboard players operation $in.uid rx.io = @s author.obj
+
+    # Note that we are using `api/get` here, `get` will **not** make a new entry on the fly
+    function rx.playerdb:api/get
+
+    # Let's hope they had some eggs stored, I was running out
+    execute store result score @s eggs run data get storage rx:io playerdb.player.data.author.cool_pack.eggs
+
+    # No need to save, we are just reading someone else's data ;)
+    # If we were to... steal some eggs, we could save that change via:
+    #     function rx.playerdb:api/save
+
+</details>
+
+<details>
+<summary>Misc Things</summary>
     
-    # If we need to list all the players in the database:
+We can manually add a player entry for `@s` via
+    
+    function rx.playerdb:api/add_entry
+
+We can also 'select' our data for `$in.uid rx:io`
+This exposing some internal logic, essentially outputs an entry @ rx:global playerdb.players[{selected:1b}]
+This does interface with the live database, so you'll wanna becareful if you are using this
+
+    scoreboard players operation $in.uid rx.io = @s rx.uid
+    function rx.playerdb:api/select
+
+    # (Note: select is much faster than a `get`/`save` which is why I've included in the api)
+
+We can check whether or not a player a database entry. This incentivizes not creating a db entry for every player, but rather creating them dynamically when you need them. You can hook into the `#api/on_entry_add` function tag which is talked about in a later section.
+
+    execute if score @s rx.pdb.HasEntry matches 1 run ...
+
+Finally, if you want to see some debug info..
+
+    tag @s add rx.admin
+
+This will provide more debug information and a cool load message (*Note that I use this for all my packs*)!
+
+</details>
+
+<details>
+<summary>Listing all the players stored in the database</summary>
+    
+This just pulls up a clickable tellraw menu for player `@s` in chat
+
     function rx.playerdb:admin/list
+
+Note that anyone can click these buttons, but only an operator can run this function
+
+</details>
+
+<details>
+<summary>Admin tools for testing and for servers</summary>
     
-    # Now, there are some handy admin tools
-    function rx.playerdb:admin/reset_all  # WARNING, resets entire db
-    function rx.playerdb:admin/delete_player # resets @s player
-    function rx.playerdb:admin/remove_entry  # removes entry from $in.uid rx.io
-    execute as player run function rx.playerdb:admin/replace_entry # replaces entry $in.uid rx.io w/ @s
- 
- 
+    function rx.playerdb:admin/reset_all      # This will nuke the database and all ids, no warning!
+    function rx.playerdb:admin/delete_player  # This will remove `@s`'s entry from the database
+    function rx.playerdb:admin/remove_entry   # This will remove `$in.uid rx.io`'s entry from the database
+
+</details>
+
+<details>
+<summary>Dynamically prepping entries when they are added</summary>
+    
+The function tag, `#rx.playerdb:api/on_entry_add`, allows a function to be ran when an entry is added. Just plop a function tag with the function you want to fire. This function will fire before a `api/get_self` completes allowing you to intercept the creation ;)
+
+The player data will already be stored in rx:io playerdb.player.data and will automatically save for you. Do **not** call `api/save_self`, just modify the data!
+    
+    data modify storage rx:io playerdb.player.data.author.cool_pack set value {eggs: 0b}  # No eggs :(
+
+</details>
+
+<details>
+<summary>Name changes: how to handle them</summary>
+    
+PlayerDB has a nifty feature of having data persist on a name change (no leftover data, etc), This allows you to cache your scoreboard scores, which are name specific, in the database. 
+
+There are two great ways of doing this:
+1. Caching scores on a slow clock (maybe every 5 minutes)
+2. Caching scores when they change
+
+I prefer 2 since it leaves little to no room for error. If you wish to see an example of this, check out [Enderchest+](https://github.com/rx-modules/EnderChestPlus/blob/master/data/rx.ec/functions/setup.mcfunction)
+
+    # I like to store the scores in a specific `scores` object so they are easy to identify
+    function rx.playerdb:api/get_self
+    execute store result data storage rx:io playerdb.player.data.author.cool_pack.scores.eggs run scoreboard players get @s eggs
+
+Once we implement this system, we have to implement a system to retrieve these scores when a name is changed. 
+The function tag, `#rx.playerdb:api/on_name_change`, allows a function to be ran when a player changes their name. This allows you to access the old name, `rx:io playerdb.old_name` and the data **if it has been created**.
+
+    execute if score @s rx.pdb.HasEntry matches 1 store result score @s eggs run data get storage rx:io playerdb.player.data.author.cool_pack.eggs
+    tellraw @a ["Yo, ", {"selector": "@s"}, " changed their name from ", {"storage": "rx:io", "nbt": "playerdb.old_name"}]
+
+Make sure you prepend `execute if score @s rx.pdb.HasEntry matches 1` to any `data get` you perform otherwise, you might just be getting null data (which automatically gives 0 in minecraft)
+
+
+</details>
+
+
 ## Lantern Load
 
 This project uses [Lantern Load](https://github.com/LanternMC/Load). This allows you to ensure your datapack loads after library to ensure you are able to use everything this datapack provides. You can also detect whether this library is loaded by checking `if score PlayerDB load matches 1..`. Note: You don't necessarily need to use Lantern Load for your pack, since using this pack is more often happening in a ticking function instead of on load.  
