@@ -32,7 +32,7 @@ As previously mentioned, this solution is an alternative to other solutions whic
 This datapack assigns a unique id to each player via a scoreboard: rx.uid. In order to access the data, you need an uid to search the database with. Secondly, the database only creates an entry when it is requested or explicitly created. I've listed some examples ranging from easy to complex.
 
 <details>
-<summary>Storing simple data</summary>
+<summary><b>Storing simple data</b></summary>
 <br>
 
 This will get `@s`'s database entry. If it does not exist, it'll dynamically create it
@@ -49,10 +49,11 @@ Finally, let's save our data!
 
     function rx.playerdb:api/save_self
 
+<br>
 </details>
 
 <details>
-<summary>Getting some previously stored data</summary>
+<summary><b>Getting some previously stored data</b></summary>
 <br>
 
     function rx.playerdb:api/get_self
@@ -60,10 +61,11 @@ Finally, let's save our data!
 
     # No need to save, we are just reading
 
+<br>
 </details>
 
 <details>
-<summary>Getting someone else's data</summary>
+<summary><b>Getting someone else's data</b></summary>
 <br>
     
 Sometimes, we don't want to get our own data, but someone elses. Let's say that we have someone else's id stored in author.obj
@@ -80,10 +82,11 @@ Sometimes, we don't want to get our own data, but someone elses. Let's say that 
     # If we were to... steal some eggs, we could save that change via:
     #     function rx.playerdb:api/save
 
+<br>
 </details>
 
 <details>
-<summary>Misc Things</summary>
+<summary><b>Misc Things</b></summary>
 <br>
     
 We can manually add a player entry for `@s` via
@@ -109,10 +112,11 @@ Finally, if you want to see some debug info..
 
 This will provide more debug information and a cool load message (*Note that I use this for all my packs*)!
 
+<br>
 </details>
 
 <details>
-<summary>Listing all the players stored in the database</summary>
+<summary><b>Listing all the players stored in the database</b></summary>
 <br>
     
 This just pulls up a clickable tellraw menu for player `@s` in chat
@@ -121,20 +125,22 @@ This just pulls up a clickable tellraw menu for player `@s` in chat
 
 Note that anyone can click these buttons, but only an operator can run this function
 
+<br>
 </details>
 
 <details>
-<summary>Admin tools for testing and for servers</summary>
+<summary><b>Admin tools for testing and for servers</b></summary>
 <br>
     
     function rx.playerdb:admin/reset_all      # This will nuke the database and all ids, no warning!
     function rx.playerdb:admin/delete_player  # This will remove `@s`'s entry from the database
     function rx.playerdb:admin/remove_entry   # This will remove `$in.uid rx.io`'s entry from the database
 
+<br>
 </details>
 
 <details>
-<summary>Dynamically prepping entries when they are added</summary>
+<summary><b>Dynamically prepping entries when they are added</b></summary>
 <br>
     
 The function tag, `#rx.playerdb:api/on_entry_add`, allows a function to be ran when an entry is added. Just plop a function tag with the function you want to fire. This function will fire before a `api/get_self` completes allowing you to intercept the creation ;)
@@ -143,10 +149,11 @@ The player data will already be stored in rx:io playerdb.player.data and will au
     
     data modify storage rx:io playerdb.player.data.author.cool_pack set value {eggs: 0b}  # No eggs :(
 
+<br>
 </details>
 
 <details>
-<summary>Name changes: how to handle them</summary>
+<summary><b>Name changes: how to handle them</b></summary>
 <br>
     
 PlayerDB has a nifty feature of having data persist on a name change (no leftover data, etc), This allows you to cache your scoreboard scores, which are name specific, in the database. 
@@ -169,7 +176,7 @@ The function tag, `#rx.playerdb:api/on_name_change`, allows a function to be ran
 
 Make sure you prepend `execute if score @s rx.pdb.HasEntry matches 1` to any `data get` you perform otherwise, you might just be getting null data (which automatically gives 0 in minecraft)
 
-
+<br>
 </details>
 
 
