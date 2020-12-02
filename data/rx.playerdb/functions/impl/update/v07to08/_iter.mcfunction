@@ -41,7 +41,9 @@ data remove storage rx:global playerdb.players[-1].bit30
 data remove storage rx:global playerdb.players[-1].bit31
 
 # gen updated bits
+data remove storage rx:temp playerdb.bits
 function rx.playerdb:impl/uid_to_bits
+data modify storage rx:global playerdb.players[-1].bits set from storage rx:temp playerdb.bits
 
 # iterate
 scoreboard players remove $loop rx.temp 1
