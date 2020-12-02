@@ -205,7 +205,8 @@ Then, make sure you have defined an empty `#load:rx/playerdb` and in your own `#
 You can detect the version of the datapack via two methods:
 
 a) The version is stored in `storage`. `rx:info playerdb.version` as `major`, `minor`, and `patch`.
-b) As of V1.0.1, the version is also available in the `load` scoreboard under `rx.PDB.major`, `rx.PDB.minor`, `rx.PDB.patch`
+
+b) As of V1.0.1, the version is also available in the `load` scoreboard under `rx.pdb.major`, `rx.pdb.minor`, `rx.pdb.patch`
 
 
 ## Some examples
