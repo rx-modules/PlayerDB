@@ -181,7 +181,11 @@ Make sure you prepend `execute if score @s rx.pdb.HasEntry matches 1` to any `da
 
 ## Lantern Load
 
-This project uses [Lantern Load](https://github.com/LanternMC/Load). This allows you to ensure your datapack loads after library to ensure you are able to use everything this datapack provides. You can also detect whether this library is loaded by checking `if score PlayerDB load matches 1..`. Note: You don't necessarily need to use Lantern Load for your pack, since using this pack is more often happening in a ticking function instead of on load.  
+This project uses [Lantern Load](https://github.com/LanternMC/Load). This allows you to ensure your datapack loads after library to ensure you are able to use everything this datapack provides. You can also detect whether this library is loaded by checking `if score PlayerDB load matches 1..`.
+
+### Do I have to use this?
+
+Maybe. If you create an entry for every player that joins, there's a tick where your `api/*` command will run before any of PlayerDB's ticking commands. This will cause an inconsistency where PlayerDB has not yet set up the player (`rx.uid` + `UUID Storage`). There are ways to avoid this, but the best solution is to use Lantern Load in your project.
 
 ### Example
 

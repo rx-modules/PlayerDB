@@ -4,8 +4,15 @@
 #> @s: 
 #> Does actual init
 
-#> LL Load
+#> LL Load + version
 scoreboard players set rx.PlayerDB load 1
+
+data modify storage rx:info playerdb.version set value {major: 1, minor: 0, patch: 1}
+scoreboard players set rx.PDB.major load 1
+scoreboard players set rx.PDB.minor load 0
+scoreboard players set rx.PDB.patch load 1
+
+data modify storage rx:info playerdb.pretty_version set value '[{"storage": "rx:info", "nbt": "playerdb.version.major"}, ".", {"storage": "rx:info", "nbt": "playerdb.version.minor"}, ".", {"storage": "rx:info", "nbt": "playerdb.version.patch"}]'
 
 scoreboard objectives add rx.io dummy
 scoreboard objectives add rx.uid dummy
@@ -15,11 +22,10 @@ scoreboard objectives add rx.temp dummy
 scoreboard objectives add rx.pdb.list dummy
 scoreboard objectives add rx.pdb.HasEntry dummy
 
-# list trigger
 scoreboard objectives add rx.pdb.LT trigger
 scoreboard objectives add rx.pdb.login minecraft.custom:minecraft.leave_game
 
-#> 0.8: uuid storage
+#> 0.8+: uuid storage
 scoreboard objectives add rx.uuid0 dummy
 scoreboard objectives add rx.uuid1 dummy
 scoreboard objectives add rx.uuid2 dummy
@@ -35,11 +41,8 @@ scoreboard players set $19 rx.int 19
 scoreboard players set $64 rx.int 64
 scoreboard players set $256 rx.int 256
 
-#> semver!
-data modify storage rx:info playerdb.version set value {major: 1, minor: 0}
-
 #> start our tick loop
 schedule function rx.playerdb:tick 1t replace
 
 #> cool admin msg is cool
-tellraw @a[tag=rx.admin] [{"nbt": "playerdb.pretty_name", "storage": "rx:info", "interpret": true}, " ", {"text":"L","color":"#dd9b14"},{"text":"o","color":"#df9211"},{"text":"a","color":"#e2890e"},{"text":"d","color":"#e5800c"},{"text":"e","color":"#e87709"},{"text":"d","color":"#eb6f07"}]
+tellraw @a[tag=rx.admin] [{"text":"", "color":"gray"}, {"nbt": "playerdb.pretty_name", "storage": "rx:info", "interpret": true}, " ", {"storage": "rx:info", "nbt": "playerdb.pretty_version", "interpret": true}, " loaded"]

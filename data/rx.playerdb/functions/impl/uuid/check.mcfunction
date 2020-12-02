@@ -21,7 +21,7 @@ function rx.playerdb:impl/uuid/select
 function rx.playerdb:impl/get_name
 
 #> chk if name is actually stored :P backwards compat !
-execute unless data storage rx:global playerdb.uuid[{selected:1b}].name run data modify storage rx:global playerdb.uuid[{selected:1b}].name set from storage rx:temp playerdb.player_name
+execute unless data storage rx:global playerdb.uuid[{selected:1b}].entries[-1].name run data modify storage rx:global playerdb.uuid[{selected:1b}].entries[-1].name set from storage rx:temp playerdb.player_name
 
 #> test fakeplayer against scoreboard scores
 scoreboard players set $success rx.temp 0

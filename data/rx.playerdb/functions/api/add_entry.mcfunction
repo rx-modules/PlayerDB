@@ -3,7 +3,8 @@
 # 
 #> Add entry. Call w/ @s being the player
 
-# fixes bug if player doesn't have uid yet
-execute unless score @s rx.uid matches 1.. run function rx.playerdb:impl/new_uid
-# only run if @s doesn't have an entry
+#> Fixes bug if player doesn't have uuid0 yet
+function rx.playerdb:player
+
+#> Only run if @s doesn't have an entry
 execute unless score @s rx.pdb.HasEntry matches 1 run function rx.playerdb:impl/add_entry
