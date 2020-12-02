@@ -200,6 +200,13 @@ Once you've copied `Load` into your datapack, navigate to the `#load:load` funct
 
 Then, make sure you have defined an empty `#load:rx/playerdb` and in your own `#load` tag, you should define your personal load function. This will ensure PlayerDB's load will occur before yours. If PlayerDB does not exist, load will continue and you can detect this by checking the `PlayerDB load` score. For an example of all of this, checkout [EnderChest+](https://github.com/rx-modules/EnderChestPlus/tree/master/data/load) as an example of a datapack relying on PlayerDB.
 
+### Versioning
+
+You can detect the version of the datapack via two methods:
+
+a) The version is stored in `storage`. `rx:info playerdb.version` as `major`, `minor`, and `patch`.
+b) As of V1.0.1, the version is also available in the `load` scoreboard under `rx.PDB.major`, `rx.PDB.minor`, `rx.PDB.patch`
+
 
 ## Some examples
 
