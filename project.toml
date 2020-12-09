@@ -11,7 +11,7 @@ config-version = '1.1.1'
 #   output-folder = <folder name to output>
 
 title = 'PlayerDB'
-version = 'v1.0.2'
+version = 'v1.0.3'
 name-format = '{title} {version} {release_name}'
 
 [global]

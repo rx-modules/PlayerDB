@@ -7,10 +7,10 @@
 #> LL Load + version
 scoreboard players set rx.PlayerDB load 1
 
-data modify storage rx:info playerdb.version set value {major: 1, minor: 0, patch: 1}
+data modify storage rx:info playerdb.version set value {major: 1, minor: 0, patch: 3}
 scoreboard players set rx.pdb.major load 1
 scoreboard players set rx.pdb.minor load 0
-scoreboard players set rx.pdb.patch load 1
+scoreboard players set rx.pdb.patch load 3
 
 data modify storage rx:info playerdb.pretty_version set value '[{"storage": "rx:info", "nbt": "playerdb.version.major"}, ".", {"storage": "rx:info", "nbt": "playerdb.version.minor"}, ".", {"storage": "rx:info", "nbt": "playerdb.version.patch"}]'
 
