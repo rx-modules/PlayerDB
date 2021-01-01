@@ -1,5 +1,5 @@
 # PlayerDB - 1.16+ Minecraft Versions
-A NBT Custom Player Database (Beta)
+A NBT Custom Player Database
 
 This datapack provides a player database for you to utilize! What is this database? Let me explain:
 
