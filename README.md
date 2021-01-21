@@ -165,7 +165,7 @@ I prefer 2 since it leaves little to no room for error. If you wish to see an ex
 
     # I like to store the scores in a specific `scores` object so they are easy to identify
     function rx.playerdb:api/get_self
-    execute store result data storage rx:io playerdb.player.data.author.cool_pack.scores.eggs run scoreboard players get @s eggs
+    execute store result storage rx:io playerdb.player.data.author.cool_pack.scores.eggs int 1 run scoreboard players get @s eggs
 
 Once we implement this system, we have to implement a system to retrieve these scores when a name is changed. 
 The function tag, `#rx.playerdb:api/on_name_change`, allows a function to be ran when a player changes their name. This allows you to access the old name, `rx:io playerdb.old_name` and the data **if it has been created**.
