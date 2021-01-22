@@ -14,4 +14,4 @@ loot replace entity e3241b58-07c0-5230-9794-aecdc5aaaad4 armor.head loot rx:play
 data modify storage rx:temp playerdb.player_name set from entity e3241b58-07c0-5230-9794-aecdc5aaaad4 ArmorItems[-1].tag.SkullOwner.Name
 
 #> get rid of stand w/o killing it so the UUID is available
-tp e3241b58-07c0-5230-9794-aecdc5aaaad4 ~ ~-100 ~
+tp e3241b58-07c0-5230-9794-aecdc5aaaad4 ~ ~-2500 ~
