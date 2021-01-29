@@ -1,9 +1,9 @@
 # PlayerDB - 1.16+ Minecraft Versions
-A NBT Custom Player Database
+An NBT Custom Player Database
 
 This datapack provides a player database for you to utilize! What is this database? Let me explain:
 
-Each player has an enderchest where the player can store and retrieve items. With commands, we can also place items, clear items, and even put loot tables in there! Each player has their own individual enderchest storage which is seperate from everyone elses. Essentially, this datapack implements a more feature filled version of a player enderchest. Using the new global nbt `storage` that was intoduced in 1.15, we can now store nbt data in the 'cloud'. This datapack maintains it's own space in this 'cloud' storing each player individually in a list. Like how scoreboard stores numbers per player, here you can store nbt per player allowing you to manage and manipulate it as you please (even access it when they are offline!)
+Each player has an enderchest where the player can store and retrieve items. With commands, we can also place items, clear items, and even put loot tables in there! Each player has their own individual enderchest storage which is separate from everyone else's. Essentially, this datapack implements a more feature-filled version of a player enderchest. Using the new global nbt `storage` that was introduced in 1.15, we can now store nbt data in the 'cloud'. This datapack maintains it's own space in this 'cloud' storing each player individually in a list. Like how scoreboard stores numbers per player, here you can store nbt per player allowing you to manage and manipulate it as you please (even access it when they are offline!)
 
 ## Why?
 
@@ -11,7 +11,7 @@ At the moment, the only thing we really have per player are scoreboards which on
 
 This datapack has a couple main advantages to enderchests:
 * Accessing enderchest data requires the player to be online. This datapack has offline access.
-* The enderchest can be accessed in survival. `storage` is a seperate entity w/ commands only access
+* The enderchest can be accessed in survival. `storage` is a separate entity w/ commands only access
 * This datapack *should* be **much** faster than accessing the enderchest. This is because accessing the enderchest requires **serialization** which incurs steep performance costs. The nbt `storage` does not store serialized, only compressed as nbt.
 
 There are a couple of alternative implementations of player-specific nbt storage:
@@ -25,11 +25,11 @@ There are a couple of alternative implementations of player-specific nbt storage
 
 ## Lag?
 
-As previously mentioned, this solution is an alternative to other solutions which may be laggier. To be specific, at worst, it is O(log(n)) which while not at O(1) like a normal array, is pretty damn close. In terms of minecraft, you can think of this being about 50% less laggier than getting the player nbt via `data get entity @s` (which has been moderately tested so do try yourself). More technical bits on lag will be discussed in a later section.
+As previously mentioned, this solution is an alternative to other solutions which may be laggier. To be specific, at worst, it is O(log(n)) which while not at O(1) like a normal array, is pretty damn close. In terms of Minecraft, you can think of this being about 50% less laggy than getting the player nbt via `data get entity @s` (which has been moderately tested so do try yourself). More technical bits on lag will be discussed in a later section.
 
 ## How to use
 
-This datapack assigns a unique id to each player via a scoreboard: `rx.uid`. In order to access the data, you need an uid to search the database with. Secondly, the database only creates an entry when it is requested or explicitly created. I've listed some examples ranging from easy to complex.
+This datapack assigns a unique id to each player via a scoreboard: `rx.uid`. To access the data, you need an uid to search the database with. Secondly, the database only creates an entry when it is requested or explicitly created. I've listed some examples ranging from easy to complex.
 
 <details>
 <summary><b>Storing simple data</b></summary>
@@ -68,7 +68,7 @@ Finally, let's save our data!
 <summary><b>Getting someone else's data</b></summary>
 <br>
     
-Sometimes, we don't want to get our own data, but someone elses. Let's say that we have someone else's id stored in `author.obj`.
+Sometimes, we don't want to get our own data, but someone else's. Let's say that we have someone else's id stored in `author.obj`.
 
     scoreboard players operation $in.uid rx.io = @s author.obj
 
@@ -101,7 +101,7 @@ This exposing some internal logic, essentially outputs an entry @ `rx:global pla
 
     # (Note: select is much faster than a `get`/`save` which is why I've included in the api)
 
-We can check whether or not a player a database entry. This incentivizes not creating a db entry for every player, but rather creating them dynamically when you need them. You can hook into the `#api/on_entry_add` function tag which is talked about in a later section.
+We can check whether or not a player has a database entry. This incentivizes not creating a db entry for every player, but rather creating them dynamically when you need them. You can hook into the `#api/on_entry_add` function tag which is talked about in a later section.
 
     execute if score @s rx.pdb.HasEntry matches 1 run ...
 
@@ -142,7 +142,7 @@ Note that anyone can click these buttons, but only an operator can run this func
 <summary><b>Dynamically prepping entries when they are added</b></summary>
 <br>
     
-The function tag, `#rx.playerdb:api/on_entry_add`, allows a function to be ran when an entry is added. Just plop a function tag with the function you want to fire. This function will fire before a `api/get_self` completes allowing you to intercept the creation ;)
+The function tag, `#rx.playerdb:api/on_entry_add`, allows a function to be run when an entry is added. Just plop a function tag with the function you want to fire. This function will fire before a `api/get_self` completes allowing you to intercept the creation ;)
 
 The player data will already be stored in rx:io playerdb.player.data and will automatically save for you. Do **not** call `api/save_self`, just modify the data!
     
@@ -173,7 +173,7 @@ The function tag, `#rx.playerdb:api/on_name_change`, allows a function to be ran
     execute if score @s rx.pdb.HasEntry matches 1 store result score @s eggs run data get storage rx:io playerdb.player.data.author.cool_pack.eggs
     tellraw @a ["Yo, ", {"selector": "@s"}, " changed their name from ", {"storage": "rx:io", "nbt": "playerdb.old_name"}]
 
-Make sure you prepend `execute if score @s rx.pdb.HasEntry matches 1` to any `data get` you perform otherwise, you might just be getting null data (*which automatically gives 0 in minecraft*).
+Make sure you prepend `execute if score @s rx.pdb.HasEntry matches 1` to any `data get` you perform otherwise, you might just be getting null data (*which automatically gives 0 in Minecraft*).
 
 <br>
 </details>
@@ -181,7 +181,7 @@ Make sure you prepend `execute if score @s rx.pdb.HasEntry matches 1` to any `da
 
 ## Lantern Load
 
-This project uses [Lantern Load](https://github.com/LanternMC/Load). This allows you to ensure your datapack loads after library to ensure you are able to use everything this datapack provides. You can also detect whether this library is loaded by checking `if score PlayerDB load matches 1..`.
+This project uses [Lantern Load](https://github.com/LanternMC/Load). This allows you to ensure your datapack loads after library to ensure you can use everything this datapack provides. You can also detect whether this library is loaded by checking `if score PlayerDB load matches 1..`.
 
 ### Do I have to use this?
 
@@ -189,7 +189,7 @@ Maybe. If you create an entry for every player that joins, there's a tick where 
 
 ### Example
 
-Once you've copied `Load` into your datapack, navigate to the `#load:load` function tag. This should simulate the contents of the function tag (note, you can add more dependancies if you have them):
+Once you've copied `Load` into your datapack, navigate to the `#load:load` function tag. This should simulate the contents of the function tag (note, you can add more dependencies if you have them):
 
     {
         "values": [
@@ -212,7 +212,7 @@ b) As of V1.0.1, the version is also available in the `load` scoreboard under `r
 ## Some examples
 
 [EnderChest+](https://github.com/rx-modules/EnderChestPlus)
-This datapack allows for expandable EnderChests with complete multiplayer compatability!
+This datapack allows for expandable EnderChests with complete multiplayer compatibility!
 
 ## Technical bits
 
@@ -222,7 +222,7 @@ When a `get` or `save` operation is called, the program will filter down the dat
 
 When you run a `get` or `save`, you will most likely trigger a selection algorithm (`impl/select`). Essentially, this modifies every entry's `selected` nbt to 1b. The system will then call the `bit0` filtering function which determines the first bit of the `uid` and modifies all entries `selected` nbt to 0b if they don't match. If there are more than 1 entries with `selected:1b`, it will continue to the next bit, else it will short-circuit and stop. At the end of the selection process, there should be either 0 or 1 entries in the database with `selected:1b` which u can select via `rx:global playerdb.players[{selected:1b}]`.
 
-Saving will usually filter (although there's some optimizations to skip that if you perform a get and a save right next to each other) and then just replace the entry while get just copies the entry into `rx:io`.
+Saving will usually filter (although there are some optimizations to skip that if you perform a get and a save right next to each other) and then just replace the entry while get just copies the entry into `rx:io`.
 
 
 ## Shoutouts
@@ -238,8 +238,8 @@ Saving will usually filter (although there's some optimizations to skip that if 
 
 ## Endnote
 
-This datapack was a calling to one of the more annoying issues with custom nbt in Minecraft: dynamic list indexing. While 1.14 gave us an amazing command, `data modify`, allowing us to modify the deeper details of nbt, and 1.15 giving us `data storage` allowing us to store arbituary nbt 'in the cloud', we still struggle with a couple of things, namely, indexing. There is no way to index into a NBT List based on a scoreboard value. This means if we needed to store a list of entries tied to a scoreboard, we would be forced to iterate through the entries which is an O(n) solution to a traditionally O(1) solution in most programming languages.
+This datapack was a calling to one of the more annoying issues with custom nbt in Minecraft: dynamic list indexing. While 1.14 gave us an amazing command, `data modify`, allowing us to modify the deeper details of nbt, and 1.15 giving us `data storage` allowing us to store arbitrary nbt 'in the cloud', we still struggle with a couple of things, namely, indexing. There is no way to index into an NBT List based on a scoreboard value. This means if we needed to store a list of entries tied to a scoreboard, we would be forced to iterate through the entries which is an O(n) solution to a traditionally O(1) solution in most programming languages.
 
 The smart folk over at [r/minecraftcommands discord](https://discord.gg/QAFXFtZ) came up with various solutions to solve this problem and this datapack is one solution that I've grown quite fond over. While I like the usefulness of this library, I've mostly been wanting to understand some of the weird problems that Minecraft throws at us.
 
-This stuff is pretty hard to work through and somewhat hard to envision, but essentially, this is a player database that you can easily use. It's a pretty technical thing, but hopefully the API is not too hard to use. If you have any questions, create a github issue or join my discord [here](https://discord.gg/zhadd6GHWJ)
+This stuff is pretty hard to work through and somewhat hard to envision, but essentially, this is a player database that you can easily use. It's a pretty technical thing, but hopefully, the API is not too hard to use. If you have any questions, create a GitHub issue or join my discord [here](https://discord.gg/zhadd6GHWJ)
