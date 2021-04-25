@@ -1,17 +1,9 @@
 # By: rx97
-
 execute if score $bit rx.temp matches 8 if data storage rx:global playerdb.uuid[{selected:1b, bits:{b3:8b}}] run data modify storage rx:global playerdb.uuid[{selected:1b, bits:{b3:8b}}].bits.select set value 1b
-
 execute if score $bit rx.temp matches 9 if data storage rx:global playerdb.uuid[{selected:1b, bits:{b3:9b}}] run data modify storage rx:global playerdb.uuid[{selected:1b, bits:{b3:9b}}].bits.select set value 1b
-
 execute if score $bit rx.temp matches 10 if data storage rx:global playerdb.uuid[{selected:1b, bits:{b3:10b}}] run data modify storage rx:global playerdb.uuid[{selected:1b, bits:{b3:10b}}].bits.select set value 1b
-
 execute if score $bit rx.temp matches 11 if data storage rx:global playerdb.uuid[{selected:1b, bits:{b3:11b}}] run data modify storage rx:global playerdb.uuid[{selected:1b, bits:{b3:11b}}].bits.select set value 1b
-
 execute if score $bit rx.temp matches 12 if data storage rx:global playerdb.uuid[{selected:1b, bits:{b3:12b}}] run data modify storage rx:global playerdb.uuid[{selected:1b, bits:{b3:12b}}].bits.select set value 1b
-
 execute if score $bit rx.temp matches 13 if data storage rx:global playerdb.uuid[{selected:1b, bits:{b3:13b}}] run data modify storage rx:global playerdb.uuid[{selected:1b, bits:{b3:13b}}].bits.select set value 1b
-
 execute if score $bit rx.temp matches 14 if data storage rx:global playerdb.uuid[{selected:1b, bits:{b3:14b}}] run data modify storage rx:global playerdb.uuid[{selected:1b, bits:{b3:14b}}].bits.select set value 1b
-
 execute if score $bit rx.temp matches 15 if data storage rx:global playerdb.uuid[{selected:1b, bits:{b3:15b}}] run data modify storage rx:global playerdb.uuid[{selected:1b, bits:{b3:15b}}].bits.select set value 1b
