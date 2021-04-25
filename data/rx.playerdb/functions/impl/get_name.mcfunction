@@ -8,4 +8,4 @@
 loot replace block -30000000 0 1602 container.0 loot rx:player_head
 
 #> copy to output
-data modify storage rx:temp playerdb.player_name set from block -30000000 0 1602 Items[-1].tag.SkullOwner.Name
+data modify storage rx:temp playerdb.player_name set from block -30000000 0 1602 Items[0].tag.SkullOwner.Name

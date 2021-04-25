@@ -21,3 +21,5 @@ data modify storage rx:io playerdb set value {}
 
 data modify storage rx:global playerdb.players set value []
 data modify storage rx:global playerdb.uuid set value []
+
+scoreboard players set @a rx.pdb.login 1

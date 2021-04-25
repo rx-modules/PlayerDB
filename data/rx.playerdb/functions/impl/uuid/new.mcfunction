@@ -12,6 +12,7 @@ execute if score $selected rx.temp matches 0 run scoreboard players operation $u
 execute if score $selected rx.temp matches 0 run function rx.playerdb:impl/uid_to_bits
 execute if score $selected rx.temp matches 0 run data modify storage rx:global playerdb.uuid append value {selected: 1b}
 execute if score $selected rx.temp matches 0 run data modify storage rx:global playerdb.uuid[-1].bits set from storage rx:temp playerdb.bits
+execute if score $selected rx.temp matches 0 store result storage rx:global playerdb.uuid[-1].bits.uuid0 int 1 run scoreboard players get @s rx.uuid0
 
 function rx.playerdb:impl/get_name
 

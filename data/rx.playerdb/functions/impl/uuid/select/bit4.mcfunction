@@ -6,4 +6,4 @@ scoreboard players set $size rx.temp 0
 function rx.playerdb:impl/uuid/select/bit4/0_63
 scoreboard players operation $uid rx.temp /= $64 rx.int
 execute if data storage rx:global playerdb.uuid[{bits:{select:0b}}] run data modify storage rx:global playerdb.uuid[{bits:{select:0b}}].selected set value 0b
-execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/uuid/select/bit5
+execute if data storage rx:global playerdb.uuid[{selected:1b}] run function rx.playerdb:impl/uuid/select/bit5
