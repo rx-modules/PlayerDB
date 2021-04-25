@@ -11,9 +11,6 @@ function rx.playerdb:impl/get_name
 #> add new entry
 data modify storage rx:global playerdb.players append value {}
 
-#> get head to get player name
-loot replace entity af-0-0-0-1 armor.head loot rx:player_head
-
 #> store sum data
 execute store result storage rx:global playerdb.players[-1].info.uid int 1 run scoreboard players get @s rx.uid
 data modify storage rx:global playerdb.players[-1].info.name set from storage rx:temp playerdb.player_name 

@@ -4,6 +4,8 @@
 #> @s: 
 #> Does actual init
 
+#alias vector shulker -30000000 0 1602
+
 #> LL Load + version
 scoreboard players set rx.PlayerDB load 1
 
@@ -43,6 +45,14 @@ scoreboard players set $256 rx.int 256
 
 #> start our tick loop
 schedule function rx.playerdb:tick 1t replace
+
+#> phi chunk
+# I'll need this in the future, + it's better than my rx-stand
+forceload remove -30000000 1600
+forceload add -30000000 1600
+execute unless block -30000000 0 1602 minecraft:yellow_shulker_box run setblock -30000000 0 1602 minecraft:yellow_shulker_box
+execute unless block -30000000 0 1603 minecraft:oak_wall_sign run setblock -30000000 0 1603 minecraft:oak_wall_sign[facing=south]
+fill -30000000 1 1600 -30000000 1 1615 minecraft:bedrock
 
 #> cool admin msg is cool
 tellraw @a[tag=rx.admin] [{"text":"", "color":"gray"}, {"nbt": "playerdb.pretty_name", "storage": "rx:info", "interpret": true}, " ", {"storage": "rx:info", "nbt": "playerdb.pretty_version", "interpret": true}, " loaded"]
