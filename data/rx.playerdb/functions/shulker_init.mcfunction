@@ -23,7 +23,7 @@ scoreboard objectives add rx.pdb.list dummy
 scoreboard objectives add rx.pdb.HasEntry dummy
 
 scoreboard objectives add rx.pdb.LT trigger
-scoreboard objectives add rx.pbb.login minecraft.custom:minecraft.leave_game
+scoreboard objectives add rx.pdb.login minecraft.custom:minecraft.leave_game
 
 #> 0.8: uuid storage
 scoreboard objectives add rx.uuid0 dummy
