@@ -11,7 +11,7 @@ config-version = '1.1.1'
 #   output-folder = <folder name to output>
 
 title = 'PlayerDB'
-version = 'v1.0.3'
+version = 'v1.1.0'
 name-format = '{title} {version} {release_name}'
 
 [global]
@@ -60,6 +60,8 @@ name-format = '{title} {version} {release_name}'
 			]
 		[[releases.shulker.rules]]
 			regex = {'rx.uid' = 'UUID'}
+		[[releases.shulker.rules]]
+			regex = {'-30000000 0 1602' = '52 2 50'}
 
 	[releases.snapshot]
 		[[releases.snapshot.rules]]

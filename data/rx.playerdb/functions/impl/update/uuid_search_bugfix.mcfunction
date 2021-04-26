@@ -11,4 +11,4 @@ execute if data storage rx:global playerdb.uuid[] run data remove storage rx:glo
 
 # iterate
 execute if data storage rx:temp playerdb.uuid_db_update[] run function rx.playerdb:impl/update/uuid_search_bugfix/_iter
-tellraw @a[tag=rx.admin] [{"text":"", "color":"gray"}, {"nbt": "playerdb.pretty_name", "storage": "rx:info", "interpret": true}, " UUID database reconstructed"]
+tellraw @a[tag=rx.admin] [{"text":"", "color":"gray"}, {"nbt": "playerdb.pretty_name", "storage": "rx:info", "interpret": true}, ": UUID database reconstructed"]
