@@ -34,7 +34,11 @@ execute store result storage rx:global playerdb.uuid[{selected:1b}].entries[-1].
 
 #> tellraw a success msg :D
 tellraw @a[tag=rx.admin] [{"text": "", "color": "green"}, {"storage": "rx:info", "nbt": "playerdb.pretty_name", "interpret": true}, ": ", {"storage": "rx:temp", "nbt": "playerdb.admin.migrate.oldName", "color": "gold"}, "'s data was migrated to ", {"selector": "@s", "color": "gold"}]
+tellraw @a[tag=rx.admin] [{"text": "", "color": "gray"}, {"storage": "rx:info", "nbt": "playerdb.pretty_name", "interpret": true}, ": Run `/scoreboard players reset ", {"storage": "rx:temp", "nbt": "playerdb.admin.migrate.oldName", "color": "gold"}, "` to complete the migration process!"]
 tellraw @s [{"text": "", "color": "green"}, {"storage": "rx:info", "nbt": "playerdb.pretty_name", "interpret": true}, ": ", {"storage": "rx:temp", "nbt": "playerdb.admin.migrate.oldName", "color": "gold"}, "'s data was successfully migrated to you!"]
+
+#> call name change api
+function #rx.playerdb:api/on_name_change
 
 #> cleanup
 data remove storage rx:temp playerdb.admin.migrate
