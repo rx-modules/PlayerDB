@@ -16,12 +16,13 @@ This datapack has a couple main advantages to enderchests:
 
 There are a couple of alternative implementations of player-specific nbt storage:
 * Using a single array and iterating through all the elements until you find the player.
-* * This is particularly laggy and scales O(n) for the number of players in the list
-* * PlayerDB scales O(log(n)) and it many more optimized with lower uid numbers.
+> This is particularly laggy and scales O(n) for the number of players in the list while 
+> PlayerDB scales O(log n) and it much more optimized with lower uid numbers.
+
 * Creating a custom dimension (or isolating a chunk) for an array of jukeboxes.
-* * Since jukeboxes are BlockEntities, they incur extra lag as well.
-* * This is one of the best other solutions which you can check out here: [EntityDB](https://github.com/hqics/entitydb)
-* * From my slight testing, PlayerDB does beat out in terms of lag, but this may vary.
+> Since jukeboxes are BlockEntities, they incur extra lag as well. 
+> This is one of the best other solutions which you can check out here: [EntityDB](https://github.com/hqics/entitydb)
+> From my slight testing, PlayerDB **does** beat out in terms of lag, but this is based off my limited testing.
 
 ## Lag?
 
@@ -131,9 +132,13 @@ Note that anyone can click these buttons, but only an operator can run this func
 <summary><b>Admin tools for testing and for servers</b></summary>
 <br>
     
-    function rx.playerdb:admin/reset_all      # This will nuke the database and all ids, no warning!
-    function rx.playerdb:admin/delete_player  # This will remove `@s`'s entry from the database
-    function rx.playerdb:admin/remove_entry   # This will remove `$in.uid rx.io`'s entry from the database
+    function rx.playerdb:admin/reset_all       # This will nuke the database and all ids, no warning!
+    function rx.playerdb:admin/delete_player   # This will remove `@s`'s entry from the database
+    function rx.playerdb:admin/remove_entry    # This will remove `$in.uid rx.io`'s entry from the database
+    
+    function rx.playerdb:admin/migrate_account
+    # This will take the data stored at rx:temp playerdb.admin.migrate.UUID
+    #  and 'migrate' the data to the entity called as @s
 
 <br>
 </details>
