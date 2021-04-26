@@ -4,8 +4,6 @@
 #> @s: 
 #> Does actual init
 
-#alias vector shulker -30000000 0 1602
-
 #> LL Load + version
 scoreboard players set rx.PlayerDB load 1
 

@@ -12,6 +12,8 @@
 #define entity e3241b58-07c0-5230-9794-aecdc5aaaad4
 #  			        mc.gen_uuid('rx.playerdb')
 
+#alias vector shulker -30000000 0 1602
+
 #> Info!
 data modify storage rx:info playerdb.name set value 'PlayerDB'
 data modify storage rx:info playerdb.pretty_name set value '[{"text":"P","color":"#dd9b14"},{"text":"l","color":"#df9412"},{"text":"a","color":"#e18e10"},{"text":"y","color":"#e3880e"},{"text":"e","color":"#e5810c"},{"text":"r","color":"#e77b0a"},{"text":"D","color":"#e97508"},{"text":"B","color":"#eb6f07"}]'
