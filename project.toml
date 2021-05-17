@@ -25,7 +25,7 @@ name-format = '{title} {version} {release_name}'
 #  	only-allow = [<list of patterns>]
 ###
 
-	ignore = ['releases/*', 'test/*']
+	ignore = ['releases/*', 'test/*', '.vscode/*']
 	whitelist = ['*.json', '*.mcfunction', 'pack.png', 'pack.mcmeta']
 
 [releases]
