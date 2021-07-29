@@ -5,12 +5,12 @@
 #> Does actual init
 
 #> LL Load + version
-scoreboard players set rx.PlayerDB load 1
+scoreboard players set rx.pdb load.status 1
 
-data modify storage rx:info playerdb.version set value {major: 1, minor: 1, patch: 1}
-scoreboard players set rx.pdb.major load 1
-scoreboard players set rx.pdb.minor load 1
-scoreboard players set rx.pdb.patch load 1
+data modify storage rx:info playerdb.version set value {major: 1, minor: 2, patch: 0}
+scoreboard players set #rx.pdb.major load.status 1
+scoreboard players set #rx.pdb.minor load.status 2
+scoreboard players set #rx.pdb.patch load.status 0
 
 data modify storage rx:info playerdb.pretty_version set value '[{"storage": "rx:info", "nbt": "playerdb.version.major"}, ".", {"storage": "rx:info", "nbt": "playerdb.version.minor"}, ".", {"storage": "rx:info", "nbt": "playerdb.version.patch"}]'
 
