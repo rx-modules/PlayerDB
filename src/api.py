@@ -1,32 +1,24 @@
-from beet import FunctionTag, Function
+from beet import FunctionTag, Function, Context
 import yaml
 
-location = 'rx.playerdb:api/v{major}/{api}'
-target = 'rx.playerdb:impl/check_api/{api}'
-
-version_check = 'rx.playerdb:impl/version_check/{api}'
-body = 'execute if score rx.pdb.__ver__ load.status matches 1 run function ../api_logic/{api}'
+body = "execute if score rx.pdb.__verstr__ load.status matches 1 run function ../api_logic/{api}"
 
 api_calls = [
-	'get',
-	'get_self',
-	'save',
-	'save_self',
-	'add_entry',
-	'select',
+    "get",
+    "get_self",
+    "save",
+    "save_self",
+    "add_entry",
+    "select",
 ]
 
 
 def beet_default(ctx: Context):
-	for call in api_calls:
-		loc = location.format(
-			major=ctx.meta['version'].major,
-			api=call
-		)
-		ctx.data[loc] = FunctionTag(
-			{"values": [target.format(api=call)]}
-		)
+    major = ctx.meta["version"].major
+    for call in api_calls:
+        tag = FunctionTag({"values": [ctx.generate.path(f'version_check/{call}')]})
+        
+        with ctx.override(generate_prefix=f"api/v{major}"):
+            ctx.generate(call, tag)
 
-		loc = version_check.format(api=call)
-		ctx.data[loc] = Function(body.format(api=call))
-
+        ctx.generate(f"version_check/{call}", Function(body.format(api=call)))

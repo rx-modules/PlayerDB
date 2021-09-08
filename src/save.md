@@ -1,5 +1,9 @@
 <!-- Implement's save logic -->
 
+## save/gate
+
+<details>
+
 ```mcfunction
 # @function save/gate
 
@@ -20,6 +24,12 @@ data remove storage rx:io playerdb.player
 
 ```
 
+</details>
+
+## save/main
+
+<details>
+
 ```mcfunction
 # @function save/main
 
@@ -27,6 +37,12 @@ data remove storage rx:io playerdb.player
 
 data modify storage rx:global playerdb.players[{selected:1b}].data set from storage rx:io playerdb.player.data
 ```
+
+</details>
+
+## save/self
+
+<details>
 
 ```mcfunction
 # @function save/self
@@ -36,3 +52,5 @@ data modify storage rx:global playerdb.players[{selected:1b}].data set from stor
 scoreboard players operation $in.uid rx.io = @s rx.uid
 function save/main
 ```
+
+</details>

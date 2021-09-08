@@ -16,19 +16,21 @@ require:
 
 pipeline:
   - lectern
+  - beet.contrib.auto_yaml
   - src.plugins.advancements
+  - src.api
+  - src.bits
   - beet.contrib.render
+  - beet.contrib.hangman
   - beet.contrib.relative_function_path
   - src.plugins.misc.function_headers
-  - beet.contrib.hangman
   - beet.contrib.yellow_shulker_box
-  - beet.contrib.load_yaml
 
 output: releases
 
-data_pack:
-  load:
-    - .
+# data_pack:
+#   load:
+#     - .
 
 meta:
   lectern:

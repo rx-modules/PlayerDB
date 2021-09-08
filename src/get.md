@@ -1,5 +1,9 @@
 <!-- Implement's get logic -->
 
+## get/gate
+
+<details>
+
 ```mcfunction
 # @function get/gate
 
@@ -14,6 +18,12 @@ execute if score $in.uid rx.io >= $uid.next rx.uid run sequentially
 	data remove storage rx:io playerdb.player
 	tellraw @a[tag=rx.admin] {"text":"Unsuccessful get. Input uid above max uid", "color": "#CE4257"}
 ```
+
+</details>
+
+## get/main
+
+<details>
 
 ```mcfunction
 # @function get/main
@@ -32,6 +42,12 @@ execute store result score $uid rx.temp run data get storage rx:io playerdb.play
 execute unless score $uid rx.temp = $in.uid rx.io run data modify storage rx:io playerdb.player set value {}
 ```
 
+</details>
+
+## save/self
+
+<details>
+
 ```mcfunction
 # @function get/self
 
@@ -43,3 +59,5 @@ function add_entry/main
 scoreboard players operation $in.uid rx.io = @s rx.uid
 function get/gate
 ```
+
+</details>

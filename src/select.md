@@ -18,7 +18,7 @@ function select/main
 
 </ details>
 
-## select/gate
+## select/main
 
 <details>
 
@@ -35,14 +35,7 @@ execute if score $verified rx.temp matches 0 run sequentially
 	execute unless data storage rx:global playerdb.players[] run tellraw @a[tag=rx.admin] {"text":"Selection failed. No players in database to select", "color": "#CE4257"}
 	execute if data storage rx:global playerdb.players[] run sequentially
 		data modify storage rx:global playerdb.players[].selected set value 1b
-		function rx.playerdb:impl/select/bit0
+		function select/tree/bit0
 ```
 
-```mcfunction
-# @function git/self
-
-#> Save @s Data
-
-scoreboard players operation $in.uid rx.io = @s rx.uid
-function save/main
-```
+</ details>

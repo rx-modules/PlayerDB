@@ -42,12 +42,15 @@ def globals(ctx: Context):
     ctx.meta["shorthand"] = parts[1] if len(parts) > 1 else parts[0]
 
     ctx.meta["version"] = SemVer(*ctx.project_version.split("."))
+    ctx.meta["verstr"] = '.'.join(ctx.meta["version"])
 
     if "colors" in config:
         config["pretty_name"] = pretty_name(
             ctx, config["colors"][0], config["colors"][1]
         )
 
+
 def gen_namespace(ctx: Context):
-    ctx.meta['generate_namespace'] = 'rx.playerdb'
-    ctx.meta['generate_prefix'] = f'impl_{version.join('.')}'
+    version = ctx.meta["version"]
+    ctx.meta["generate_namespace"] = "rx.playerdb"
+    ctx.meta["generate_prefix"] = f"impl/v{'.'.join(version)}"
