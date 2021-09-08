@@ -1,12 +1,21 @@
 # Navigate the source code
 Through `beet` technologies, we can easily navigate through our code since most of this project will be compiled using `lectern` with `.md`'s.
 
+## Entrypoints
+* [main.md](main.md)
+
 ## PlayerDB API
 * [API Bindings](api.py)
-* [api/get and api/get_self](impl/get.py)
-* [api/save and api/save_self](impl/save.py)
-* [api/select](impl/select.py)
-* [api/add_entry](impl/add_entry.py)
+* [api/get](get.md)
+* [api/save](save.md)
+* [api/select](select.md)
+* [api/add_entry](add_entry.md)
+
+## PlayerDB Other
+* [Bits Generation](bits.py)
+* [impl/uuid](uuid.md)
+* [impl/verify](verify.md)
+* [admin](admin.md)
 
 ## Misc Things
 * [Lantern Load](misc/lantern_load.md)
