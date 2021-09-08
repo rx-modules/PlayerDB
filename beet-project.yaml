@@ -1,0 +1,58 @@
+name: PlayerDB
+id: rx.playerdb
+description: Player Data Manager Library - (SQL but in Minecraft)
+author: rx97
+version: '2.0.0'
+
+require:
+  - src.plugins.misc.globals
+  - src.plugins.misc.gen_namespace
+  - beet.contrib.inline_function
+  - beet.contrib.inline_function_tag
+  - beet.contrib.template_context
+  - beet.contrib.dundervar
+  - lectern.contrib.relative_location
+  - lectern.contrib.yaml_to_json
+
+pipeline:
+  - lectern
+  - src.plugins.advancements
+  - beet.contrib.render
+  - beet.contrib.relative_function_path
+  - src.plugins.misc.function_headers
+  - beet.contrib.hangman
+  - beet.contrib.yellow_shulker_box
+  - beet.contrib.load_yaml
+
+output: releases
+
+data_pack:
+  load:
+    - .
+
+meta:
+  lectern:
+    load: ["src/**/*.md"]
+
+  hangman:
+    match: ["*"]
+
+  render:
+    data_pack:
+      functions: ["*"]
+      loot_tables: ["*"]
+      item_modifiers: ["*"]
+
+  format_json:
+    indent: 2
+
+  globals:
+    colors:
+      - '#dd9b14'
+      - '#eb6f07'
+
+  lantern_load:
+    url: https://github.com/rx-modules/PlayerDB/releases
+
+  advancements:
+    item: 'minecraft:jukebox'

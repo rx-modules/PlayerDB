@@ -1,0 +1,9 @@
+extend:
+  - beet.yaml
+
+# pipeline:
+#   - data_pack:
+#       load:
+#         - '../PlayerDB/releases/PlayerDB v1.2.0.zip'
+
+output: test
