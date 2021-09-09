@@ -115,7 +115,7 @@ i18n = ["Babel (>=2.7)"]
 
 [[package]]
 name = "lectern"
-version = "0.15.3"
+version = "0.16.0"
 description = "Literate Minecraft data packs and resource packs."
 category = "dev"
 optional = false
@@ -222,7 +222,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "2ddcc0b2056391dcb9bf9af8093c3bbd9cb214419343f10756817aacf0cd2ee6"
+content-hash = "4b3471063f393511776ba86d88aa6bad5a7c4833c22d8b80bcf733d4d75b4923"
 
 [metadata.files]
 attrs = [
@@ -261,8 +261,8 @@ jinja2 = [
     {file = "Jinja2-3.0.1.tar.gz", hash = "sha256:703f484b47a6af502e743c9122595cc812b0271f661722403114f71a79d0f5a4"},
 ]
 lectern = [
-    {file = "lectern-0.15.3-py3-none-any.whl", hash = "sha256:b2e2718b5f58eb39a973f62b3b1ce49ccfdb8fd262a8bd7390f255285b16b022"},
-    {file = "lectern-0.15.3.tar.gz", hash = "sha256:5933d7038eeba730016ec1ab42ada1e0a27b6ead59c80a0dc22c397893be99ba"},
+    {file = "lectern-0.16.0-py3-none-any.whl", hash = "sha256:b63ba29cbce4446c4cef5412542417ab45dab512a4fe36c46858c3e15dced2ba"},
+    {file = "lectern-0.16.0.tar.gz", hash = "sha256:1b7ce215ec5fbc9a82a9c15508df07e8038c715e3e04e8b191f96418cca7571a"},
 ]
 markdown-it-py = [
     {file = "markdown-it-py-1.1.0.tar.gz", hash = "sha256:36be6bb3ad987bfdb839f5ba78ddf094552ca38ccbd784ae4f74a4e1419fc6e3"},

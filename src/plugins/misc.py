@@ -42,7 +42,7 @@ def globals(ctx: Context):
     ctx.meta["shorthand"] = parts[1] if len(parts) > 1 else parts[0]
 
     ctx.meta["version"] = SemVer(*ctx.project_version.split("."))
-    ctx.meta["verstr"] = '.'.join(ctx.meta["version"])
+    ctx.meta["verstr"] = ".".join(ctx.meta["version"])
 
     if "colors" in config:
         config["pretty_name"] = pretty_name(

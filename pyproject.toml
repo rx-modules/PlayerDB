@@ -13,16 +13,11 @@ PyYAML = "^5.4.1"
 [tool.poetry.dev-dependencies]
 colour = "^0.1.5"
 beet = "^0.41.0"
-lectern = "^0.15.3"
+lectern = "^0.16.0"
 
 [tool.beet]
 output = "build"
 extend = ["beet-project.yaml"]
-
-[[tool.beet.pipeline]]
-output = "build"
-extend = ["beet-project.yaml"]
-data_pack.zipped = true
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

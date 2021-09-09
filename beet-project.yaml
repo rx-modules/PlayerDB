@@ -13,13 +13,12 @@ require:
   - beet.contrib.dundervar
   - lectern.contrib.relative_location
   - lectern.contrib.yaml_to_json
+  - lectern.contrib.plugin
 
 pipeline:
   - lectern
   - beet.contrib.auto_yaml
   - src.plugins.advancements
-  - src.api
-  - src.bits
   - beet.contrib.render
   - beet.contrib.hangman
   - beet.contrib.relative_function_path
