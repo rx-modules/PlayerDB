@@ -14,10 +14,10 @@ Through `beet` technologies, we can easily navigate through our code since most 
 * [uuid.md](uuid.md)
 	- Contains the special uuid database logic
 
-* [admin](admin.md)
+* [admi.md](admin.md)
 	- Contains the server admin centric functions
 
-* [utils](utils.md)
+* [utils.md](utils.md)
 	- General utility functions such as `get_name`
 
 ## Misc Things

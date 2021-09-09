@@ -50,7 +50,7 @@ for call in api_calls:
     )
 ```
 
-<\details>
+</details>
 
 # api/get
 
@@ -104,7 +104,7 @@ function ./get
 
 </details>
 
-## api/save
+# api/save
 
 <details>
 
