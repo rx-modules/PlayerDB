@@ -25,12 +25,6 @@ pipeline:
   - src.plugins.misc.function_headers
   - beet.contrib.yellow_shulker_box
 
-output: releases
-
-# data_pack:
-#   load:
-#     - .
-
 meta:
   lectern:
     load: ["src/**/*.md"]
@@ -56,4 +50,8 @@ meta:
     url: https://github.com/rx-modules/PlayerDB/releases
 
   advancements:
-    item: 'minecraft:jukebox'
+    item: minecraft:jukebox
+  # installation_advancement:
+  #   icon:
+  #     item: minecraft:jukebox
+  #   author_description: I make datapacks, I guess?

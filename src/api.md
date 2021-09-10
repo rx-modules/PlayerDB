@@ -27,10 +27,10 @@ execute
     if score #rx.pdb.major load.status matches {major}
     if score #rx.pdb.minor load.status matches {minor}
     if score #rx.pdb.patch load.status matches {patch}
-    run function ../{api}
+    run function {func}/main
 """
 
-api_calls = ["get", "get_self", "save", "save_self", "add_entry", "select"]
+api_calls = ["get", "get/self", "save", "save/self", "add_entry", "select"]
 
 major, minor, patch = (
     ctx.meta["version"].major,
@@ -44,7 +44,8 @@ for call in api_calls:
     ctx.generate(
         f"version_check/{call}",
         Function(
-            body.format(major=major, minor=minor, patch=patch, api=call),
+            body.format(
+            	major=major, minor=minor, patch=patch, api=call,func=ctx.generate.path(call)),
             tags=[tag]
         )
     )
@@ -52,29 +53,29 @@ for call in api_calls:
 
 </details>
 
-# api/get
+# api/get/main
 
 <details>
 
 ```mcfunction
-# @function get
+# @function get/main
 
 #> Get Data: Output in rx:io out.player
 #> TODO: make tellraws referenced from a file
 
 execute if score $in.uid rx.io < $uid.next rx.uid run sequentially
-	function ./select
-	function ./get/main
+	function ../select/main
+	function ./logic
 
 execute if score $in.uid rx.io >= $uid.next rx.uid run sequentially
 	data remove storage rx:io playerdb.player
 	tellraw @a[tag=rx.admin] {"text":"Unsuccessful get. Input uid above max uid", "color": "#CE4257"}
 ```
 
-## get/main
+## get/logic
 
 ```mcfunction
-# @function get/main
+# @function get/logic
 
 #> Get Data: Output in rx:io out.player
 
@@ -90,16 +91,18 @@ execute store result score $uid rx.temp run data get storage rx:io playerdb.play
 execute unless score $uid rx.temp = $in.uid rx.io run data modify storage rx:io playerdb.player set value {}
 ```
 
+## get/self/main
+
 ```mcfunction
-# @function get/self
+# @function get/self/main
 
 #> Get @s Data: Output in rx:io out.player
 
 #> api add_entry, won't add unless we need to. $entry: 1: we have entry, 0: we don't have entry
-function ./add_entry
+function ../../add_entry/main
 
 scoreboard players operation $in.uid rx.io = @s rx.uid
-function ./get
+function ../../get/main
 ```
 
 </details>
@@ -108,13 +111,13 @@ function ./get
 
 <details>
 
-## save
+## save/main
 
 ```mcfunction
-# @function save
+# @function save/main
 
 # optimization baked in
-function ./select
+function ../select/main
 
 # verify that rx:io is proper player
 execute store result score $uid.check rx.temp
@@ -131,29 +134,29 @@ execute if data storage rx:io playerdb.player
 	run tellraw @a[tag=rx.admin] {"text":"Save unsuccessful. rx:io data uid invalid", "color": "#CE4257"}
 execute if data storage rx:io playerdb.player
 	if score $uid.check rx.temp = $in.uid rx.io
-	run function save/main
+	run function ./logic
 data remove storage rx:io playerdb.player
 ```
 
-## save/main
+## save/logic
 
 ```mcfunction
-# @function save/main
+# @function save/logic
 
 #> Save after Select
 
 data modify storage rx:global playerdb.players[{selected:1b}].data set from storage rx:io playerdb.player.data
 ```
 
-## save/self
+## save/self/main
 
 ```mcfunction
-# @function save/self
+# @function save/self/main
 
 #> Save @s Data
 
 scoreboard players operation $in.uid rx.io = @s rx.uid
-function ./save
+function ../../save/main
 ```
 
 </details>
@@ -162,20 +165,6 @@ function ./save
 
 <details>
 
-## select
-
-```mcfunction
-# @function select
-
-#> Select Data: Output selected:1b
-
-# set input
-scoreboard players operation $uid rx.temp = $in.uid rx.io
-
-# select
-function ./select/main
-```
-
 ## select/main
 
 ```mcfunction
@@ -183,10 +172,24 @@ function ./select/main
 
 #> Select Data: Output selected:1b
 
+# set input
+scoreboard players operation $uid rx.temp = $in.uid rx.io
+
+# select
+function ./logic
+```
+
+## select/logic
+
+```mcfunction
+# @function select/logic
+
+#> Select Data: Output selected:1b
+
 scoreboard players operation $verify.uid rx.io = $uid rx.temp
 
 # verification
-function ./verify
+function ../verify/main
 
 # selection
 execute if score $verified rx.io matches 0 run sequentially
@@ -194,7 +197,7 @@ execute if score $verified rx.io matches 0 run sequentially
 		run tellraw @a[tag=rx.admin] {"text":"Selection failed. No players in database to select", "color": "#CE4257"}
 	execute if data storage rx:global playerdb.players[] run sequentially
 		data modify storage rx:global playerdb.players[].selected set value 1b
-		function ./select/tree/bit0
+		function ./tree/bit0
 ```
 
 ### bits generator
@@ -213,7 +216,7 @@ MAX_INT = 2 ** 31 - 1
 ITERATIONS = math.log(MAX_INT, BASE) + 1
 
 
-TREE = "execute if score $bit rx.temp matches {low}..{high} run function select/tree/bit{num}/{low}_{high}"
+TREE = "execute if score $bit rx.temp matches {low}..{high} run function ./{low}_{high}"
 
 LEAF = "execute if score $bit rx.temp matches @ if data storage rx:global playerdb.players[{selected:1b, bits:{b%:@b}}] store result score $size rx.temp run data modify storage rx:global playerdb.players[{selected:1b, bits:{b%:@b}}].bits.select set value 1b"
 
@@ -223,10 +226,11 @@ def gen_bit(ctx: Context, bit_num: int):
         "scoreboard players operation $bit rx.temp = $uid rx.temp\n"
         f"scoreboard players operation $bit rx.temp %= ${BASE} rx.int\n"
         "scoreboard players set $size rx.temp 0\n"
-        f"function select/tree/bit{bit_num}/0_{BASE-1}\n"
+        f"function ./bit{bit_num}/0_{BASE-1}\n"
         f"scoreboard players operation $uid rx.temp /= ${BASE} rx.int\n"
         "execute if data storage rx:global playerdb.players[{bits:{select:0b}}] run data modify storage rx:global playerdb.players[{bits:{select:0b}}].selected set value 0b\n"
-        f"execute if score $size rx.temp matches 2.. run function select/tree/bit{bit_num+1}\n"
+        # 'tellraw @a {"score":{"name":"$size","objective":"rx.temp"}}\n'
+        f"execute if score $size rx.temp matches 2.. run function ./bit{bit_num+1}\n"
     )
     ctx.generate(f"select/tree/bit{bit_num}", Function(bit))
 
@@ -272,14 +276,14 @@ main(ctx)
 <details>
 
 ```mcfunction
-# @function add_entry
+# @function add_entry/main
 
 #!set major = ctx.meta.version.major
 
 #> Add entry. Call w/ @s being the player
 
 #> Fixes bug if player doesn't have uuid0 yet
-function ./player
+function ../tick/player
 
 #> Only run if @s doesn't have an entry
 execute unless score @s rx.pdb.HasEntry matches 1 run commands main
@@ -326,7 +330,7 @@ execute unless score @s rx.pdb.HasEntry matches 1 run commands main
 <details>
 
 ```mcfunction
-# @function verify
+# @function verify/main
 
 #> Verify selected is 1 and correct uid
 #> input: $verify.uid rx.io
@@ -343,9 +347,9 @@ execute store result score $uid.check rx.temp
 #> stores 1 in $verified if:
 #> - $size == 1
 #> - $uid == $uid.check
-execute store result score $verified rx.temp if score $size rx.temp matches 1
-execute if score $verified rx.temp matches 1
-	store result score $verified rx.temp if score $verify.uid rx.temp = $uid.check rx.temp
+execute store result score $verified rx.io if score $size rx.temp matches 1
+execute if score $verified rx.io matches 1
+	store result score $verified rx.io if score $verify.uid rx.temp = $uid.check rx.temp
 
 #> clean up
 scoreboard players reset $uid.check rx.temp

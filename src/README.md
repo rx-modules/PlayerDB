@@ -14,7 +14,7 @@ Through `beet` technologies, we can easily navigate through our code since most 
 * [uuid.md](uuid.md)
 	- Contains the special uuid database logic
 
-* [admi.md](admin.md)
+* [admin.md](admin.md)
 	- Contains the server admin centric functions
 
 * [utils.md](utils.md)

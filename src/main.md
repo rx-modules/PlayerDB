@@ -3,6 +3,12 @@
 Essentially, every PlayerDB sits in it's own namespace. When the pack loads, every version of PlayerDB runs a version checker which essentially sets a score if it's a newer version than the pack before it.
 
 ```yaml
+// @function_tag load:load
+values:
+- '#rx.playerdb:load'
+```
+
+```yaml
 // @function_tag rx.playerdb:load
 values:
 - '#rx.playerdb:impl/enumerate'
@@ -16,6 +22,8 @@ values:
 #!set major = ctx.meta.version.major
 #!set minor = ctx.meta.version.minor
 #!set patch = ctx.meta.version.patch
+
+# adapated from lepsen_core
 
 execute
     unless score #rx.pdb.major load.status matches __major__..
@@ -53,7 +61,7 @@ execute
 #> Does actual init
 #!set pname = ctx.meta.globals.pretty_name | tojson
 data modify storage rx:info playerdb.name set value 'PlayerDB'
-data modify storage rx:info playerdb.pretty_name set value __pname__
+data modify storage rx:info playerdb.pretty_name set value '__pname__'
 
 #> LL Load + version
 scoreboard players set rx.pdb load.status 1
@@ -64,7 +72,7 @@ scoreboard players set rx.pdb load.status 1
 data modify storage rx:info playerdb.version
 	set value {major: __major__, minor: __minor__, patch: __patch__}
 
-data modify storage rx:info playerdb.pretty_version 
+data modify storage rx:info playerdb.pretty_version
 	set value '[{"storage": "rx:info", "nbt": "playerdb.version.major"}, ".", {"storage": "rx:info", "nbt": "playerdb.version.minor"}, ".", {"storage": "rx:info", "nbt": "playerdb.version.patch"}]'
 
 scoreboard objectives add rx.io dummy
@@ -96,7 +104,7 @@ scoreboard players set $64 rx.int 64
 scoreboard players set $256 rx.int 256
 
 #> start our tick loop
-schedule function ./tick 1t replace
+schedule function {{ctx.generate.path('tick')}} 1t replace
 
 #> phi chunk
 # I'll need this in the future, + it's better than my rx-stand
@@ -113,4 +121,21 @@ fill -30000000 1 1600 -30000000 1 1615 minecraft:bedrock
 
 #> cool admin msg is cool
 tellraw @a[tag=rx.admin] [{"text":"", "color":"gray"}, {"nbt": "playerdb.pretty_name", "storage": "rx:info", "interpret": true}, " ", {"storage": "rx:info", "nbt": "playerdb.pretty_version", "interpret": true}, " loaded"]
+```
+
+```mcfunction
+# @function tick
+
+# scoreboard players enable @a rx.pdb.LT
+execute as @a run commands player
+	# check if uuid0 has been set
+	execute unless score @s rx.uuid0 = @s rx.uuid0 run function ../uuid/set
+
+	# on login, chk name change
+	execute if score @s rx.pdb.login matches 1.. run function ../uuid/check
+
+schedule function {{ctx.generate.path('tick')}} 1t replace
+
+# # list bs
+# execute unless score @s rx.pdb.LT matches 0 run function rx.playerdb:admin/list
 ```

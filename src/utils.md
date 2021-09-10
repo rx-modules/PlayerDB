@@ -52,3 +52,13 @@ for i in range(0, int(math.log(MAX_INT, BASE)) + 2):
 
 ctx.generate('utils/uid_to_bits', Function('\n'.join(out)))
 ```
+
+## new_uid
+
+```mcfunction
+# @function utils/new_uid
+#> New UID
+
+scoreboard players operation @s rx.uid = $uid.next rx.uid
+scoreboard players add $uid.next rx.uid 1
+```
