@@ -57,7 +57,7 @@ for call in api_calls:
 
 <details>
 
-```mcfunction
+```mcfunction-jinja
 # @function get/main
 
 #> Get Data: Output in rx:io out.player
@@ -67,18 +67,7 @@ execute if score $in.uid rx.io < $uid.next rx.uid run sequentially
 	function ../select/main
 	function ./logic
 
-execute if score $in.uid rx.io >= $uid.next rx.uid run sequentially
-	data remove storage rx:io playerdb.player
-	tellraw @a[tag=rx.admin] {"text":"Unsuccessful get. Input uid above max uid", "color": "#CE4257"}
-```
-
-## get/logic
-
-```mcfunction
-# @function get/logic
-
-#> Get Data: Output in rx:io out.player
-
+#!function generate_path('get/logic')
 # size leftover from select
 execute if score $size rx.temp matches 1 run sequentially
 	data modify storage rx:io playerdb.player set from storage rx:global playerdb.players[{selected:1b}]
@@ -89,6 +78,11 @@ execute if score $size rx.temp matches ..0 run data modify storage rx:io playerd
 # sanity check, output -> playerdb.player
 execute store result score $uid rx.temp run data get storage rx:io playerdb.player.info.uid
 execute unless score $uid rx.temp = $in.uid rx.io run data modify storage rx:io playerdb.player set value {}
+#!endfunction
+
+execute if score $in.uid rx.io >= $uid.next rx.uid run sequentially
+	data remove storage rx:io playerdb.player
+	tellraw @a[tag=rx.admin] {"text":"Unsuccessful get. Input uid above max uid", "color": "#CE4257"}
 ```
 
 ## get/self/main
@@ -167,7 +161,7 @@ function ../../save/main
 
 ## select/main
 
-```mcfunction
+```mcfunction-jinja
 # @function select/main
 
 #> Select Data: Output selected:1b
@@ -175,20 +169,11 @@ function ../../save/main
 # set input
 scoreboard players operation $uid rx.temp = $in.uid rx.io
 
-# select
 function ./logic
-```
-
-## select/logic
-
-```mcfunction
-# @function select/logic
-
-#> Select Data: Output selected:1b
-
-scoreboard players operation $verify.uid rx.io = $uid rx.temp
+#!function generate_path('select/logic')
 
 # verification
+scoreboard players operation $verify.uid rx.io = $uid rx.temp
 function ../verify/main
 
 # selection
@@ -197,76 +182,46 @@ execute if score $verified rx.io matches 0 run sequentially
 		run tellraw @a[tag=rx.admin] {"text":"Selection failed. No players in database to select", "color": "#CE4257"}
 	execute if data storage rx:global playerdb.players[] run sequentially
 		data modify storage rx:global playerdb.players[].selected set value 1b
+		tellraw @a {"nbt":"playerdb.players","storage":"rx:global"}
 		function ./tree/bit0
-```
 
-### bits generator
-This plugin generates all of the bit checking logic.
+#!for i in range(6)
+#!function generate_path("select/tree/bit" ~ i)
 
-```python
-# @plugin
+data modify storage rx:global playerdb.players[].bits.select set value 0b
+scoreboard players operation $bit rx.temp = $uid rx.temp
+scoreboard players operation $bit rx.temp %= $64 rx.int
+scoreboard players set $size rx.temp 0
+tellraw @a ["$bit{{i}}:", {"score":{"name":"$bit","objective":"rx.temp"}}]
 
-from beet import Function, Context
-import math
+#!for node in generate_tree(render_path, range(64))
+#!function node.parent append
+#!if node.partition(8)
+execute if score $bit rx.temp matches {{ node.range }}
+	run function {{ node.children }}
+#!else
+#!set path = "playerdb.players[{selected:1b, bits:{b" ~ i ~ ":" ~ node.value ~ "b}}]"
+execute
+	if score $bit rx.temp matches {{ node.range }}
+	if data storage rx:global {{ path }}
+	run data modify storage rx:global {{ path }}.bits.select set value 1b
+#!endif
+#!endfunction
+#!endfor
 
-BASE = 64
-BRANCHES = 8
-MAX_INT = 2 ** 31 - 1
+tellraw @a ["$size:", {"score":{"name":"$size","objective":"rx.temp"}}]
+execute
+	if data storage rx:global playerdb.players[{bits:{select:0b}}]
+	run data modify storage rx:global playerdb.players[{bits:{select:0b}}].selected set value 0b
 
-ITERATIONS = math.log(MAX_INT, BASE) + 1
+#!if not loop.last
+scoreboard players operation $uid rx.temp /= 64 rx.int
+execute if score $size rx.temp matches 2.. run function ./bit{{ i + 1 }}
+#!endif
 
-
-TREE = "execute if score $bit rx.temp matches {low}..{high} run function ./{low}_{high}"
-
-LEAF = "execute if score $bit rx.temp matches @ if data storage rx:global playerdb.players[{selected:1b, bits:{b%:@b}}] store result score $size rx.temp run data modify storage rx:global playerdb.players[{selected:1b, bits:{b%:@b}}].bits.select set value 1b"
-
-def gen_bit(ctx: Context, bit_num: int):
-    bit = (
-        "data modify storage rx:global playerdb.players[].bits.select set value 0b\n"
-        "scoreboard players operation $bit rx.temp = $uid rx.temp\n"
-        f"scoreboard players operation $bit rx.temp %= ${BASE} rx.int\n"
-        "scoreboard players set $size rx.temp 0\n"
-        f"function ./bit{bit_num}/0_{BASE-1}\n"
-        f"scoreboard players operation $uid rx.temp /= ${BASE} rx.int\n"
-        "execute if data storage rx:global playerdb.players[{bits:{select:0b}}] run data modify storage rx:global playerdb.players[{bits:{select:0b}}].selected set value 0b\n"
-        # 'tellraw @a {"score":{"name":"$size","objective":"rx.temp"}}\n'
-        f"execute if score $size rx.temp matches 2.. run function ./bit{bit_num+1}\n"
-    )
-    ctx.generate(f"select/tree/bit{bit_num}", Function(bit))
-
-
-def gen_tree(ctx: Context, bit_num: int, low: int, high: int):
-    change = (high - low) // BRANCHES
-
-    low_values = [low + change * i for i in range(BRANCHES)]
-    high_values = [(low + change * (i + 1)) for i in range(BRANCHES)]
-
-    values = list(zip(low_values, high_values))
-
-    if low + BRANCHES < high:
-        tree = tuple(
-            TREE.format(low=value[0], high=value[1] - 1, num=bit_num)
-            for value in values
-        )
-
-        ctx.generate(f"select/tree/bit{bit_num}/{low}_{high-1}", Function(tree))
-
-        for value in values:
-            gen_tree(ctx, bit_num, value[0], value[1])
-
-    else:
-        leaf = tuple(
-            LEAF.replace("@", str(low + i)).replace("%", str(bit_num))
-            for i in range(BRANCHES)
-        )
-        ctx.generate(f"select/tree/bit{bit_num}/{low}_{low+BRANCHES-1}", Function(leaf))
-
-def main(ctx: Context):
-    for i in range(int(ITERATIONS) + 1):
-        gen_bit(ctx, i)
-        gen_tree(ctx, i, 0, BASE)
-
-main(ctx)
+#!endfunction
+#!endfor
+#!endfunction
 ```
 
 </details>
@@ -275,7 +230,7 @@ main(ctx)
 
 <details>
 
-```mcfunction
+```mcfunction-jinja
 # @function add_entry/main
 
 #!set major = ctx.meta.version.major
@@ -286,41 +241,44 @@ main(ctx)
 function ../tick/player
 
 #> Only run if @s doesn't have an entry
-execute unless score @s rx.pdb.HasEntry matches 1 run commands main
-	execute if data storage rx:global playerdb.players[]
-		run data modify storage rx:global playerdb.players[].selected set value 0b
+execute unless score @s rx.pdb.HasEntry matches 1 run function ./logic
 
-	#> get name
-	function ../utils/get_name
+#!function generate_path('add_entry/logic')
+execute if data storage rx:global playerdb.players[]
+	run data modify storage rx:global playerdb.players[].selected set value 0b
 
-	#> add new entry
-	data modify storage rx:global playerdb.players append value {}
+#> get name
+function ../utils/get_name
 
-	#> store sum data
-	execute store result storage rx:global playerdb.players[-1].info.uid int 1
-		run scoreboard players get @s rx.uid
-	data modify storage rx:global playerdb.players[-1].info.name set from storage rx:temp playerdb.player_name 
-	data modify storage rx:global playerdb.players[-1].info.UUID set from entity @s UUID
-	data modify storage rx:global playerdb.players[-1].data set value {}
-	data modify storage rx:global playerdb.players[-1].selected set value 1b
+#> add new entry
+data modify storage rx:global playerdb.players append value {}
 
-	#> generate bits :D
-	scoreboard players operation $uid rx.temp = @s rx.uid
-	function ../utils/uid_to_bits
+#> store sum data
+execute store result storage rx:global playerdb.players[-1].info.uid int 1
+	run scoreboard players get @s rx.uid
+data modify storage rx:global playerdb.players[-1].info.name set from storage rx:temp playerdb.player_name 
+data modify storage rx:global playerdb.players[-1].info.UUID set from entity @s UUID
+data modify storage rx:global playerdb.players[-1].data set value {}
+data modify storage rx:global playerdb.players[-1].selected set value 1b
 
-	#> copy bits
-	data modify storage rx:global playerdb.players[-1].bits set from storage rx:temp playerdb.bits
+#> generate bits :D
+scoreboard players operation $uid rx.temp = @s rx.uid
+function ../utils/uid_to_bits
 
-	#> update uuidDB
-	data modify storage rx:temp playerdb.UUID set from storage rx:global playerdb.players[-1].info.UUID
-	function ../uuid/select
-	data modify storage rx:global playerdb.uuid[{selected:1b}].entries[-1].hasEntry set value 1b
-	scoreboard players set @s rx.pdb.HasEntry 1
+#> copy bits
+data modify storage rx:global playerdb.players[-1].bits set from storage rx:temp playerdb.bits
 
-	#> api
-	data modify storage rx:io playerdb.player set from storage rx:global playerdb.players[{selected:1b}]
-	function #rx.playerdb:api/v{{major}}/on_entry_add
-	data modify storage rx:global playerdb.players[{selected:1b}].data set from storage rx:io playerdb.player.data
+#> update uuidDB
+data modify storage rx:temp playerdb.UUID set from storage rx:global playerdb.players[-1].info.UUID
+function ../uuid/select
+data modify storage rx:global playerdb.uuid[{selected:1b}].entries[-1].hasEntry set value 1b
+scoreboard players set @s rx.pdb.HasEntry 1
+
+#> api
+data modify storage rx:io playerdb.player set from storage rx:global playerdb.players[{selected:1b}]
+function #rx.playerdb:api/v{{ major ~ '/on_entry_add'}}
+data modify storage rx:global playerdb.players[{selected:1b}].data set from storage rx:io playerdb.player.data
+#!endfunction
 ```
 
 </details>
@@ -349,7 +307,7 @@ execute store result score $uid.check rx.temp
 #> - $uid == $uid.check
 execute store result score $verified rx.io if score $size rx.temp matches 1
 execute if score $verified rx.io matches 1
-	store result score $verified rx.io if score $verify.uid rx.temp = $uid.check rx.temp
+	store result score $verified rx.io if score $verify.uid rx.io = $uid.check rx.temp
 
 #> clean up
 scoreboard players reset $uid.check rx.temp

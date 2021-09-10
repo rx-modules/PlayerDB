@@ -2,7 +2,7 @@
 
 ## get_name
 
-```mcfunction
+```mcfunction-jinja
 # @function utils/get_name
 
 #> @s: player
@@ -17,40 +17,19 @@ execute in minecraft:overworld run sequentially
 
 ## uid\_to\_bits
 
-```python
-# @plugin
+```mcfunction-jinja
+# @function utils/uid_to_bits
 
-from beet import Function
-import math
+{%- for i in range(6) -%}
+scoreboard players operation $bit rx.temp = $uid rx.temp
+execute store result storage rx:temp playerdb.bits.{{ 'b' ~ i }} byte 1
+    run scoreboard players operation $bit rx.temp %= $64 rx.int
 
-BASE = 64
-MAX_INT = 2 ** 31 - 1
-DEBUG = False
+{% if not loop.last -%}
+scoreboard players operation $uid rx.temp /= $64 rx.int
+{% endif -%}
+{%- endfor -%}
 
-
-COMMENT = (
-    "# By: rx97\n"
-)
-
-lines = (
-    f"scoreboard players operation $uid rx.temp /= ${BASE} rx.int",
-    "scoreboard players operation $bit rx.temp = $uid rx.temp",
-    "execute store result storage rx:temp playerdb.bits.b{bit} byte 1 run scoreboard players operation $bit rx.temp %= ${base} rx.int"
-)
-
-debug_line = 'tellraw @s[tag=rx.PDBDebug] [{"text":"", "color":"gold"}, {"text":"bit^: "}, {"score":{"name":"$bit", "objective":"rx.temp"}}]'
-
-out = [COMMENT]
-for i in range(0, int(math.log(MAX_INT, BASE)) + 2):
-    if i != 0:
-        out.append(lines[0])
-    out.append(lines[1])
-    out.append(lines[2].format(bit=i, base=BASE))
-    if DEBUG:
-        out.append(debug_line.replace("^", str(i)))
-    out.append("\n")
-
-ctx.generate('utils/uid_to_bits', Function('\n'.join(out)))
 ```
 
 ## new_uid

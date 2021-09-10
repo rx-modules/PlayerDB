@@ -11,7 +11,6 @@ from colour import Color
 
 SemVer = namedtuple("version", ("major", "minor", "patch"))
 
-
 def function_headers(ctx: Context):
     for name, func in ctx.data.functions.items():
         func.lines.insert(0, f"# source: {name}")

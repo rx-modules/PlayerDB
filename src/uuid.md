@@ -4,7 +4,7 @@
 
 <details>
 
-```mcfunction
+```mcfunction-jinja
 # @function uuid/select
 
 #> Select an entry in the UUID db
@@ -31,19 +31,21 @@ scoreboard players set $size rx.temp 0
 #!for node in generate_tree(render_path, range(64))
 #!function node.parent append
 #!if node.partition(8)
-execute if score $bit rx.temp matches {{ node.range }} run function {{ node.children }}
+execute if score $bit rx.temp matches {{ node.range }}
+	run function {{ node.children }}
 #!else
 #!set path = "playerdb.uuid[{selected:1b, bits:{b" ~ i ~ ":" ~ node.value ~ "b}}]"
 execute
-    if score $bit rx.temp matches {{ node.range }}
-    if data storage rx:global {{ path }} run data modify storage rx:global {{ path }}.bits.select set value 1b
+	if score $bit rx.temp matches {{ node.range }}
+	if data storage rx:global {{ path }}
+	run data modify storage rx:global {{ path }}.bits.select set value 1b
 #!endif
 #!endfunction
 #!endfor
 
 execute
-    if data storage rx:global playerdb.uuid[{bits: {select: 0b}}]
-    run data modify storage rx:global playerdb.uuid[{bits: {select: 0b}}].selected set value 0b
+	if data storage rx:global playerdb.uuid[{bits:{select:0b}}]
+	run data modify storage rx:global playerdb.uuid[{bits:{select:0b}}].selected set value 0b
 
 #!if not loop.last
 scoreboard players operation $uid rx.temp /= 64 rx.int
@@ -102,7 +104,7 @@ execute if score $loop rx.temp matches 1..
 
 <details>
 
-```mcfunction
+```mcfunction-jinja
 # @function uuid/check
 
 #> @s: player
@@ -235,7 +237,7 @@ function ./select
 #> 	gen a uid if we don't have one
 #> 	gen a UUID entry since we don't have a UUID entry
 execute if score $found rx.temp matches 0 run sequentially
-	unless score @s rx.uid matches 1.. run function ../utils/new_uid
+	execute unless score @s rx.uid matches 1.. run function ../utils/new_uid
 	function ./new
 
 #> else: update! we have a name change!!
@@ -250,7 +252,7 @@ execute if score $found rx.temp matches 1 run
 <details>
 
 ```mcfunction
-# @function uuid/set
+# @function uuid/update
 
 #> @s: player
 #> update UUID + PlayerDB w/ name change
@@ -287,47 +289,6 @@ execute if score @s rx.pdb.HasEntry matches 1 run data modify storage rx:global 
 #> reapply cache
 scoreboard players operation @s rx.uid = $cache.uid rx.temp
 scoreboard players operation @s rx.pdb.HasEntry = $cache.HasEntry rx.temp
-```
-
-</details>
-
-## uuid/set
-
-<details>
-
-```mcfunction
-# @function uuid/set
-
-#> @s: player
-#> Set the uuid from storage
-
-#> There are three situations for players w/o UUID:
-#>   New player: no uid nor entry
-#>   Returning player: no entry
-#>   Returning player: has both uid and entry
-
-#> get UUID from entity
-data modify storage rx:temp playerdb.UUID set from entity @s UUID
-
-#> store UUID in uuid0-3
-execute store result score @s rx.uuid0 run data get storage rx:temp playerdb.UUID[0]
-execute store result score @s rx.uuid1 run data get storage rx:temp playerdb.UUID[1]
-execute store result score @s rx.uuid2 run data get storage rx:temp playerdb.UUID[2]
-execute store result score @s rx.uuid3 run data get storage rx:temp playerdb.UUID[3]
-
-#> select UUID + iterations
-scoreboard players operation $uid rx.temp = @s rx.uuid0
-function ./select
-
-#> if not found
-#> 	gen a uid if we don't have one
-#> 	gen a UUID entry since we don't have a UUID entry
-execute if score $found rx.temp matches 0 run sequentially
-	execute unless score @s rx.uid matches 1.. run function ../utils/new_uid
-	function ./new
-
-#> else: update! we have a name change!!
-execute if score $found rx.temp matches 1 run function ./update
 ```
 
 </details>
