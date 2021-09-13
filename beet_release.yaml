@@ -1,0 +1,8 @@
+extend:
+  - beet-project.yaml
+output: releases
+data_pack:
+  zipped: true
+meta:
+  lectern:
+    load: ["src/*.md"]

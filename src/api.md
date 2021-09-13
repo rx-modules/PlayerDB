@@ -67,6 +67,8 @@ execute if score $in.uid rx.io < $uid.next rx.uid run sequentially
 	function ../select/main
 	function ./logic
 
+#!out score "rx.io", "$in.uid"
+
 #!function generate_path('get/logic')
 # size leftover from select
 execute if score $size rx.temp matches 1 run sequentially

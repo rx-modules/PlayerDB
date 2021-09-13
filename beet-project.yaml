@@ -1,9 +1,3 @@
-name: PlayerDB
-id: rx.playerdb
-description: Player Data Manager Library - (SQL but in Minecraft)
-author: rx97
-version: '2.0.0'
-
 require:
   - src.plugins.misc.globals
   - src.plugins.misc.gen_namespace
@@ -19,6 +13,7 @@ pipeline:
   - lectern
   - beet.contrib.auto_yaml
   - src.plugins.advancements
+  - src.plugins.debug_extension
   - beet.contrib.render
   - beet.contrib.hangman
   - beet.contrib.relative_function_path
@@ -27,7 +22,7 @@ pipeline:
 
 meta:
   lectern:
-    load: ["src/**/*.md"]
+    load: ["src/*.md", "test/*.md"]
 
   hangman:
     match: ["*"]
@@ -51,7 +46,6 @@ meta:
 
   advancements:
     item: minecraft:jukebox
-  # installation_advancement:
-  #   icon:
-  #     item: minecraft:jukebox
-  #   author_description: I make datapacks, I guess?
+
+  out_statement:
+

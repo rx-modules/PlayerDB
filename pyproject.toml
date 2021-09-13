@@ -16,6 +16,12 @@ beet = "^0.41.0"
 lectern = "^0.16.0"
 
 [tool.beet]
+name = "PlayerDB"
+id = "rx.playerdb"
+description = "Player Data Manager Library - (SQL but in Minecraft)"
+author = "rx97"
+version = "2.0.0"
+
 output = "build"
 extend = ["beet-project.yaml"]
 
