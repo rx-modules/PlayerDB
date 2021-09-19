@@ -15,7 +15,7 @@ values:
 - '#rx.playerdb:impl/resolve'
 ```
 
-```mcfunction
+```mcf
 # @function rx.playerdb:impl/enumerate
 #!tag "rx.playerdb:impl/enumerate"
 
@@ -39,7 +39,7 @@ execute
     run scoreboard players set #rx.pdb.patch load.status __patch__
 ```
 
-```mcfunction
+```mcf
 # @function rx.playerdb:impl/resolve
 #!tag "rx.playerdb:impl/resolve"
 
@@ -47,15 +47,15 @@ execute
 #!set minor = ctx.meta.version.minor
 #!set patch = ctx.meta.version.patch
 
-schedule clear rx.playerdb:impl/v{{verstr}}/tick
+schedule clear rx.playerdb:impl/v{{verstr ~ '/tick'}}
 execute
 	if score #rx.pdb.major load.status matches __major__
 	if score #rx.pdb.minor load.status matches __minor__
 	if score #rx.pdb.patch load.status matches __patch__
-	run function rx.playerdb:impl/v{{verstr}}/init
+	run function rx.playerdb:impl/v{{verstr ~ '/init'}}
 ```
 
-```mcfunction
+```mcf
 # @function init
 
 #> Does actual init
@@ -123,9 +123,8 @@ fill -30000000 1 1600 -30000000 1 1615 minecraft:bedrock
 tellraw @a[tag=rx.admin] [{"text":"", "color":"gray"}, {"nbt": "playerdb.pretty_name", "storage": "rx:info", "interpret": true}, " ", {"storage": "rx:info", "nbt": "playerdb.pretty_version", "interpret": true}, " loaded"]
 ```
 
-```mcfunction
+```mcf
 # @function tick
-
 # scoreboard players enable @a rx.pdb.LT
 execute as @a run commands player
 	# check if uuid0 has been set

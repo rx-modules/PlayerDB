@@ -13,6 +13,7 @@ from jinja2.nodes import ExprStmt, Node, Expr, Const, Output, TemplateData
 from beet import Context, FunctionTag, JinjaExtension
 
 from pydantic import BaseModel
+from functools import cached_property
 
 import json
 
@@ -22,7 +23,27 @@ def beet_default(ctx: Context):
 
 
 class OutOptions(BaseModel):
-    command: str = 'tellraw @a '
+    command: str = "tellraw @a {payload}"
+    payload: List[dict] = [
+        {
+            "text": "",
+            "hoverEvent": {
+                "action": "show_text",
+                "contents": [
+                    "",
+                    {"text": "Type: {{ mode | title }}\n", "color": "gray"},
+                    {"text": "Path: {{ render_path }}\n", "color": "gray"},
+                    {"text": "Lineno: {{ lineno }}", "color": "gray"},
+                ],
+            },
+        },
+        {"text": "[{{ project_name }}]: ", "color": "gray"},
+        {
+            "text": "< {{ identifier }} ",
+            "color": "gold",
+            "extra": ["{{ accessor }}", " >"],
+        },
+    ]
     stringify: bool = False
 
 
@@ -31,12 +52,16 @@ class OutStatement(JinjaExtension):
 
     tags = {"out"}
 
+    @cached_property
+    def opts(self) -> OutOptions:
+        return self.ctx.validate("out", OutOptions)
+
     def parse(self, parser: Any) -> Node:
         lineno = next(parser.stream).lineno
         mode = next(parser.stream)
         if not mode.test_any("name:score", "name:storage", "name:entity"):
             return parser.fail("Failed to provide score, storage or entity")
-            
+
         target, name = parser.parse_tuple().items
 
         args = [TemplateData(mode.value), name, target, TemplateData(lineno)]
@@ -51,52 +76,35 @@ class OutStatement(JinjaExtension):
             raise TypeError("Out statements can only be used inside functions.")
 
         kwargs = {
-            'mode': f'{mode!r}',
-            'identifier': f'{identifier!r}',
-            'target': f'{target!r}',
-            'lineno': f'{lineno!r}'
+            "mode": mode,
+            "identifier": identifier,
+            "target": target,
+            "lineno": lineno,
         }
 
         if mode == "score":
-            accessor = {
-                "score": {"name": "{{identifier}}", "objective": "{{target}}"}
-            }
+            accessor = self.ctx.template.render_json(
+                {"score": {"name": "{{identifier}}", "objective": "{{target}}"}},
+                **kwargs,
+            )
         elif mode == "storage":
-            accessor = {"storage": "{{target}}", "nbt": "{{identifier}}"}
+            accessor = self.ctx.template.render_json(
+                {"storage": "{{target}}", "nbt": "{{identifier}}"}, **kwargs
+            )
         elif mode == "entity":
-            accessor = {"entity": "{{target}}", "nbt": "{{identifier}}"}
+            accessor = self.ctx.template.render_json(
+                {"entity": "{{target}}", "nbt": "{{identifier}}"}, **kwargs
+            )
         elif mode == "block":
-            accessor = {"block": "{{target}}", "nbt": "{{identifier}}"}
+            accessor = self.ctx.template.render_json(
+                {"block": "{{target}}", "nbt": "{{identifier}}"}, **kwargs
+            )
 
-        hover = {
-            "text": "",
-            "hoverEvent": {
-                "action": "show_text",
-                "contents": [
-                    "",
-                    {"text": "Type: {{mode | title}}\n", "color": "gray"},
-                    {"text": "Filename: {{ctx.meta.render_path}}\n", "color": "gray"},
-                    {"text": "Lineno: {{lineno}}\n", "color": "gray"},
-                    {"text": "\n", "color": "gray"}
-                ]
-            }
-        }
+        rendered = self.ctx.template.render_string(
+            json.dumps(self.opts.payload),
+            accessor='",' + json.dumps(accessor) + ',"',
+            **kwargs,
+        )
+        # rendered = self.ctx.template.render_json(self.opts.payload, **kwargs)
 
-        # func = self.ctx.data[self.ctx.meta['render_path']]
-        # tellraw_line = func.lines[lineno]
-        # surrounding = [line for line in func.lines if line]
-        
-        # if (fake_lineno := surrounding.index(tellraw_line)):
-        #     for i in range(lineno-1, lineno+2):
-        #         if 0 < i < len(surrounding):
-        #             hover['hoverEvent']['contents'].append(surrounding[i])
-
-        payload = [
-            hover,
-            {"text": "[{{ctx.project_name}}]: ", "color": "gray"},
-            {"text": "<{{identifier}} ", "color": "gold", "extra":[accessor, " >"]},
-        ]
-
-        rendered = self.ctx.template.render_json(payload, **kwargs)
-
-        return f"tellraw @a[tag=rx.admin] {json.dumps(rendered)}\n"
+        return self.opts.command.format(payload=rendered) + '\n'

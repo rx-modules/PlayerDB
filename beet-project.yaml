@@ -22,7 +22,7 @@ pipeline:
 
 meta:
   lectern:
-    load: ["src/*.md", "test/*.md"]
+    load: ["src/**/*.md", "test/*.md"]
 
   hangman:
     match: ["*"]
@@ -46,6 +46,3 @@ meta:
 
   advancements:
     item: minecraft:jukebox
-
-  out_statement:
-

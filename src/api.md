@@ -57,7 +57,7 @@ for call in api_calls:
 
 <details>
 
-```mcfunction-jinja
+```mcf
 # @function get/main
 
 #> Get Data: Output in rx:io out.player
@@ -66,8 +66,6 @@ for call in api_calls:
 execute if score $in.uid rx.io < $uid.next rx.uid run sequentially
 	function ../select/main
 	function ./logic
-
-#!out score "rx.io", "$in.uid"
 
 #!function generate_path('get/logic')
 # size leftover from select
@@ -89,10 +87,11 @@ execute if score $in.uid rx.io >= $uid.next rx.uid run sequentially
 
 ## get/self/main
 
-```mcfunction
+```mcf
 # @function get/self/main
 
 #> Get @s Data: Output in rx:io out.player
+#!out score "rx.io", "$in.uid"
 
 #> api add_entry, won't add unless we need to. $entry: 1: we have entry, 0: we don't have entry
 function ../../add_entry/main
@@ -109,7 +108,7 @@ function ../../get/main
 
 ## save/main
 
-```mcfunction
+```mcf
 # @function save/main
 
 # optimization baked in
@@ -163,7 +162,7 @@ function ../../save/main
 
 ## select/main
 
-```mcfunction-jinja
+```mcf
 # @function select/main
 
 #> Select Data: Output selected:1b
@@ -232,7 +231,7 @@ execute if score $size rx.temp matches 2.. run function ./bit{{ i + 1 }}
 
 <details>
 
-```mcfunction-jinja
+```mcf
 # @function add_entry/main
 
 #!set major = ctx.meta.version.major

@@ -59,7 +59,7 @@ execute if score $in.uid rx.io < $uid.next rx.uid run commands logic
 		run tellraw @a[tag=rx.admin] [{"text": "Failed to remove entry. Entry does not exist", "color": "#CE4257"}]
 ```
 
-```mcfunction
+```mcf
 # @function rx.playerdb:admin/remove_entry/logic
 
 #!set major = ctx.meta.version.major
@@ -70,7 +70,7 @@ execute if score $in.uid rx.io < $uid.next rx.uid run commands logic
 
 #> perform select as long as input is less than $uid.next
 execute if score $in.uid rx.io < $uid.next rx.uid
-	run function #rx.playerdb:api/v{{major}}/select
+	run function #rx.playerdb:api/v{{major ~ '/select'}}
 execute unless score $in.uid rx.io < $uid.next rx.uid
 	run scoreboard players set $size rx.temp 0
 
@@ -116,7 +116,7 @@ execute if data storage rx:temp playerdb.admin.migrate.UUID
 	run function rx.playerdb:admin/migrate_account/logic
 ```
 
-```mcfunction
+```mcf
 # @function rx.playerdb:admin/migrate_account/logic
 
 #> @s: player to migrate
@@ -171,7 +171,7 @@ execute if score $found rx.temp matches 1 run commands found_acc
 	tellraw @s [{"text": "", "color": "green"}, {"storage": "rx:info", "nbt": "playerdb.pretty_name", "interpret": true}, ": ", {"storage": "rx:temp", "nbt": "playerdb.admin.migrate.oldName", "color": "gold"}, "'s data was successfully migrated to you!"]
 
 	#> call name change api
-	function #rx.playerdb:api/v{{major}}/on_name_change
+	function #rx.playerdb:api/v{{major ~ '/on_name_change'}}
 
 	#> cleanup
 	data remove storage rx:temp playerdb.admin.migrate
