@@ -59,7 +59,7 @@ execute if score $in.uid rx.io < $uid.next rx.uid run commands logic
 		run tellraw @a[tag=rx.admin] [{"text": "Failed to remove entry. Entry does not exist", "color": "#CE4257"}]
 ```
 
-```mcf
+```mcfunction
 # @function rx.playerdb:admin/remove_entry/logic
 
 #!set major = ctx.meta.version.major
@@ -116,7 +116,7 @@ execute if data storage rx:temp playerdb.admin.migrate.UUID
 	run function rx.playerdb:admin/migrate_account/logic
 ```
 
-```mcf
+```mcfunction
 # @function rx.playerdb:admin/migrate_account/logic
 
 #> @s: player to migrate

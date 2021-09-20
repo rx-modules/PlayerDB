@@ -4,7 +4,7 @@
 
 <details>
 
-```mcf
+```mcfunction
 # @function uuid/select
 
 #> Select an entry in the UUID db
@@ -104,7 +104,7 @@ execute if score $loop rx.temp matches 1..
 
 <details>
 
-```mcf
+```mcfunction
 # @function uuid/check
 
 #> @s: player

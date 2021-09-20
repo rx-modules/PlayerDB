@@ -57,7 +57,7 @@ for call in api_calls:
 
 <details>
 
-```mcf
+```mcfunction
 # @function get/main
 
 #> Get Data: Output in rx:io out.player
@@ -87,7 +87,7 @@ execute if score $in.uid rx.io >= $uid.next rx.uid run sequentially
 
 ## get/self/main
 
-```mcf
+```mcfunction
 # @function get/self/main
 
 #> Get @s Data: Output in rx:io out.player
@@ -108,7 +108,7 @@ function ../../get/main
 
 ## save/main
 
-```mcf
+```mcfunction
 # @function save/main
 
 # optimization baked in
@@ -162,7 +162,7 @@ function ../../save/main
 
 ## select/main
 
-```mcf
+```mcfunction
 # @function select/main
 
 #> Select Data: Output selected:1b
@@ -231,7 +231,7 @@ execute if score $size rx.temp matches 2.. run function ./bit{{ i + 1 }}
 
 <details>
 
-```mcf
+```mcfunction
 # @function add_entry/main
 
 #!set major = ctx.meta.version.major

@@ -15,7 +15,7 @@ values:
 - '#rx.playerdb:impl/resolve'
 ```
 
-```mcf
+```mcfunction
 # @function rx.playerdb:impl/enumerate
 #!tag "rx.playerdb:impl/enumerate"
 
@@ -39,7 +39,7 @@ execute
     run scoreboard players set #rx.pdb.patch load.status __patch__
 ```
 
-```mcf
+```mcfunction
 # @function rx.playerdb:impl/resolve
 #!tag "rx.playerdb:impl/resolve"
 
@@ -55,7 +55,7 @@ execute
 	run function rx.playerdb:impl/v{{verstr ~ '/init'}}
 ```
 
-```mcf
+```mcfunction
 # @function init
 
 #> Does actual init
@@ -123,7 +123,7 @@ fill -30000000 1 1600 -30000000 1 1615 minecraft:bedrock
 tellraw @a[tag=rx.admin] [{"text":"", "color":"gray"}, {"nbt": "playerdb.pretty_name", "storage": "rx:info", "interpret": true}, " ", {"storage": "rx:info", "nbt": "playerdb.pretty_version", "interpret": true}, " loaded"]
 ```
 
-```mcf
+```mcfunction
 # @function tick
 # scoreboard players enable @a rx.pdb.LT
 execute as @a run commands player

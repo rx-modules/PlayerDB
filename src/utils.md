@@ -2,7 +2,7 @@
 
 ## get_name
 
-```mcf
+```mcfunction
 # @function utils/get_name
 
 #> @s: player
@@ -17,7 +17,7 @@ execute in minecraft:overworld run sequentially
 
 ## uid\_to\_bits
 
-```mcf
+```mcfunction
 # @function utils/uid_to_bits
 
 {%- for i in range(6) -%}

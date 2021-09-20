@@ -20,7 +20,7 @@ for count in [10, 25, 50, 100]:
 	])
 ```
 
-```mcfunction-jinja
+```mcfunction
 # @function rx.playerdb:test/utils/reset_self
 #> Note this increments the uid counter w/o resetting it ;)
 scoreboard players reset @s rx.uid
@@ -29,7 +29,7 @@ function ./utils/new_uid
 function #rx.playerdb:api/v2/add_entry
 ```
 
-```mcfunction-jinja
+```mcfunction
 # @function rx.playerdb:test/utils/create/main
 
 function rx.playerdb:test/utils/reset_self
@@ -38,7 +38,7 @@ scoreboard players remove $loop rx.temp 1
 execute if score $loop rx.temp matches 1.. run function rx.playerdb:test/utils/create/main
 ```
 
-```mcfunction-jinja
+```mcfunction
 # @function rx.playerdb:test/utils/modify_self
 
 function #rx.playerdb:api/v2/get/self
