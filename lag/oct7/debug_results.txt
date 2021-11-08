@@ -78,34 +78,34 @@ Tick span: 536 ticks
 [03] |   |   |   #getChunk 100/0
 [02] |   |   unspecified(1/0) - 7.47%/0.03%
 [01] |   /execute as @a run function rx.playerdb:test/modify_save(1/0) - 0.42%/0.35%
-[02] |   |   execute if score $size rx.temp matches 1 run data modify storage rx:io playerdb.player.data set from storage rx:global playerdb.players[{selected:1b}].data(50/0) - 59.72%/0.21%
+[02] |   |   execute if score $size rx.temp matches 1 run data modify storage rx.playerdb:io player.data set from storage rx.playerdb:main players[{selected:1b}].data(50/0) - 59.72%/0.21%
 [02] |   |   unspecified(1/0) - 11.99%/0.04%
-[02] |   |   data modify storage rx:global playerdb.players[{selected:1b}].data set from storage rx:io playerdb.player.data(50/0) - 7.21%/0.03%
-[02] |   |   execute store result score $size rx.temp if data storage rx:global playerdb.players[{selected:1b}](336/1) - 4.30%/0.02%
-[02] |   |   execute if score $size rx.temp matches 1 run data modify storage rx:io playerdb.player.info set from storage rx:global playerdb.players[{selected:1b}].info(50/0) - 1.11%/0.00%
-[02] |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit0:0b}] run data modify storage rx:global playerdb.players[{bit0:0b}].selected set value 0b(50/0) - 1.01%/0.00%
-[02] |   |   data modify storage rx:global playerdb.players[].selected set value 1b(50/0) - 1.01%/0.00%
-[02] |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit0:1b}] run data modify storage rx:global playerdb.players[{bit0:1b}].selected set value 0b(50/0) - 0.88%/0.00%
-[02] |   |   data modify storage rx:global playerdb.players[].selected set value 0b(50/0) - 0.86%/0.00%
-[02] |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit3:1b}] run data modify storage rx:global playerdb.players[{bit3:1b}].selected set value 0b(50/0) - 0.84%/0.00%
-[02] |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit1:1b}] run data modify storage rx:global playerdb.players[{bit1:1b}].selected set value 0b(50/0) - 0.82%/0.00%
-[02] |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit4:1b}] run data modify storage rx:global playerdb.players[{bit4:1b}].selected set value 0b(50/0) - 0.82%/0.00%
-[02] |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit2:1b}] run data modify storage rx:global playerdb.players[{bit2:1b}].selected set value 0b(50/0) - 0.78%/0.00%
-[02] |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit1:0b}] run data modify storage rx:global playerdb.players[{bit1:0b}].selected set value 0b(50/0) - 0.74%/0.00%
-[02] |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit2:0b}] run data modify storage rx:global playerdb.players[{bit2:0b}].selected set value 0b(50/0) - 0.71%/0.00%
-[02] |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit3:0b}] run data modify storage rx:global playerdb.players[{bit3:0b}].selected set value 0b(50/0) - 0.67%/0.00%
-[02] |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit4:0b}] run data modify storage rx:global playerdb.players[{bit4:0b}].selected set value 0b(50/0) - 0.64%/0.00%
-[02] |   |   execute unless score $bit rx.temp matches 0 if data storage rx:global playerdb.players[{bit5:0b}] run data modify storage rx:global playerdb.players[{bit5:0b}].selected set value 0b(36/0) - 0.55%/0.00%
-[02] |   |   execute unless score $bit rx.temp matches 1 if data storage rx:global playerdb.players[{bit5:1b}] run data modify storage rx:global playerdb.players[{bit5:1b}].selected set value 0b(36/0) - 0.48%/0.00%
-[02] |   |   execute store result score $uid rx.temp run data get storage rx:io playerdb.player.info.uid(50/0) - 0.45%/0.00%
+[02] |   |   data modify storage rx.playerdb:main players[{selected:1b}].data set from storage rx.playerdb:io player.data(50/0) - 7.21%/0.03%
+[02] |   |   execute store result score $size rx.temp if data storage rx.playerdb:main players[{selected:1b}](336/1) - 4.30%/0.02%
+[02] |   |   execute if score $size rx.temp matches 1 run data modify storage rx.playerdb:io player.info set from storage rx.playerdb:main players[{selected:1b}].info(50/0) - 1.11%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 0 if data storage rx.playerdb:main players[{bit0:0b}] run data modify storage rx.playerdb:main players[{bit0:0b}].selected set value 0b(50/0) - 1.01%/0.00%
+[02] |   |   data modify storage rx.playerdb:main players[].selected set value 1b(50/0) - 1.01%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 1 if data storage rx.playerdb:main players[{bit0:1b}] run data modify storage rx.playerdb:main players[{bit0:1b}].selected set value 0b(50/0) - 0.88%/0.00%
+[02] |   |   data modify storage rx.playerdb:main players[].selected set value 0b(50/0) - 0.86%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 1 if data storage rx.playerdb:main players[{bit3:1b}] run data modify storage rx.playerdb:main players[{bit3:1b}].selected set value 0b(50/0) - 0.84%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 1 if data storage rx.playerdb:main players[{bit1:1b}] run data modify storage rx.playerdb:main players[{bit1:1b}].selected set value 0b(50/0) - 0.82%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 1 if data storage rx.playerdb:main players[{bit4:1b}] run data modify storage rx.playerdb:main players[{bit4:1b}].selected set value 0b(50/0) - 0.82%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 1 if data storage rx.playerdb:main players[{bit2:1b}] run data modify storage rx.playerdb:main players[{bit2:1b}].selected set value 0b(50/0) - 0.78%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 0 if data storage rx.playerdb:main players[{bit1:0b}] run data modify storage rx.playerdb:main players[{bit1:0b}].selected set value 0b(50/0) - 0.74%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 0 if data storage rx.playerdb:main players[{bit2:0b}] run data modify storage rx.playerdb:main players[{bit2:0b}].selected set value 0b(50/0) - 0.71%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 0 if data storage rx.playerdb:main players[{bit3:0b}] run data modify storage rx.playerdb:main players[{bit3:0b}].selected set value 0b(50/0) - 0.67%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 0 if data storage rx.playerdb:main players[{bit4:0b}] run data modify storage rx.playerdb:main players[{bit4:0b}].selected set value 0b(50/0) - 0.64%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 0 if data storage rx.playerdb:main players[{bit5:0b}] run data modify storage rx.playerdb:main players[{bit5:0b}].selected set value 0b(36/0) - 0.55%/0.00%
+[02] |   |   execute unless score $bit rx.temp matches 1 if data storage rx.playerdb:main players[{bit5:1b}] run data modify storage rx.playerdb:main players[{bit5:1b}].selected set value 0b(36/0) - 0.48%/0.00%
+[02] |   |   execute store result score $uid rx.temp run data get storage rx.playerdb:io player.info.uid(50/0) - 0.45%/0.00%
 [02] |   |   scoreboard players operation $uid rx.temp /= $2 rx.int(286/1) - 0.44%/0.00%
 [02] |   |   scoreboard players operation $bit rx.temp = $uid rx.temp(286/1) - 0.43%/0.00%
 [02] |   |   scoreboard players operation $bit rx.temp %= $2 rx.int(286/1) - 0.35%/0.00%
 [02] |   |   scoreboard players operation $in.uid rx.io = @s rx.uid(100/0) - 0.30%/0.00%
-[02] |   |   execute if score $size rx.temp matches 1 store result score $uid rx.temp run data get storage rx:io playerdb.player.info.uid(50/0) - 0.28%/0.00%
+[02] |   |   execute if score $size rx.temp matches 1 store result score $uid rx.temp run data get storage rx.playerdb:io player.info.uid(50/0) - 0.28%/0.00%
 [02] |   |   execute unless score @s rx.pdb.HasEntry = @s rx.pdb.HasEntry run function rx.playerdb:impl/add_entry(50/0) - 0.27%/0.00%
-[02] |   |   data modify storage rx:io playerdb.player.data.test set value 1b(50/0) - 0.24%/0.00%
-[02] |   |   execute unless score $uid rx.temp = $in.uid rx.io run data modify storage rx:io playerdb.player set value {}(50/0) - 0.18%/0.00%
+[02] |   |   data modify storage rx.playerdb:io player.data.test set value 1b(50/0) - 0.24%/0.00%
+[02] |   |   execute unless score $uid rx.temp = $in.uid rx.io run data modify storage rx.playerdb:io player set value {}(50/0) - 0.18%/0.00%
 [02] |   |   function rx.playerdb:api/get_self(100/0) - 0.15%/0.00%
 [02] |   |   function rx.playerdb:api/save_self(100/0) - 0.15%/0.00%
 [02] |   |   execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit1(50/0) - 0.14%/0.00%
@@ -122,7 +122,7 @@ Tick span: 536 ticks
 [02] |   |   function rx.playerdb:api/get(100/0) - 0.07%/0.00%
 [02] |   |   function rx.playerdb:api/save(100/0) - 0.07%/0.00%
 [02] |   |   function rx.playerdb:api/add_entry(100/0) - 0.07%/0.00%
-[02] |   |   execute if score $size rx.temp matches ..0 run data modify storage rx:io playerdb.player set value {}(50/0) - 0.06%/0.00%
+[02] |   |   execute if score $size rx.temp matches ..0 run data modify storage rx.playerdb:io player set value {}(50/0) - 0.06%/0.00%
 [02] |   |   execute unless score $size rx.temp matches 1 run function rx.playerdb:impl/select(50/0) - 0.05%/0.00%
 [02] |   |   execute if score $size rx.temp matches 2.. run function rx.playerdb:impl/select/bit6(36/0) - 0.04%/0.00%
 [02] |   |   function rx.playerdb:impl/select/bit4(50/0) - 0.02%/0.00%

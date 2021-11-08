@@ -42,6 +42,6 @@ execute if score $loop rx.temp matches 1.. run function rx.playerdb:test/utils/c
 # @function rx.playerdb:test/utils/modify_self
 
 function #rx.playerdb:api/v2/get/self
-execute store result storage rx:io playerdb.player.data.test int -1 run data get storage rx:io playerdb.player.data.test 
+execute store result storage rx.playerdb:io player.data.test int -1 run data get storage rx.playerdb:io player.data.test 
 function #rx.playerdb:api/v2/save/self
 ```

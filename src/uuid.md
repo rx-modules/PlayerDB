@@ -14,16 +14,16 @@ scoreboard players set $found rx.temp 0
 
 #> select UUID
 execute store result score $uid rx.temp
-	run data get storage rx:temp playerdb.UUID[0]
+	run data get storage rx.playerdb:temp UUID[0]
 
-execute if data storage rx:global playerdb.uuid[] run sequentially
-	data modify storage rx:global playerdb.uuid[].selected set value 1b
+execute if data storage rx.playerdb:main uuid[] run sequentially
+	data modify storage rx.playerdb:main uuid[].selected set value 1b
 	function ./tree/bit0
 
 #!for i in range(6)
 #!function generate_path("uuid/tree/bit" ~ i)
 
-data modify storage rx:global playerdb.uuid[].bits.select set value 0b
+data modify storage rx.playerdb:main uuid[].bits.select set value 0b
 scoreboard players operation $bit rx.temp = $uid rx.temp
 scoreboard players operation $bit rx.temp %= $64 rx.int
 scoreboard players set $size rx.temp 0
@@ -43,21 +43,21 @@ execute
 #!endfunction
 #!endfor
 
-execute if data storage rx:global playerdb.uuid[{bits:{select:0b}}]
-	run data modify storage rx:global playerdb.uuid[{bits:{select:0b}}].selected set value 0b
+execute if data storage rx.playerdb:main uuid[{bits:{select:0b}}]
+	run data modify storage rx.playerdb:main uuid[{bits:{select:0b}}].selected set value 0b
 
 #!if not loop.last
 scoreboard players operation $uid rx.temp /= 64 rx.int
-execute if data storage rx:global playerdb.uuid[{selected:1b}] run function ./bit{{ i + 1 }}
+execute if data storage rx.playerdb:main uuid[{selected:1b}] run function ./bit{{ i + 1 }}
 #!endif
 
 #!endfunction
 #!endfor
 
 #> selected or not
-execute if data storage rx:global playerdb.uuid[{selected:1b}] run sequentially
+execute if data storage rx.playerdb:main uuid[{selected:1b}] run sequentially
 	execute store result score $loop rx.temp
-		if data storage rx:global playerdb.uuid[{selected:1b}].entries[]
+		if data storage rx.playerdb:main uuid[{selected:1b}].entries[]
 	function ./iter
 ```
 
@@ -73,9 +73,9 @@ execute if data storage rx:global playerdb.uuid[{selected:1b}] run sequentially
 #> iterate through all of the UUID entries
 
 #> test
-data modify storage rx:temp playerdb.UUIDTest set from storage rx:global playerdb.uuid[{selected:1b}].entries[-1].UUID
+data modify storage rx.playerdb:temp UUIDTest set from storage rx.playerdb:main uuid[{selected:1b}].entries[-1].UUID
 execute store success score $check rx.temp
-	run data modify storage rx:temp playerdb.UUIDTest set from storage rx:temp playerdb.UUID
+	run data modify storage rx.playerdb:temp UUIDTest set from storage rx.playerdb:temp UUID
 
 #> if $check == 1, entries DO NOT match
 #> else if $check == 0, entries DO match
@@ -83,8 +83,8 @@ execute store success score $check rx.temp
 
 #> iterate through entries unless we matched.
 execute unless score $check rx.temp matches 0 run sequentially
-	data modify storage rx:global playerdb.uuid[{selected:1b}].entries insert 0 from storage rx:global playerdb.uuid[{selected:1b}].entries[-1]
-	data remove storage rx:global playerdb.uuid[{selected:1b}].entries[-1]
+	data modify storage rx.playerdb:main uuid[{selected:1b}].entries insert 0 from storage rx.playerdb:main uuid[{selected:1b}].entries[-1]
+	data remove storage rx.playerdb:main uuid[{selected:1b}].entries[-1]
 
 #> found!
 execute if score $check rx.temp matches 0
@@ -112,11 +112,11 @@ execute if score $loop rx.temp matches 1..
 #> Will reset relevant scores if true and generate either new uid or old uid from system
 
 #> get uuid into fakeplayer scores
-data modify storage rx:temp playerdb.UUID set from entity @s UUID
-execute store result score $uuid0 rx.temp run data get storage rx:temp playerdb.UUID[0]
-execute store result score $uuid1 rx.temp run data get storage rx:temp playerdb.UUID[1]
-execute store result score $uuid2 rx.temp run data get storage rx:temp playerdb.UUID[2]
-execute store result score $uuid3 rx.temp run data get storage rx:temp playerdb.UUID[3]
+data modify storage rx.playerdb:temp UUID set from entity @s UUID
+execute store result score $uuid0 rx.temp run data get storage rx.playerdb:temp UUID[0]
+execute store result score $uuid1 rx.temp run data get storage rx.playerdb:temp UUID[1]
+execute store result score $uuid2 rx.temp run data get storage rx.playerdb:temp UUID[2]
+execute store result score $uuid3 rx.temp run data get storage rx.playerdb:temp UUID[3]
 
 #> select uuid since we'll need it later
 scoreboard players operation $uid rx.temp = @s rx.uuid0
@@ -126,8 +126,8 @@ function ./select
 function ../utils/get_name
 
 #> chk if name is actually stored :P backwards compat !
-execute unless data storage rx:global playerdb.uuid[{selected:1b}].entries[-1].name run
-	data modify storage rx:global playerdb.uuid[{selected:1b}].entries[-1].name set from storage rx:temp playerdb.player_name
+execute unless data storage rx.playerdb:main uuid[{selected:1b}].entries[-1].name run
+	data modify storage rx.playerdb:main uuid[{selected:1b}].entries[-1].name set from storage rx.playerdb:temp player_name
 
 #> test fakeplayer against scoreboard scores
 scoreboard players set $success rx.temp 0
@@ -145,9 +145,9 @@ execute
 #>   else:
 #>     $success remains 1
 execute if score $success rx.temp matches 1 run sequentially
-	data modify storage rx:temp playerdb.name_cache set from storage rx:temp playerdb.player_name
+	data modify storage rx.playerdb:temp name_cache set from storage rx.playerdb:temp player_name
 	execute store result score $copy rx.temp
-		run data modify storage rx:temp playerdb.name_cache set from storage rx:global playerdb.uuid[{selected:1b}].entries[-1].name
+		run data modify storage rx.playerdb:temp name_cache set from storage rx.playerdb:main uuid[{selected:1b}].entries[-1].name
 	execute if score $copy rx.temp matches 1
 		run scoreboard players set $success rx.temp 0
 
@@ -180,25 +180,25 @@ scoreboard players reset @s rx.playerdb.counter
 #> add new entry to uuid db
 
 #> if selected
-execute store result score $selected rx.temp if data storage rx:global playerdb.uuid[{selected:1b}] 
+execute store result score $selected rx.temp if data storage rx.playerdb:main uuid[{selected:1b}] 
 
 #> we are pretending to add an entry to players but we move it to uuid
 execute if score $selected rx.temp matches 0 run sequentially
 	scoreboard players operation $uid rx.temp = @s rx.uuid0
 	function ../utils/uid_to_bits
-	data modify storage rx:global playerdb.uuid append value {selected: 1b}
-	data modify storage rx:global playerdb.uuid[-1].bits set from storage rx:temp playerdb.bits
-	execute store result storage rx:global playerdb.uuid[-1].bits.uuid0 int 1
+	data modify storage rx.playerdb:main uuid append value {selected: 1b}
+	data modify storage rx.playerdb:main uuid[-1].bits set from storage rx.playerdb:temp bits
+	execute store result storage rx.playerdb:main uuid[-1].bits.uuid0 int 1
 		run scoreboard players get @s rx.uuid0
 
 function ../utils/get_name
 
 #> other info
-data modify storage rx:global playerdb.uuid[{selected:1b}].entries append value {}
-execute store result storage rx:global playerdb.uuid[{selected:1b}].entries[-1].uid int 1 run scoreboard players get @s rx.uid
-execute store result storage rx:global playerdb.uuid[{selected:1b}].entries[-1].hasEntry byte 1 run scoreboard players get @s rx.playerdb.has_entry
-data modify storage rx:global playerdb.uuid[{selected:1b}].entries[-1].name set from storage rx:temp playerdb.player_name 
-data modify storage rx:global playerdb.uuid[{selected:1b}].entries[-1].UUID set from storage rx:temp playerdb.UUID
+data modify storage rx.playerdb:main uuid[{selected:1b}].entries append value {}
+execute store result storage rx.playerdb:main uuid[{selected:1b}].entries[-1].uid int 1 run scoreboard players get @s rx.uid
+execute store result storage rx.playerdb:main uuid[{selected:1b}].entries[-1].hasEntry byte 1 run scoreboard players get @s rx.playerdb.has_entry
+data modify storage rx.playerdb:main uuid[{selected:1b}].entries[-1].name set from storage rx.playerdb:temp player_name 
+data modify storage rx.playerdb:main uuid[{selected:1b}].entries[-1].UUID set from storage rx.playerdb:temp UUID
 
 ```
 
@@ -220,13 +220,13 @@ data modify storage rx:global playerdb.uuid[{selected:1b}].entries[-1].UUID set 
 #>   Returning player: has both uid and entry
 
 #> get UUID from entity
-data modify storage rx:temp playerdb.UUID set from entity @s UUID
+data modify storage rx.playerdb:temp UUID set from entity @s UUID
 
 #> store UUID in uuid0-3
-execute store result score @s rx.uuid0 run data get storage rx:temp playerdb.UUID[0]
-execute store result score @s rx.uuid1 run data get storage rx:temp playerdb.UUID[1]
-execute store result score @s rx.uuid2 run data get storage rx:temp playerdb.UUID[2]
-execute store result score @s rx.uuid3 run data get storage rx:temp playerdb.UUID[3]
+execute store result score @s rx.uuid0 run data get storage rx.playerdb:temp UUID[0]
+execute store result score @s rx.uuid1 run data get storage rx.playerdb:temp UUID[1]
+execute store result score @s rx.uuid2 run data get storage rx.playerdb:temp UUID[2]
+execute store result score @s rx.uuid3 run data get storage rx.playerdb:temp UUID[3]
 
 #> select UUID + iterations
 scoreboard players operation $uid rx.temp = @s rx.uuid0
@@ -258,9 +258,9 @@ execute if score $found rx.temp matches 1 run
 
 #> else: cache our uid and our hasEntry
 execute store result score $cache.uid rx.temp run
-	data get storage rx:global playerdb.uuid[{selected:1b}].entries[-1].uid
+	data get storage rx.playerdb:main uuid[{selected:1b}].entries[-1].uid
 execute store result score $cache.HasEntry rx.temp run
-	data get storage rx:global playerdb.uuid[{selected:1b}].entries[-1].hasEntry
+	data get storage rx.playerdb:main uuid[{selected:1b}].entries[-1].hasEntry
 
 #> apply cache
 scoreboard players operation @s rx.uid = $cache.uid rx.temp
@@ -270,20 +270,20 @@ scoreboard players operation @s rx.playerdb.has_entry = $cache.HasEntry rx.temp
 execute if score @s rx.playerdb.has_entry matches 1 run sequentially
 	function ../get/self
 	function ../utils/get_name
-	data modify storage rx:io playerdb.old_name set from storage rx:global playerdb.players[{selected:1b}].info.name
-	data modify storage rx:global playerdb.players[{selected:1b}].info.name set from storage rx:temp playerdb.player_name 
+	data modify storage rx.playerdb:io old_name set from storage rx.playerdb:main players[{selected:1b}].info.name
+	data modify storage rx.playerdb:main players[{selected:1b}].info.name set from storage rx.playerdb:temp player_name 
 	function ./self
 
 #> update name in uuid db
-data modify storage rx:global playerdb.uuid[{selected:1b}].entries[-1].name set from storage rx:temp playerdb.player_name
+data modify storage rx.playerdb:main uuid[{selected:1b}].entries[-1].name set from storage rx.playerdb:temp player_name
 
 #> admin :P
 tellraw @a[tag=rx.admin] [{"text": "", "color": "gray"}, {"nbt": "playerdb.pretty_name", "storage": "rx:info", "interpret": true}, ": ", {"storage": "rx:io", "nbt": "playerdb.old_name"}, " has changed their name to ", {"selector": "@s"}]
 
 #> api
-execute if score @s rx.playerdb.has_entry matches 1 run data modify storage rx:io playerdb.player set from storage rx:global playerdb.players[{selected:1b}]
+execute if score @s rx.playerdb.has_entry matches 1 run data modify storage rx.playerdb:io player set from storage rx.playerdb:main players[{selected:1b}]
 function #rx.playerdb:api/on_name_change
-execute if score @s rx.playerdb.has_entry matches 1 run data modify storage rx:global playerdb.players[{selected:1b}].data set from storage rx:io playerdb.player.data
+execute if score @s rx.playerdb.has_entry matches 1 run data modify storage rx.playerdb:main players[{selected:1b}].data set from storage rx.playerdb:io player.data
 
 #> reapply cache
 scoreboard players operation @s rx.uid = $cache.uid rx.temp

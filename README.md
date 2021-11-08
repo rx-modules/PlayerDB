@@ -95,9 +95,9 @@ This will get `@s`'s database entry. If it does not exist, it'll dynamically cre
 
     function #rx.playerdb:api/v2/get/self
 
-Our data is available at `rx:io playerdb.player.data`. We should write some data, notice how we organized our data by `author.cool_pack`.
+Our data is available at `rx.playerdb:io player.data`. We should write some data, notice how we organized our data by `author.cool_pack`.
 
-    data modify storage rx:io playerdb.player.data.author.cool_pack set value {eggs: 3b}
+    data modify storage rx.playerdb:io player.data.author.cool_pack set value {eggs: 3b}
 
 Note that we stored our data in `author.cool_pack`. Namespacing our data allows us to have better compatibility with other packs!
 
@@ -113,7 +113,7 @@ Finally, let's save our data!
 <br>
 
     function rx.playerdb:api/get_self
-    execute store result score @s eggs run data get storage rx:io playerdb.player.data.author.cool_pack.eggs
+    execute store result score @s eggs run data get storage rx.playerdb:io player.data.author.cool_pack.eggs
 
     # No need to save, we are just reading
 
@@ -132,7 +132,7 @@ Sometimes, we don't want to get our own data, but someone else's. Let's say that
     function rx.playerdb:api/get
 
     # Let's hope they had some eggs stored, I was running out
-    execute store result score @s eggs run data get storage rx:io playerdb.player.data.author.cool_pack.eggs
+    execute store result score @s eggs run data get storage rx.playerdb:io player.data.author.cool_pack.eggs
 
     # No need to save, we are just reading someone else's data ;)
     # If we were to... steal some eggs, we could save that change via:
@@ -150,7 +150,7 @@ We can manually add a player entry for `@s` via:
     function rx.playerdb:api/add_entry
 
 We can also 'select' our data for `$in.uid rx:io`
-This exposing some internal logic, essentially outputs an entry @ `rx:global playerdb.players[{selected:1b}]`. This does interface with the live database, so you'll wanna be careful if you are using this.
+This exposing some internal logic, essentially outputs an entry @ `rx.playerdb:main players[{selected:1b}]`. This does interface with the live database, so you'll wanna be careful if you are using this.
 
     scoreboard players operation $in.uid rx.playerdb.io = @s rx.uid
     function rx.playerdb:api/select
@@ -192,7 +192,7 @@ Note that anyone can click these buttons, but only an operator can run this func
     function rx.playerdb:admin/remove_entry    # This will remove `$in.uid rx.playerdb.io`'s entry from the database
     
     function rx.playerdb:admin/migrate_account
-    # This will take the data stored at rx:temp playerdb.admin.migrate.UUID
+    # This will take the data stored at rx.playerdb:temp admin.migrate.UUID
     #  and 'migrate' the data to the entity called as @s
 
 <br>
@@ -204,9 +204,9 @@ Note that anyone can click these buttons, but only an operator can run this func
     
 The function tag, `#rx.playerdb:api/on_entry_add`, allows a function to be run when an entry is added. Just plop a function tag with the function you want to fire. This function will fire before a `api/get_self` completes allowing you to intercept the creation ;)
 
-The player data will already be stored in rx:io playerdb.player.data and will automatically save for you. Do **not** call `api/save_self`, just modify the data!
+The player data will already be stored in rx.playerdb:io player.data and will automatically save for you. Do **not** call `api/save_self`, just modify the data!
     
-    data modify storage rx:io playerdb.player.data.author.cool_pack set value {eggs: 0b}  # No eggs :(
+    data modify storage rx.playerdb:io player.data.author.cool_pack set value {eggs: 0b}  # No eggs :(
 
 <br>
 </details>
@@ -225,12 +225,12 @@ I prefer 2 since it leaves little to no room for error. If you wish to see an ex
 
     # I like to store the scores in a specific `scores` object so they are easy to identify
     function rx.playerdb:api/get_self
-    execute store result storage rx:io playerdb.player.data.author.cool_pack.scores.eggs int 1 run scoreboard players get @s eggs
+    execute store result storage rx.playerdb:io player.data.author.cool_pack.scores.eggs int 1 run scoreboard players get @s eggs
 
 Once we implement this system, we have to implement a system to retrieve these scores when a name is changed. 
-The function tag, `#rx.playerdb:api/on_name_change`, allows a function to be ran when a player changes their name. This allows you to access the old name, `rx:io playerdb.old_name` and the data **if it has been created**.
+The function tag, `#rx.playerdb:api/on_name_change`, allows a function to be ran when a player changes their name. This allows you to access the old name, `rx.playerdb:io old_name` and the data **if it has been created**.
 
-    execute if score @s rx.playerdb.has_entry matches 1 store result score @s eggs run data get storage rx:io playerdb.player.data.author.cool_pack.eggs
+    execute if score @s rx.playerdb.has_entry matches 1 store result score @s eggs run data get storage rx.playerdb:io player.data.author.cool_pack.eggs
     tellraw @a ["Yo, ", {"selector": "@s"}, " changed their name from ", {"storage": "rx:io", "nbt": "playerdb.old_name"}]
 
 Make sure you prepend `execute if score @s rx.playerdb.has_entry matches 1` to any `data get` you perform otherwise, you might just be getting null data (*which automatically gives 0 in Minecraft*).
@@ -276,11 +276,11 @@ This datapack allows for expandable EnderChests with complete multiplayer compat
 
 ## Technical bits
 
-Every player is given a unique id scoreboard, `rx.uid`. This is a number that starts counting from 1, `$uid.next rx.uid`, and every player gets an incrementing number. When a player wants to create a new entry via `api/add_entry` or `api/get_self` (which creates an entry for you), a new nbt compound is added a list located at `rx:global playerdb.players`. Each player data is organized as so: `{selected: 0b, info:{name: '<player name>', uid: <scoreboard uid>, UUID: <player UUID>}, data:{...}, bit0: xb, bit1: xb, ..., bitn: xb}`. When a player is given a uid, bits will be generated inside the entry `bit0: xb` based on the binary breakdown of the uid. This is used for the selection/filtering algorithm.
+Every player is given a unique id scoreboard, `rx.uid`. This is a number that starts counting from 1, `$uid.next rx.uid`, and every player gets an incrementing number. When a player wants to create a new entry via `api/add_entry` or `api/get_self` (which creates an entry for you), a new nbt compound is added a list located at `rx.playerdb:main players`. Each player data is organized as so: `{selected: 0b, info:{name: '<player name>', uid: <scoreboard uid>, UUID: <player UUID>}, data:{...}, bit0: xb, bit1: xb, ..., bitn: xb}`. When a player is given a uid, bits will be generated inside the entry `bit0: xb` based on the binary breakdown of the uid. This is used for the selection/filtering algorithm.
 
 When a `get` or `save` operation is called, the program will filter down the database to select the correct entry to the input uid via `@s rx.uid` or `$in.uid rx.playerdb.io`. The filtering process is really unique and this is the crux of the entire library so I'll describe it in more detail.
 
-When you run a `get` or `save`, you will most likely trigger a selection algorithm (`impl/select`). Essentially, this modifies every entry's `selected` nbt to 1b. The system will then call the `bit0` filtering function which determines the first bit of the `uid` and modifies all entries `selected` nbt to 0b if they don't match. If there are more than 1 entries with `selected:1b`, it will continue to the next bit, else it will short-circuit and stop. At the end of the selection process, there should be either 0 or 1 entries in the database with `selected:1b` which u can select via `rx:global playerdb.players[{selected:1b}]`.
+When you run a `get` or `save`, you will most likely trigger a selection algorithm (`impl/select`). Essentially, this modifies every entry's `selected` nbt to 1b. The system will then call the `bit0` filtering function which determines the first bit of the `uid` and modifies all entries `selected` nbt to 0b if they don't match. If there are more than 1 entries with `selected:1b`, it will continue to the next bit, else it will short-circuit and stop. At the end of the selection process, there should be either 0 or 1 entries in the database with `selected:1b` which u can select via `rx.playerdb:main players[{selected:1b}]`.
 
 Saving will usually filter (although there are some optimizations to skip that if you perform a get and a save right next to each other) and then just replace the entry while get just copies the entry into `rx:io`.
 

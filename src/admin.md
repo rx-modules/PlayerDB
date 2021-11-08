@@ -44,15 +44,15 @@ execute if score $in.uid rx.playerdb.io < $uid.next rx.uid run commands logic
 
 	#> if $size = 1, this means an entry was found
 	execute if score $size rx.temp matches 1 run sequentially
-		data modify storage rx:temp playerdb.UUID set from storage rx:global playerdb.players[{selected:1b}].info.UUID
+		data modify storage rx.playerdb:temp UUID set from storage rx.playerdb:main players[{selected:1b}].info.UUID
 		function uuid/select
-		data modify storage rx:global playerdb.uuid[{selected:1b}].entries[-1].hasEntry set value 0b
+		data modify storage rx.playerdb:main uuid[{selected:1b}].entries[-1].hasEntry set value 0b
 
 	#>  success msg and remove selected player
 	execute if score $size rx.temp matches 1 run sequentially
 		tellraw @a[tag=rx.admin] [{"text": "Successfully removed ", "color": "gold"}, {"storage":"rx:global", "nbt": "playerdb.players[{selected:1b}].info.name", "color":"#DAD6D6"}, "'s entry"]
 		tellraw @a[tag=rx.admin] [{"text": "Don't forget to reset their rx.playerdb.has_entry score unless you ran admin/delete_player", "color": "gold"}]
-		data remove storage rx:global playerdb.players[{selected:1b}]
+		data remove storage rx.playerdb:main players[{selected:1b}]
 
 	#> else: failed msg
 	execute unless score $size rx.temp matches 1
@@ -76,15 +76,15 @@ execute unless score $in.uid rx.playerdb.io < $uid.next rx.uid
 
 #> if $size = 1, this means an entry was found
 execute if score $size rx.temp matches 1 run sequentially
-	data modify storage rx:temp playerdb.UUID set from storage rx:global playerdb.players[{selected:1b}].info.UUID
+	data modify storage rx.playerdb:temp UUID set from storage rx.playerdb:main players[{selected:1b}].info.UUID
 	function ./uuid/select
-	data modify storage rx:global playerdb.uuid[{selected:1b}].entries[-1].hasEntry set value 0b
+	data modify storage rx.playerdb:main uuid[{selected:1b}].entries[-1].hasEntry set value 0b
 
 #>  success msg and remove selected player
 execute if score $size rx.temp matches 1 run sequentially
 	tellraw @a[tag=rx.admin] [{"text": "Successfully removed ", "color": "gold"}, {"storage":"rx:global", "nbt": "playerdb.players[{selected:1b}].info.name", "color":"#DAD6D6"}, "'s entry"]
 	tellraw @a[tag=rx.admin] [{"text": "Don't forget to reset their rx.playerdb.has_entry score unless you ran admin/delete_player", "color": "gold"}]
-	data remove storage rx:global playerdb.players[{selected:1b}]
+	data remove storage rx.playerdb:main players[{selected:1b}]
 
 #> else: failed msg
 execute unless score $size rx.temp matches 1 run tellraw @a[tag=rx.admin] [{"text": "Failed to remove entry. Entry does not exist", "color": "#CE4257"}]
@@ -101,7 +101,7 @@ execute unless score $size rx.temp matches 1 run tellraw @a[tag=rx.admin] [{"tex
 
 #> @s: player to migrate
 #> Migrates old player data to new @s account
-#> - input: rx:temp playerdb.admin.migrate.UUID
+#> - input: rx.playerdb:temp admin.migrate.UUID
 #> -   set as UUID array of old account
 #> - output:
 #> -   @s will have old rx.uid and old data
@@ -110,9 +110,9 @@ execute unless score $size rx.temp matches 1 run tellraw @a[tag=rx.admin] [{"tex
 #>            with the other accounts data. Do take backups!
 
 #> run migration if we have data
-execute unless data storage rx:temp playerdb.admin.migrate.UUID
-	run tellraw @a[tag=rx.admin] [{"text": "", "color":"gray"}, {"storage": "rx:info", "nbt": "playerdb.pretty_name", "interpret": true}, ": ", {"text": "Migration failed. Input in ", "color": "#CE4257"}, {"text": "rx:temp playerdb.admin.migrate", "color": "gold"}, {"text": " is empty.", "color": "#CE4257"}]
-execute if data storage rx:temp playerdb.admin.migrate.UUID
+execute unless data storage rx.playerdb:temp admin.migrate.UUID
+	run tellraw @a[tag=rx.admin] [{"text": "", "color":"gray"}, {"storage": "rx:info", "nbt": "playerdb.pretty_name", "interpret": true}, ": ", {"text": "Migration failed. Input in ", "color": "#CE4257"}, {"text": "rx.playerdb:temp admin.migrate", "color": "gold"}, {"text": " is empty.", "color": "#CE4257"}]
+execute if data storage rx.playerdb:temp admin.migrate.UUID
 	run function rx.playerdb:admin/migrate_account/logic
 ```
 
@@ -125,7 +125,7 @@ execute if data storage rx:temp playerdb.admin.migrate.UUID
 #!set major = ctx.meta.version.major
 
 #> First, let's get our entry
-execute store result score $uid rx.temp run data get storage rx:temp playerdb.admin.migrate.UUID[0]
+execute store result score $uid rx.temp run data get storage rx.playerdb:temp admin.migrate.UUID[0]
 function ./uuid/select
 
 execute if score $found rx.temp matches 0
@@ -136,16 +136,16 @@ execute if score $found rx.temp matches 1 run commands found_acc
 	#> Once we've found the acc, migrate!
 
 	#> grab our uid and other data then nuke
-	execute store result score $migrate.uid rx.temp run data get storage rx:global playerdb.uuid[{selected:1b}].entries[-1].uid
-	execute store result score $migrate.hasEntry rx.temp run data get storage rx:global playerdb.uuid[{selected:1b}].entries[-1].hasEntry
-	data modify storage rx:temp playerdb.admin.migrate.oldName set from storage rx:global playerdb.uuid[{selected:1b}].entries[-1].name
-	data remove storage rx:global playerdb.uuid[{selected:1b}].entries[-1]
+	execute store result score $migrate.uid rx.temp run data get storage rx.playerdb:main uuid[{selected:1b}].entries[-1].uid
+	execute store result score $migrate.hasEntry rx.temp run data get storage rx.playerdb:main uuid[{selected:1b}].entries[-1].hasEntry
+	data modify storage rx.playerdb:temp admin.migrate.oldName set from storage rx.playerdb:main uuid[{selected:1b}].entries[-1].name
+	data remove storage rx.playerdb:main uuid[{selected:1b}].entries[-1]
 
 	#> nuke our current entry if it exists
 	execute if score @s rx.playerdb.has_entry matches 1.. run sequentially
 		scoreboard players operation $in.uid rx.playerdb.io = @s rx.uid
 		function #rx.playerdb:api/v2/select
-		data remove storage rx:global playerdb.players[{selected:1b}]
+		data remove storage rx.playerdb:main players[{selected:1b}]
 
 	#> restore our old uid and data
 	scoreboard players operation @s rx.uid = $migrate.uid rx.temp
@@ -154,16 +154,16 @@ execute if score $found rx.temp matches 1 run commands found_acc
 	# also update name while we are at it
 	execute if score @s rx.playerdb.has_entry matches 1.. run sequentially
 		function #rx.playerdb:api/v2/get_self
-		data modify storage rx:global playerdb.players[{selected:1b}].info.UUID set from entity @s UUID
+		data modify storage rx.playerdb:main players[{selected:1b}].info.UUID set from entity @s UUID
 		function utils/get_name
-		data modify storage rx:global playerdb.players[{selected:1b}].info.name set from storage rx:temp playerdb.player_name
+		data modify storage rx.playerdb:main players[{selected:1b}].info.name set from storage rx.playerdb:temp player_name
 		function #rx.playerdb:api/v2/save_self
 
 	#> update our current UUID entry w/ the original uid
 	scoreboard players operation $uid rx.temp = @s rx.uuid0
 	function rx.playerdb:impl/uuid/select
-	execute store result storage rx:global playerdb.uuid[{selected:1b}].entries[-1].uid byte 1 run scoreboard players get @s rx.uid
-	execute store result storage rx:global playerdb.uuid[{selected:1b}].entries[-1].hasEntry byte 1 run scoreboard players get @s rx.playerdb.has_entry
+	execute store result storage rx.playerdb:main uuid[{selected:1b}].entries[-1].uid byte 1 run scoreboard players get @s rx.uid
+	execute store result storage rx.playerdb:main uuid[{selected:1b}].entries[-1].hasEntry byte 1 run scoreboard players get @s rx.playerdb.has_entry
 
 	#> tellraw a success msg :D
 	tellraw @a[tag=rx.admin] [{"text": "", "color": "green"}, {"storage": "rx:info", "nbt": "playerdb.pretty_name", "interpret": true}, ": ", {"storage": "rx:temp", "nbt": "playerdb.admin.migrate.oldName", "color": "gold"}, "'s data was migrated to ", {"selector": "@s", "color": "gold"}]
@@ -174,7 +174,7 @@ execute if score $found rx.temp matches 1 run commands found_acc
 	function #rx.playerdb:api/v{{major ~ '/on_name_change'}}
 
 	#> cleanup
-	data remove storage rx:temp playerdb.admin.migrate
+	data remove storage rx.playerdb:temp admin.migrate
 ```
 
 </details>
@@ -194,11 +194,11 @@ scoreboard players reset * rx.playerdb.io
 scoreboard players reset * rx.playerdb.has_entry
 scoreboard players set $uid.next rx.uid 1
 
-data remove storage rx.playerdb:main {}
-data remove storage rx.playerdb:temp {}
 data modify storage rx.playerdb:main players set value []
 data modify storage rx.playerdb:main uuid set value []
-data modify storage rx.playerdb:main io set value {}
+
+data remove storage rx.playerdb:io player
+data remove storage rx.playerdb:io player_name
 
 scoreboard players set @a rx.playerdb.counter 0
 ```

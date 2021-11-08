@@ -6,12 +6,12 @@
 # @function utils/get_name
 
 #> @s: player
-#> Gets player name to rx:temp playerdb.name
+#> Gets player name to rx.playerdb:temp name
 
 #> get player head
 execute in minecraft:overworld run sequentially
 	loot replace block -30000000 0 1602 container.0 loot rx:player_head
-	data modify storage rx:temp playerdb.player_name
+	data modify storage rx.playerdb:temp player_name
 		set from block -30000000 0 1602 Items[0].tag.SkullOwner.Name
 ```
 
@@ -22,7 +22,7 @@ execute in minecraft:overworld run sequentially
 
 {%- for i in range(6) -%}
 scoreboard players operation $bit rx.temp = $uid rx.temp
-execute store result storage rx:temp playerdb.bits.{{ 'b' ~ i }} byte 1
+execute store result storage rx.playerdb:temp bits.{{ 'b' ~ i }} byte 1
     run scoreboard players operation $bit rx.temp %= $64 rx.int
 
 {% if not loop.last -%}
