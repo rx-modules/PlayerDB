@@ -2,7 +2,7 @@
 name = "playerdb"
 version = "2.0.0"
 description = "A minecraft library which aids in storing data per player"
-authors = ["rx"]
+authors = ["rx97"]
 license = "MIT"
 
 readme = "README.md"
@@ -41,8 +41,6 @@ colour = "^0.1.5"
 name = "PlayerDB"
 id = "rx.playerdb"
 description = "Player Data Manager Library - (SQL but in Minecraft)"
-author = "rx97"
-version = "2.0.0"
 
 output = "build"
 extend = ["beet-project.yaml"]
@@ -61,7 +59,7 @@ version_toml = [
 	"pyproject.toml:tool.beet.version"
 ]
 major_on_zero = false
-build_command = "poetry build && poetry run mudkip build --update-gh-pages --repository https://x-access-token:${GH_TOKEN}@github.com/rx-modules/playerdb"
+build_command = "poetry run beet -c beet-release.yaml build && poetry run mudkip build --update-gh-pages --repository https://x-access-token:${GH_TOKEN}@github.com/rx-modules/playerdb"
 
 [tool.mudkip]
 preset = "furo"

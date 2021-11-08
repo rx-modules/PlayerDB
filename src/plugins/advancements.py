@@ -1,13 +1,6 @@
 """Plugin for rx-module base"""
 
-
-import json
-import math
-from pathlib import Path
-
-import yaml
-from beet import Context, Function, FunctionTag
-from beet.core.file import File, TextFile
+from beet import Context
 from beet.library.data_pack import Advancement
 
 

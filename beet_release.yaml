@@ -1,8 +1,8 @@
 extend:
-  - beet-project.yaml
-output: releases
+  - pyproject.yaml
+output: dist
 data_pack:
   zipped: true
 meta:
   lectern:
-    load: ["src/*.md"]
+    load: ["src/**/*.md"]

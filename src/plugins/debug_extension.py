@@ -8,9 +8,9 @@ __all__ = [
 
 from typing import Any, List
 
-from jinja2.nodes import ExprStmt, Node, Expr, Const, Output, TemplateData
+from jinja2.nodes import Node, Output, TemplateData
 
-from beet import Context, FunctionTag, JinjaExtension
+from beet import Context, JinjaExtension
 
 from pydantic import BaseModel
 from functools import cached_property

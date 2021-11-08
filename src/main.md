@@ -61,6 +61,9 @@ data modify storage rx:info playerdb.pretty_name set value '{{ctx.meta.globals.p
 #> LL Load + version
 scoreboard players set rx.playerdb load.status 1
 
+scoreboard objectives add rx.temp dummy
+function ./upgrade
+
 {% set version = ctx.meta.version %}
 data modify storage rx:info playerdb.version
 	set value {major: {{version.major}}, minor: {{version.minor}}, patch: {{version.patch}}}
@@ -70,7 +73,6 @@ data modify storage rx:info playerdb.pretty_version
 
 scoreboard objectives add rx.uid dummy
 scoreboard objectives add rx.int dummy
-scoreboard objectives add rx.temp dummy
 
 scoreboard objectives add rx.playerdb.io dummy
 scoreboard objectives add rx.playerdb.list_page dummy

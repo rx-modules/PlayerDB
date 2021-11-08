@@ -7,6 +7,9 @@
 ```mcfunction
 # @function uuid/select
 
+#> Quickly migrate has entry
+execute if data storage rx.playerdb:main meta.upgrade{has_entry:1b} run scoreboard players operation @s rx.playerdb.has_entry = @s rx.pdb.hasEntry
+
 #> Select an entry in the UUID db
 #> input -> $uid, output -> $found
 

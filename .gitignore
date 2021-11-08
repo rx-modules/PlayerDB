@@ -140,6 +140,7 @@ cython_debug/
 # mcfunction
 .DS_Store
 .datapack/
-releases/
+dist/
 .vscode/
 build/
+*.sublime-project
