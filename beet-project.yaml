@@ -15,7 +15,6 @@ require:
 pipeline:
   - lectern
   - src.plugins.advancements
-  - src.plugins.debug_extension
   - beet.contrib.render
   - beet.contrib.hangman
   - beet.contrib.relative_function_path
