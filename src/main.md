@@ -16,42 +16,38 @@ values:
 ```
 
 ```mcfunction
-# @function rx.playerdb:impl/enumerate
+# @function enumerate
 #!tag "rx.playerdb:impl/enumerate"
-
-#!set major = ctx.meta.version.major
-#!set minor = ctx.meta.version.minor
-#!set patch = ctx.meta.version.patch
 
 # adapated from lepsen_core
 
+{% set version = ctx.meta.version %}
+
 execute
-    unless score #rx.pdb.major load.status matches __major__..
-    run scoreboard players set #rx.pdb.major load.status __major__
+    unless score #rx.playerdb.major load.status matches {{version.major ~ '..'}}
+    run scoreboard players set #rx.playerdb.major load.status {{version.major}}
 execute
-    if score #rx.pdb.major load.status matches __major__
-    unless score #rx.pdb.minor load.status matches __minor__..
-    run scoreboard players set #rx.pdb.minor load.status __minor__
+    if score #rx.playerdb.major load.status matches {{version.major}}
+    unless score #rx.playerdb.minor load.status matches {{version.minor ~ '..'}}
+    run scoreboard players set #rx.playerdb.minor load.status {{version.minor}}
 execute
-    if score #rx.pdb.major load.status matches __major__
-    if score #rx.pdb.minor load.status matches __minor__
-    unless score #rx.pdb.patch load.status matches __patch__..
-    run scoreboard players set #rx.pdb.patch load.status __patch__
+    if score #rx.playerdb.major load.status matches {{version.major}}
+    if score #rx.playerdb.minor load.status matches {{version.minor}}
+    unless score #rx.playerdb.patch load.status matches {{version.patch ~ '..'}}
+    run scoreboard players set #rx.playerdb.patch load.status {{version.patch}}
 ```
 
 ```mcfunction
-# @function rx.playerdb:impl/resolve
+# @function resolve
 #!tag "rx.playerdb:impl/resolve"
 
-#!set major = ctx.meta.version.major
-#!set minor = ctx.meta.version.minor
-#!set patch = ctx.meta.version.patch
+{% set version = ctx.meta.version %}
 
 schedule clear rx.playerdb:impl/v{{verstr ~ '/tick'}}
 execute
-	if score #rx.pdb.major load.status matches __major__
-	if score #rx.pdb.minor load.status matches __minor__
-	if score #rx.pdb.patch load.status matches __patch__
+	if score #rx.playerdb.major load.status matches {{version.major}}
+	if score #rx.playerdb.minor load.status matches {{version.minor}}
+	if score #rx.playerdb.patch load.status matches {{version.patch}}
 	run function rx.playerdb:impl/v{{verstr ~ '/init'}}
 ```
 
@@ -59,32 +55,29 @@ execute
 # @function init
 
 #> Does actual init
-#!set pname = ctx.meta.globals.pretty_name | tojson
 data modify storage rx:info playerdb.name set value 'PlayerDB'
-data modify storage rx:info playerdb.pretty_name set value '__pname__'
+data modify storage rx:info playerdb.pretty_name set value '{{ctx.meta.globals.pretty_name | tojson}}'
 
 #> LL Load + version
-scoreboard players set rx.pdb load.status 1
+scoreboard players set rx.playerdb load.status 1
 
-#!set major = ctx.meta.version.major
-#!set minor = ctx.meta.version.minor
-#!set patch = ctx.meta.version.patch
+{% set version = ctx.meta.version %}
 data modify storage rx:info playerdb.version
-	set value {major: __major__, minor: __minor__, patch: __patch__}
+	set value {major: {{version.major}}, minor: {{version.minor}}, patch: {{version.patch}}}
 
 data modify storage rx:info playerdb.pretty_version
 	set value '[{"storage": "rx:info", "nbt": "playerdb.version.major"}, ".", {"storage": "rx:info", "nbt": "playerdb.version.minor"}, ".", {"storage": "rx:info", "nbt": "playerdb.version.patch"}]'
 
-scoreboard objectives add rx.io dummy
 scoreboard objectives add rx.uid dummy
 scoreboard objectives add rx.int dummy
 scoreboard objectives add rx.temp dummy
 
-scoreboard objectives add rx.pdb.list dummy
-scoreboard objectives add rx.pdb.HasEntry dummy
+scoreboard objectives add rx.playerdb.io dummy
+scoreboard objectives add rx.playerdb.list_page dummy
+scoreboard objectives add rx.playerdb.has_entry dummy
 
-scoreboard objectives add rx.pdb.LT trigger
-scoreboard objectives add rx.pdb.login minecraft.custom:minecraft.leave_game
+scoreboard objectives add rx.playerdb.list trigger
+scoreboard objectives add rx.playerdb.counter dummy
 
 #> 0.8+: uuid storage
 scoreboard objectives add rx.uuid0 dummy
@@ -95,6 +88,11 @@ scoreboard objectives add rx.uuid3 dummy
 #> only sets if unset ;)
 execute unless score $uid.next rx.uid matches -2147483648..
 	run scoreboard players set $uid.next rx.uid 1
+
+# global counter to keep track of logins
+#  also works for server crashes ;)
+scoreboard players set $global rx.playerdb.counter 1
+scoreboard players operation @a rx.playerdb.counter = $global rx.playerdb.counter
 
 scoreboard players set $2 rx.int 2
 scoreboard players set $3 rx.int 3
@@ -125,16 +123,19 @@ tellraw @a[tag=rx.admin] [{"text":"", "color":"gray"}, {"nbt": "playerdb.pretty_
 
 ```mcfunction
 # @function tick
-# scoreboard players enable @a rx.pdb.LT
+# scoreboard players enable @a rx.playerdb.list
 execute as @a run commands player
 	# check if uuid0 has been set
 	execute unless score @s rx.uuid0 = @s rx.uuid0 run function ../uuid/set
 
 	# on login, chk name change
-	execute if score @s rx.pdb.login matches 1.. run function ../uuid/check
+	execute unless score @s rx.playerdb.counter = $global rx.playerdb.counter run function ../uuid/check
+	scoreboard players operation @s rx.playedb.counter = $global rx.playerdb.counter
 
+	# list trigger
+	execute unless score @s rx.playerdb.list matches 0 run function rx.playerdb:admin/list
+
+scoreboard players add $global rx.playerdb.counter 1
+scoreboard players operation @a rx.playerbd.counter = $global rx.playerdb.counter
 schedule function {{ctx.generate.path('tick')}} 1t replace
-
-# # list bs
-# execute unless score @s rx.pdb.LT matches 0 run function rx.playerdb:admin/list
 ```

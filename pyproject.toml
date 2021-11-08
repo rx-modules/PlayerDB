@@ -1,19 +1,41 @@
 [tool.poetry]
-name = "mc-playerdb"
+name = "playerdb"
 version = "2.0.0"
-description = "A minecraft datapack which aids in storing data per player"
-authors = ["Ritik Shah <ritik10.shah@gmail.com>"]
+description = "A minecraft library which aids in storing data per player"
+authors = ["rx"]
 license = "MIT"
+
 readme = "README.md"
+
+homepage = "https://github.com/rx-modules/playerdb"
+repository = "https://github.com/rx-modules/playerdb"
+documentation = "https://rx-modules.github.io/playerdb/"
+
+keywords = [
+  "beet",
+  "minecraft",
+  "rx",
+  "rx-modules",
+  "playerdb",
+  "database"
+]
 
 [tool.poetry.dependencies]
 python = "^3.9"
 PyYAML = "^5.4.1"
+mecha = "^0.5.2"
+allay = "^1.0.1"
+beet = ">=0.43.3"
 
 [tool.poetry.dev-dependencies]
+pytest = "^6.2.5"
+black = "^21.10b0"
+isort = "^5.10.0"
+python-semantic-release = "^7.19.2"
+mudkip = "^0.4.12"
+pytest-insta = "^0.1.10"
+lectern = "^0.16.1"
 colour = "^0.1.5"
-beet = "^0.41.0"
-lectern = "^0.16.0"
 
 [tool.beet]
 name = "PlayerDB"
@@ -24,6 +46,29 @@ version = "2.0.0"
 
 output = "build"
 extend = ["beet-project.yaml"]
+
+[tool.black]
+target-version = ["py39"]
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+
+[tool.semantic_release]
+branch = "main"
+version_toml = [
+	"pyproject.toml:tool.poetry.version",
+	"pyproject.toml:tool.beet.version"
+]
+major_on_zero = false
+build_command = "poetry build && poetry run mudkip build --update-gh-pages --repository https://x-access-token:${GH_TOKEN}@github.com/rx-modules/beet-smithed"
+
+[tool.mudkip]
+preset = "furo"
+
+[tool.mudkip.override]
+html_title = "playerdb"
+suppress_warnings = ["myst.header"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

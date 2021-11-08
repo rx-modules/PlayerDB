@@ -43,8 +43,7 @@ execute
 #!endfunction
 #!endfor
 
-execute
-	if data storage rx:global playerdb.uuid[{bits:{select:0b}}]
+execute if data storage rx:global playerdb.uuid[{bits:{select:0b}}]
 	run data modify storage rx:global playerdb.uuid[{bits:{select:0b}}].selected set value 0b
 
 #!if not loop.last
@@ -157,15 +156,15 @@ execute if score $success rx.temp matches 1 run sequentially
 #>   reset the scores like they should be and let's do our normal name change stuff
 execute if score $success rx.temp matches 0 run commands resets
 	scoreboard players reset @s rx.uid
-	scoreboard players reset @s rx.pdb.HasEntry
+	scoreboard players reset @s rx.playerdb.has_entry
 	scoreboard players reset @s rx.uuid0
 	scoreboard players reset @s rx.uuid1
 	scoreboard players reset @s rx.uuid2
 	scoreboard players reset @s rx.uuid3
-	scoreboard players reset @s rx.pdb.list 
+	scoreboard players reset @s rx.playerdb.list_page 
 	function ../set
 
-scoreboard players reset @s rx.pdb.login
+scoreboard players reset @s rx.playerdb.counter
 ```
 
 </details>
@@ -197,7 +196,7 @@ function ../utils/get_name
 #> other info
 data modify storage rx:global playerdb.uuid[{selected:1b}].entries append value {}
 execute store result storage rx:global playerdb.uuid[{selected:1b}].entries[-1].uid int 1 run scoreboard players get @s rx.uid
-execute store result storage rx:global playerdb.uuid[{selected:1b}].entries[-1].hasEntry byte 1 run scoreboard players get @s rx.pdb.HasEntry
+execute store result storage rx:global playerdb.uuid[{selected:1b}].entries[-1].hasEntry byte 1 run scoreboard players get @s rx.playerdb.has_entry
 data modify storage rx:global playerdb.uuid[{selected:1b}].entries[-1].name set from storage rx:temp playerdb.player_name 
 data modify storage rx:global playerdb.uuid[{selected:1b}].entries[-1].UUID set from storage rx:temp playerdb.UUID
 
@@ -265,10 +264,10 @@ execute store result score $cache.HasEntry rx.temp run
 
 #> apply cache
 scoreboard players operation @s rx.uid = $cache.uid rx.temp
-scoreboard players operation @s rx.pdb.HasEntry = $cache.HasEntry rx.temp
+scoreboard players operation @s rx.playerdb.has_entry = $cache.HasEntry rx.temp
 
 #> update name
-execute if score @s rx.pdb.HasEntry matches 1 run sequentially
+execute if score @s rx.playerdb.has_entry matches 1 run sequentially
 	function ../get/self
 	function ../utils/get_name
 	data modify storage rx:io playerdb.old_name set from storage rx:global playerdb.players[{selected:1b}].info.name
@@ -282,13 +281,13 @@ data modify storage rx:global playerdb.uuid[{selected:1b}].entries[-1].name set 
 tellraw @a[tag=rx.admin] [{"text": "", "color": "gray"}, {"nbt": "playerdb.pretty_name", "storage": "rx:info", "interpret": true}, ": ", {"storage": "rx:io", "nbt": "playerdb.old_name"}, " has changed their name to ", {"selector": "@s"}]
 
 #> api
-execute if score @s rx.pdb.HasEntry matches 1 run data modify storage rx:io playerdb.player set from storage rx:global playerdb.players[{selected:1b}]
+execute if score @s rx.playerdb.has_entry matches 1 run data modify storage rx:io playerdb.player set from storage rx:global playerdb.players[{selected:1b}]
 function #rx.playerdb:api/on_name_change
-execute if score @s rx.pdb.HasEntry matches 1 run data modify storage rx:global playerdb.players[{selected:1b}].data set from storage rx:io playerdb.player.data
+execute if score @s rx.playerdb.has_entry matches 1 run data modify storage rx:global playerdb.players[{selected:1b}].data set from storage rx:io playerdb.player.data
 
 #> reapply cache
 scoreboard players operation @s rx.uid = $cache.uid rx.temp
-scoreboard players operation @s rx.pdb.HasEntry = $cache.HasEntry rx.temp
+scoreboard players operation @s rx.playerdb.has_entry = $cache.HasEntry rx.temp
 ```
 
 </details>

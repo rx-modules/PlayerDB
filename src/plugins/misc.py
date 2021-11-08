@@ -20,10 +20,10 @@ def function_headers(ctx: Context):
 def pretty_name(ctx: Context, color1: str, color2: str) -> dict:
     name = ctx.project_name
 
-    color1, color2 = Color(color1), Color(color2)
+    c1, c2 = Color(color1), Color(color2)
 
-    first_half = color1.range_to(color2, math.floor(len(name) / 2))
-    second_half = color2.range_to(color1, math.ceil(len(name) / 2))
+    first_half = c1.range_to(c2, math.floor(len(name) / 2))
+    second_half = c2.range_to(c1, math.ceil(len(name) / 2))
 
     return {
         "text": "",
@@ -35,7 +35,6 @@ def pretty_name(ctx: Context, color1: str, color2: str) -> dict:
 
 
 def globals(ctx: Context):
-    name = ctx.project_name
     config = ctx.meta.get("globals", cast(JsonDict, {}))
 
     parts = ctx.project_id.split(".")

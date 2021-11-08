@@ -1,4 +1,7 @@
 require:
+  - beet.contrib.messages
+  - beet.contrib.auto_yaml
+  - allay
   - src.plugins.misc.globals
   - src.plugins.misc.gen_namespace
   - beet.contrib.inline_function
@@ -11,7 +14,6 @@ require:
 
 pipeline:
   - lectern
-  - beet.contrib.auto_yaml
   - src.plugins.advancements
   - src.plugins.debug_extension
   - beet.contrib.render
@@ -19,6 +21,7 @@ pipeline:
   - beet.contrib.relative_function_path
   - src.plugins.misc.function_headers
   - beet.contrib.yellow_shulker_box
+  # - mecha
 
 meta:
   lectern:
@@ -46,3 +49,6 @@ meta:
 
   advancements:
     item: minecraft:jukebox
+
+  mecha:
+    version: 1.18

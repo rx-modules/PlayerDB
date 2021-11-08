@@ -10,9 +10,9 @@ Clients of PlayerDB will call function tags as apart of the API which calls ever
 
 ```mcfunction
 execute
-    if score #rx.pdb.major load.status matches __major__
-    if score #rx.pdb.minor load.status matches __minor__
-    if score #rx.pdb.patch load.status matches __patch__
+    if score #rx.playerdb.major load.status matches __major__
+    if score #rx.playerdb.minor load.status matches __minor__
+    if score #rx.playerdb.patch load.status matches __patch__
     run function ../api
 ```
 
@@ -24,9 +24,9 @@ import yaml
 
 body = """
 execute
-    if score #rx.pdb.major load.status matches {major}
-    if score #rx.pdb.minor load.status matches {minor}
-    if score #rx.pdb.patch load.status matches {patch}
+    if score #rx.playerdb.major load.status matches {major}
+    if score #rx.playerdb.minor load.status matches {minor}
+    if score #rx.playerdb.patch load.status matches {patch}
     run function {func}/main
 """
 
@@ -63,7 +63,7 @@ for call in api_calls:
 #> Get Data: Output in rx:io out.player
 #> TODO: make tellraws referenced from a file
 
-execute if score $in.uid rx.io < $uid.next rx.uid run sequentially
+execute if score $in.uid rx.playerdb.io < $uid.next rx.uid run sequentially
 	function ../select/main
 	function ./logic
 
@@ -73,14 +73,17 @@ execute if score $size rx.temp matches 1 run sequentially
 	data modify storage rx:io playerdb.player set from storage rx:global playerdb.players[{selected:1b}]
 	data remove storage rx:io playerdb.player.bits
 
-execute if score $size rx.temp matches ..0 run data modify storage rx:io playerdb.player set value {}
+execute if score $size rx.temp matches ..0 run
+	data modify storage rx:io playerdb.player set value {}
 
 # sanity check, output -> playerdb.player
-execute store result score $uid rx.temp run data get storage rx:io playerdb.player.info.uid
-execute unless score $uid rx.temp = $in.uid rx.io run data modify storage rx:io playerdb.player set value {}
+execute store result score $uid rx.temp run
+	data get storage rx:io playerdb.player.info.uid
+execute unless score $uid rx.temp = $in.uid rx.playerdb.io run
+	data modify storage rx:io playerdb.player set value {}
 #!endfunction
 
-execute if score $in.uid rx.io >= $uid.next rx.uid run sequentially
+execute if score $in.uid rx.playerdb.io >= $uid.next rx.uid run sequentially
 	data remove storage rx:io playerdb.player
 	tellraw @a[tag=rx.admin] {"text":"Unsuccessful get. Input uid above max uid", "color": "#CE4257"}
 ```
@@ -91,12 +94,11 @@ execute if score $in.uid rx.io >= $uid.next rx.uid run sequentially
 # @function get/self/main
 
 #> Get @s Data: Output in rx:io out.player
-#!out score "rx.io", "$in.uid"
 
 #> api add_entry, won't add unless we need to. $entry: 1: we have entry, 0: we don't have entry
 function ../../add_entry/main
 
-scoreboard players operation $in.uid rx.io = @s rx.uid
+scoreboard players operation $in.uid rx.playerdb.io = @s rx.uid
 function ../../get/main
 ```
 
@@ -125,10 +127,10 @@ execute store result score $uid.check rx.temp
 execute unless data storage rx:io playerdb.player
 	run tellraw @a[tag=rx.admin] {"text":"Save unsuccessful. No rx:io data to save.", "color": "#CE4257"}
 execute if data storage rx:io playerdb.player
-	unless score $uid.check rx.temp = $in.uid rx.io
+	unless score $uid.check rx.temp = $in.uid rx.playerdb.io
 	run tellraw @a[tag=rx.admin] {"text":"Save unsuccessful. rx:io data uid invalid", "color": "#CE4257"}
 execute if data storage rx:io playerdb.player
-	if score $uid.check rx.temp = $in.uid rx.io
+	if score $uid.check rx.temp = $in.uid rx.playerdb.io
 	run function ./logic
 data remove storage rx:io playerdb.player
 ```
@@ -150,7 +152,7 @@ data modify storage rx:global playerdb.players[{selected:1b}].data set from stor
 
 #> Save @s Data
 
-scoreboard players operation $in.uid rx.io = @s rx.uid
+scoreboard players operation $in.uid rx.playerdb.io = @s rx.uid
 function ../../save/main
 ```
 
@@ -168,17 +170,17 @@ function ../../save/main
 #> Select Data: Output selected:1b
 
 # set input
-scoreboard players operation $uid rx.temp = $in.uid rx.io
+scoreboard players operation $uid rx.temp = $in.uid rx.playerdb.io
 
 function ./logic
 #!function generate_path('select/logic')
 
 # verification
-scoreboard players operation $verify.uid rx.io = $uid rx.temp
+scoreboard players operation $verify.uid rx.playerdb.io = $uid rx.temp
 function ../verify/main
 
 # selection
-execute if score $verified rx.io matches 0 run sequentially
+execute if score $verified rx.playerdb.io matches 0 run sequentially
 	execute unless data storage rx:global playerdb.players[]
 		run tellraw @a[tag=rx.admin] {"text":"Selection failed. No players in database to select", "color": "#CE4257"}
 	execute if data storage rx:global playerdb.players[] run sequentially
@@ -242,7 +244,7 @@ execute if score $size rx.temp matches 2.. run function ./bit{{ i + 1 }}
 function ../tick/player
 
 #> Only run if @s doesn't have an entry
-execute unless score @s rx.pdb.HasEntry matches 1 run function ./logic
+execute unless score @s rx.playerdb.has_entry matches 1 run function ./logic
 
 #!function generate_path('add_entry/logic')
 execute if data storage rx:global playerdb.players[]
@@ -273,7 +275,7 @@ data modify storage rx:global playerdb.players[-1].bits set from storage rx:temp
 data modify storage rx:temp playerdb.UUID set from storage rx:global playerdb.players[-1].info.UUID
 function ../uuid/select
 data modify storage rx:global playerdb.uuid[{selected:1b}].entries[-1].hasEntry set value 1b
-scoreboard players set @s rx.pdb.HasEntry 1
+scoreboard players set @s rx.playerdb.has_entry 1
 
 #> api
 data modify storage rx:io playerdb.player set from storage rx:global playerdb.players[{selected:1b}]
@@ -292,8 +294,8 @@ data modify storage rx:global playerdb.players[{selected:1b}].data set from stor
 # @function verify/main
 
 #> Verify selected is 1 and correct uid
-#> input: $verify.uid rx.io
-#> output: $verified rx.io 0/1 (0: failed, 1: success)
+#> input: $verify.uid rx.playerdb.io
+#> output: $verified rx.playerdb.io 0/1 (0: failed, 1: success)
 
 #> get size
 execute store result score $size rx.temp
@@ -306,9 +308,9 @@ execute store result score $uid.check rx.temp
 #> stores 1 in $verified if:
 #> - $size == 1
 #> - $uid == $uid.check
-execute store result score $verified rx.io if score $size rx.temp matches 1
-execute if score $verified rx.io matches 1
-	store result score $verified rx.io if score $verify.uid rx.io = $uid.check rx.temp
+execute store result score $verified rx.playerdb.io if score $size rx.temp matches 1
+execute if score $verified rx.playerdb.io matches 1
+	store result score $verified rx.playerdb.io if score $verify.uid rx.playerdb.io = $uid.check rx.temp
 
 #> clean up
 scoreboard players reset $uid.check rx.temp

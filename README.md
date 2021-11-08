@@ -1,18 +1,24 @@
-# PlayerDB - 1.16+ Minecraft Versions
+# PlayerDB - 1.18+
 An NBT Custom Player Database
 
-This datapack provides a player database for you to utilize! What is this database? Let me explain:
+> Hello everyone! The most recent 1.18 update was pretty large and changed almost every single name throughout the pack. While your data will be migrated, you will have to update your API calls etc.
+> 
+> This is due to a brand new feature called bundling which I discuss later on. Please join my [Discord]((https://discord.gg/zhadd6GHWJ) if you have any questions!
 
-Each player has an enderchest where the player can store and retrieve items. With commands, we can also place items, clear items, and even put loot tables in there! Each player has their own individual enderchest storage which is separate from everyone else's. Essentially, this datapack implements a more feature-filled version of a player enderchest. Using the new global nbt `storage` that was introduced in 1.15, we can now store nbt data in the 'cloud'. This datapack maintains it's own space in this 'cloud' storing each player individually in a list. Like how scoreboard stores numbers per player, here you can store nbt per player allowing you to manage and manipulate it as you please (even access it when they are offline!)
+PlayerDB is a database solution which allows you to store more data per player. *What does this mean?* Let me explain:
+
+Consider the Ender Chest. Every player has access to a **player** specific inventory where you save your stuff without anyone being able to snoop around. This chest lives in the "cloud" which allows you to access it anywhere in the world at any time making it very convenient to access your favorite items!
+
+This datapack implements a feature-rich version of the Ender Chest for the use for creators! Through a global nbt feature called `storage`, introduced in 1.15, PlayerDB stores arbitrary NBT data, such as Ender Chest items, in a really efficient manner. Each player can then be tied to a section of this "cloud" akin to how we access scores via the `scoreboard` command! You can manipulate this data however you please, and even access it offline!
 
 ## Why?
 
-At the moment, the only thing we really have per player are scoreboards which only store numbers and enderchests which store items (mostly for survival). This new system adds another per player storage... custom nbt! This ranges from numbers, floats, strings, lists, and compounds of all these elements combined!
+At the moment, the only thing we really have per player are scoreboards which only store numbers and Ender Chests which store items (mostly in survival). This new system adds another per player storage... custom nbt! This ranges from numbers, floats, strings, lists, and compounds of all these elements combined!
 
-This datapack has a couple main advantages to enderchests:
-* Accessing enderchest data requires the player to be online. This datapack has offline access.
-* The enderchest can be accessed in survival. `storage` is a separate entity w/ commands only access
-* This datapack *should* be **much** faster than accessing the enderchest. This is because accessing the enderchest requires **serialization** which incurs steep performance costs. The nbt `storage` does not store serialized, only compressed as nbt.
+This datapack has a couple main advantages to Ender Chests:
+* Accessing Ender Chest data requires the player to be online. This datapack has offline access.
+* The Ender Chest can be accessed in survival. `storage` is a separate thing only commands can access
+* This datapack is **much** faster than accessing Ender Chest data. This is because accessing the Ender Chest requires **serialization** which incurs steep performance costs. The NBT `storage` does not store serialized data, only compressed in the NBT format.
 
 There are a couple of alternative implementations of player-specific nbt storage:
 * Using a single array and iterating through all the elements until you find the player.
@@ -24,11 +30,60 @@ There are a couple of alternative implementations of player-specific nbt storage
 > This is one of the best other solutions which you can check out here: [EntityDB](https://github.com/hqics/entitydb)
 > From my slight testing, PlayerDB **does** beat out in terms of lag, but this is based off my limited testing.
 
+**New**
+* Summoning a new `marker` entity per player and connecting them with a unique scoreboard score
+> While this method is pretty clean since referencing entities can look very clean, there are still issues with this.
+1. PlayerDB stores all the data in `storage` NBT files in the `data` directory which can be easy to access with external tools esp in backing up the database specifically
+2. `marker` entities need to link in a specific chunk.
+    a) If the chunk is always loaded, they will clog up `@e` commands, esp on servers where many new players join creating new entities.
+    b) If the chunk isn't loaded, then you have to load the chunk when you access the data which doesn't make the data immediately available due to entity loading being asynchronous.
+3. Storing a large amount of data there could corrupt your chunk. Boq, a developer at Mojang warned about this over in the MinecraftCommands discord [here](https://canary.discord.com/channels/154777837382008833/593812273164976166/831955643568619561).
+> Due to these cons, I find that PlayerDB ends up being a great solution, with a plus of having no persistent entities.
+
 ## Lag?
 
-As previously mentioned, this solution is an alternative to other solutions which may be laggier. To be specific, at worst, it is O(log(n)) which while not at O(1) like a normal array, is pretty damn close. In terms of Minecraft, you can think of this being about 50% less laggy than getting the player nbt via `data get entity @s` (which has been moderately tested so do try yourself). More technical bits on lag will be discussed in a later section.
+As previously mentioned, this solution is designed to be very well optimized. To be specific, at worst, it is O(log(n)) which while not at O(1) like a normal array, is pretty damn close. In terms of Minecraft, you can think of this being about 50% less laggy than getting the player nbt via `data get entity @s` (which has been moderately tested, so do try yourself). More technical bits on lag will be discussed in a later section.
 
 ## How to use
+
+Before you start using this pack, you should consider what you are using this pack for. New, in v2.0, there is now an easy way to distribute this datapack, by bundling it with your own datapack! This makes it very easy to depend on this datapack, since you don't need to have your users install a separate zip. Even if other packs in the world use PlayerDB, the latest version will only leave one instance of the pack actively running!
+
+<details>
+<summary><b>How to bundle PlayerDB v2.0+ with your datapack</b></summary>
+<br>
+
+First, head over to the [releases](https://github.com/rx-modules/PlayerDB/releases) tab, download the latest release, then unzip.
+
+Grab all the contents, except the minecraft folder, inside the `data` folder, and plop them inside your own datapack's `data`. Nothing should collide here (if `global` collides, you can keep either `global/advancements/root`).
+
+To properly merge the `minecraft` namespace, you'll have to pay a bit of attention. For `minecraft/loot_tables/block/yellow_shulker_box.json`, you will likely not be overriding this loot table. This loot table is apart of a widely used standard which is used in technical inventory manipulation. If you do have a loot table here, it is likely the same one.
+
+For `tags/functions/load.json`, you will see the following contents:
+```json
+{
+    "values": [
+        "#load:_private/load"
+    ]
+}
+```
+This odd looking setup is known as lantern load and helps manage load order with inconsistent `/datapack list` order. Instead of placing your pack inside the `#minecraft:load` tag file, you can instead use the `load` tag from PlayerDB (which is the Lantern Load convention) and place your `load` tag inside the `#load:load` function tag. For example:
+
+```json
+{
+    "values": [
+        "#rx.playerdb:load",
+        "your_pack_here:load"
+    ]
+}
+```
+
+This will ensure that my pack will run it's load function before your pack, which will ensure proper usecase with the library. If you are using a `tick.json`, you should also migrate to a schedule loop system as well. Essentially, your main ticking loop can run `schedule function your_pack_here:tick 1t replace` at the end of the function. This allows PlayerDB's ticking loops to run before yours.
+
+After these steps, you should be ready to go! If you wish to update your PlayerDB to a new version, you only need to update the `rx` and `rx.playerdb` namespaces!
+
+
+<br>
+</details>
 
 This datapack assigns a unique id to each player via a scoreboard: `rx.uid`. To access the data, you need an uid to search the database with. Secondly, the database only creates an entry when it is requested or explicitly created. I've listed some examples ranging from easy to complex.
 
@@ -38,7 +93,7 @@ This datapack assigns a unique id to each player via a scoreboard: `rx.uid`. To 
 
 This will get `@s`'s database entry. If it does not exist, it'll dynamically create it.
 
-    function rx.playerdb:api/get_self
+    function #rx.playerdb:api/v2/get/self
 
 Our data is available at `rx:io playerdb.player.data`. We should write some data, notice how we organized our data by `author.cool_pack`.
 
@@ -71,7 +126,7 @@ Finally, let's save our data!
     
 Sometimes, we don't want to get our own data, but someone else's. Let's say that we have someone else's id stored in `author.obj`.
 
-    scoreboard players operation $in.uid rx.io = @s author.obj
+    scoreboard players operation $in.uid rx.playerdb.io = @s author.obj
 
     # Note that we are using `api/get` here, `get` will **not** make a new entry on the fly
     function rx.playerdb:api/get
@@ -97,14 +152,14 @@ We can manually add a player entry for `@s` via:
 We can also 'select' our data for `$in.uid rx:io`
 This exposing some internal logic, essentially outputs an entry @ `rx:global playerdb.players[{selected:1b}]`. This does interface with the live database, so you'll wanna be careful if you are using this.
 
-    scoreboard players operation $in.uid rx.io = @s rx.uid
+    scoreboard players operation $in.uid rx.playerdb.io = @s rx.uid
     function rx.playerdb:api/select
 
     # (Note: select is much faster than a `get`/`save` which is why I've included in the api)
 
 We can check whether or not a player has a database entry. This incentivizes not creating a db entry for every player, but rather creating them dynamically when you need them. You can hook into the `#api/on_entry_add` function tag which is talked about in a later section.
 
-    execute if score @s rx.pdb.HasEntry matches 1 run ...
+    execute if score @s rx.playerdb.has_entry matches 1 run ...
 
 Finally, if you want to see some debug info..
 
@@ -134,7 +189,7 @@ Note that anyone can click these buttons, but only an operator can run this func
     
     function rx.playerdb:admin/reset_all       # This will nuke the database and all ids, no warning!
     function rx.playerdb:admin/delete_player   # This will remove `@s`'s entry from the database
-    function rx.playerdb:admin/remove_entry    # This will remove `$in.uid rx.io`'s entry from the database
+    function rx.playerdb:admin/remove_entry    # This will remove `$in.uid rx.playerdb.io`'s entry from the database
     
     function rx.playerdb:admin/migrate_account
     # This will take the data stored at rx:temp playerdb.admin.migrate.UUID
@@ -175,10 +230,10 @@ I prefer 2 since it leaves little to no room for error. If you wish to see an ex
 Once we implement this system, we have to implement a system to retrieve these scores when a name is changed. 
 The function tag, `#rx.playerdb:api/on_name_change`, allows a function to be ran when a player changes their name. This allows you to access the old name, `rx:io playerdb.old_name` and the data **if it has been created**.
 
-    execute if score @s rx.pdb.HasEntry matches 1 store result score @s eggs run data get storage rx:io playerdb.player.data.author.cool_pack.eggs
+    execute if score @s rx.playerdb.has_entry matches 1 store result score @s eggs run data get storage rx:io playerdb.player.data.author.cool_pack.eggs
     tellraw @a ["Yo, ", {"selector": "@s"}, " changed their name from ", {"storage": "rx:io", "nbt": "playerdb.old_name"}]
 
-Make sure you prepend `execute if score @s rx.pdb.HasEntry matches 1` to any `data get` you perform otherwise, you might just be getting null data (*which automatically gives 0 in Minecraft*).
+Make sure you prepend `execute if score @s rx.playerdb.has_entry matches 1` to any `data get` you perform otherwise, you might just be getting null data (*which automatically gives 0 in Minecraft*).
 
 <br>
 </details>
@@ -223,7 +278,7 @@ This datapack allows for expandable EnderChests with complete multiplayer compat
 
 Every player is given a unique id scoreboard, `rx.uid`. This is a number that starts counting from 1, `$uid.next rx.uid`, and every player gets an incrementing number. When a player wants to create a new entry via `api/add_entry` or `api/get_self` (which creates an entry for you), a new nbt compound is added a list located at `rx:global playerdb.players`. Each player data is organized as so: `{selected: 0b, info:{name: '<player name>', uid: <scoreboard uid>, UUID: <player UUID>}, data:{...}, bit0: xb, bit1: xb, ..., bitn: xb}`. When a player is given a uid, bits will be generated inside the entry `bit0: xb` based on the binary breakdown of the uid. This is used for the selection/filtering algorithm.
 
-When a `get` or `save` operation is called, the program will filter down the database to select the correct entry to the input uid via `@s rx.uid` or `$in.uid rx.io`. The filtering process is really unique and this is the crux of the entire library so I'll describe it in more detail.
+When a `get` or `save` operation is called, the program will filter down the database to select the correct entry to the input uid via `@s rx.uid` or `$in.uid rx.playerdb.io`. The filtering process is really unique and this is the crux of the entire library so I'll describe it in more detail.
 
 When you run a `get` or `save`, you will most likely trigger a selection algorithm (`impl/select`). Essentially, this modifies every entry's `selected` nbt to 1b. The system will then call the `bit0` filtering function which determines the first bit of the `uid` and modifies all entries `selected` nbt to 0b if they don't match. If there are more than 1 entries with `selected:1b`, it will continue to the next bit, else it will short-circuit and stop. At the end of the selection process, there should be either 0 or 1 entries in the database with `selected:1b` which u can select via `rx:global playerdb.players[{selected:1b}]`.
 

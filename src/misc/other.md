@@ -20,5 +20,4 @@ pools:
     - function: minecraft:set_nbt
       tag: "{rx.player_head:1b}"
     name: minecraft:player_head
-
 ```

@@ -2,7 +2,7 @@
 
 
 __all__ = [
-    "DebugStatement",
+    "OutStatement",
 ]
 
 
@@ -71,7 +71,7 @@ class OutStatement(JinjaExtension):
             lineno=lineno,
         )
 
-    def _out_handler(self, mode, identifier, target, lineno) -> str:
+    def _out_handler(self, mode: str, identifier: str, target: str, lineno: int) -> str:
         if self.ctx.meta["render_group"] != "functions":
             raise TypeError("Out statements can only be used inside functions.")
 
@@ -82,6 +82,7 @@ class OutStatement(JinjaExtension):
             "lineno": lineno,
         }
 
+        accessor = None
         if mode == "score":
             accessor = self.ctx.template.render_json(
                 {"score": {"name": "{{identifier}}", "objective": "{{target}}"}},
@@ -99,6 +100,9 @@ class OutStatement(JinjaExtension):
             accessor = self.ctx.template.render_json(
                 {"block": "{{target}}", "nbt": "{{identifier}}"}, **kwargs
             )
+
+        if not accessor:
+            raise Exception
 
         rendered = self.ctx.template.render_string(
             json.dumps(self.opts.payload),
