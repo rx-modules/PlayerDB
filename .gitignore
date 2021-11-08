@@ -143,4 +143,4 @@ cython_debug/
 dist/
 .vscode/
 build/
-*.sublime-project
+*.sublime*
