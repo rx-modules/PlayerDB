@@ -61,7 +61,7 @@ version_toml = [
 	"pyproject.toml:tool.beet.version"
 ]
 major_on_zero = false
-build_command = "poetry build && poetry run mudkip build --update-gh-pages --repository https://x-access-token:${GH_TOKEN}@github.com/rx-modules/beet-smithed"
+build_command = "poetry build && poetry run mudkip build --update-gh-pages --repository https://x-access-token:${GH_TOKEN}@github.com/rx-modules/playerdb"
 
 [tool.mudkip]
 preset = "furo"
