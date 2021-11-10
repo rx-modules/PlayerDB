@@ -1,20 +1,21 @@
-name: CI
+name: Docs
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
+    paths:
+      - "docs/**"
+      - "README.md"
+      - "pyproject.toml"
 
 jobs:
   main:
-    name: Test and release
+    name: Build and deploy
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
       - name: Set up Python 3.10
         uses: actions/setup-python@v2
         with:
@@ -31,19 +32,9 @@ jobs:
           key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: poetry install
-      - name: Run type-checking
-        run: npm run check
-      - name: Check formatting
-        run: poetry run black --check src
-      - name: Release
-        if: |
-          github.repository == 'rx-modules/PlayerDB'
-          && github.event_name == 'push'
-          && github.ref == 'refs/heads/main'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: poetry install --extras image
+      - name: Build and deploy documentation
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "action@github.com"
-          poetry run semantic-release publish --retry -v DEBUG -D commit_author="github-actions <action@github.com>"
+          poetry run mudkip build --check --update-gh-pages --repository https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
