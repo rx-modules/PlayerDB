@@ -9,7 +9,7 @@ with open('test/player_names.txt') as f:
 	names = f.read().split('\n')
 
 cmd = 'execute if score $iter rx.temp matches {num}.. run player {name} spawn'
-contents = [cmd.format(num=i, name=name) for i, name in enumerate(names)]
+contents = [cmd.format(num=i+1, name=name) for i, name in enumerate(names)]
 
 ctx.data['rx.playerdb:test/utils/summon/names'] = Function(contents)
 

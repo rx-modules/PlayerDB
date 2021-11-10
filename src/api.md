@@ -85,7 +85,7 @@ execute unless score $uid rx.temp = $in.uid rx.playerdb.io run
 
 execute if score $in.uid rx.playerdb.io >= $uid.next rx.uid run sequentially
 	data remove storage rx.playerdb:io player
-	tellraw @a[tag=rx.admin] {"text":"Unsuccessful get. Input uid above max uid", "color": "#CE4257"}
+	tellraw @a[tag=rx.admin] from rx.playerdb:error/impossible_uid
 ```
 
 ## get/self/main
@@ -96,10 +96,10 @@ execute if score $in.uid rx.playerdb.io >= $uid.next rx.uid run sequentially
 #> Get @s Data: Output in rx:io out.player
 
 #> api add_entry, won't add unless we need to. $entry: 1: we have entry, 0: we don't have entry
-function ../../add_entry/main
-
-scoreboard players operation $in.uid rx.playerdb.io = @s rx.uid
-function ../../get/main
+execute unless score $disable.api rx.temp matches 1.. run sequentially
+	function ../../add_entry/main
+	scoreboard players operation $in.uid rx.playerdb.io = @s rx.uid
+	function ../../get/main
 ```
 
 </details>
@@ -125,10 +125,10 @@ execute store result score $uid.check rx.temp
 #> - data uid == input uid
 #> Consume reguardless
 execute unless data storage rx.playerdb:io player
-	run tellraw @a[tag=rx.admin] {"text":"Save unsuccessful. No rx:io data to save.", "color": "#CE4257"}
+	run tellraw @a[tag=rx.admin] from rx.playerdb:error/no_data
 execute if data storage rx.playerdb:io player
 	unless score $uid.check rx.temp = $in.uid rx.playerdb.io
-	run tellraw @a[tag=rx.admin] {"text":"Save unsuccessful. rx:io data uid invalid", "color": "#CE4257"}
+	run tellraw @a[tag=rx.admin] from rx.playerdb:error/bad_uid
 execute if data storage rx.playerdb:io player
 	if score $uid.check rx.temp = $in.uid rx.playerdb.io
 	run function ./logic
@@ -152,8 +152,9 @@ data modify storage rx.playerdb:main players[{selected:1b}].data set from storag
 
 #> Save @s Data
 
-scoreboard players operation $in.uid rx.playerdb.io = @s rx.uid
-function ../../save/main
+execute unless score $disable.api rx.temp matches 1.. run sequentially
+	scoreboard players operation $in.uid rx.playerdb.io = @s rx.uid
+	function ../../save/main
 ```
 
 </details>
@@ -182,10 +183,9 @@ function ../verify/main
 # selection
 execute if score $verified rx.playerdb.io matches 0 run sequentially
 	execute unless data storage rx.playerdb:main players[]
-		run tellraw @a[tag=rx.admin] {"text":"Selection failed. No players in database to select", "color": "#CE4257"}
+		run tellraw @a[tag=rx.admin] from rx.playerdb:error/empty_database
 	execute if data storage rx.playerdb:main players[] run sequentially
 		data modify storage rx.playerdb:main players[].selected set value 1b
-		tellraw @a {"nbt":"playerdb.players","storage":"rx:global"}
 		function ./tree/bit0
 
 #!for i in range(6)
@@ -195,7 +195,6 @@ data modify storage rx.playerdb:main players[].bits.select set value 0b
 scoreboard players operation $bit rx.temp = $uid rx.temp
 scoreboard players operation $bit rx.temp %= $64 rx.int
 scoreboard players set $size rx.temp 0
-tellraw @a ["$bit{{i}}:", {"score":{"name":"$bit","objective":"rx.temp"}}]
 
 #!for node in generate_tree(render_path, range(64))
 #!function node.parent append
@@ -207,18 +206,18 @@ execute if score $bit rx.temp matches {{ node.range }}
 execute
 	if score $bit rx.temp matches {{ node.range }}
 	if data storage rx.playerdb:main {{ path }}
+	store result score $size rx.temp
 	run data modify storage rx.playerdb:main {{ path }}.bits.select set value 1b
 #!endif
 #!endfunction
 #!endfor
 
-tellraw @a ["$size:", {"score":{"name":"$size","objective":"rx.temp"}}]
 execute
 	if data storage rx.playerdb:main players[{bits:{select:0b}}]
 	run data modify storage rx.playerdb:main players[{bits:{select:0b}}].selected set value 0b
 
 #!if not loop.last
-scoreboard players operation $uid rx.temp /= 64 rx.int
+scoreboard players operation $uid rx.temp /= $64 rx.int
 execute if score $size rx.temp matches 2.. run function ./bit{{ i + 1 }}
 #!endif
 
@@ -274,12 +273,14 @@ data modify storage rx.playerdb:main players[-1].bits set from storage rx.player
 #> update uuidDB
 data modify storage rx.playerdb:temp UUID set from storage rx.playerdb:main players[-1].info.UUID
 function ../uuid/select
-data modify storage rx.playerdb:main uuid[{selected:1b}].entries[-1].hasEntry set value 1b
+data modify storage rx.playerdb:main uuid[{selected:1b}].entries[-1].has_entry set value 1b
 scoreboard players set @s rx.playerdb.has_entry 1
 
 #> api
 data modify storage rx.playerdb:io player set from storage rx.playerdb:main players[{selected:1b}]
+scoreboard players set $disable.api rx.temp 1
 function #rx.playerdb:api/v{{ major ~ '/on_entry_add'}}
+scoreboard players reset $disable.api rx.temp
 data modify storage rx.playerdb:main players[{selected:1b}].data set from storage rx.playerdb:io player.data
 #!endfunction
 ```

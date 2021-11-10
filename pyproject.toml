@@ -23,9 +23,10 @@ keywords = [
 [tool.poetry.dependencies]
 python = "^3.9"
 PyYAML = "^5.4.1"
-mecha = "^0.5.2"
-allay = "^1.0.1"
-beet = ">=0.43.3"
+mecha = ">=0.8.0"
+allay = ">=1.0.3"
+beet = ">=0.44.2"
+lectern = ">=0.17.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
@@ -34,12 +35,12 @@ isort = "^5.10.0"
 python-semantic-release = "^7.19.2"
 mudkip = "^0.4.12"
 pytest-insta = "^0.1.10"
-lectern = "^0.16.1"
 colour = "^0.1.5"
 
 [tool.beet]
 name = "PlayerDB"
 id = "rx.playerdb"
+data_pack.name = "PlayerDB v{{verstr}}"
 description = "Player Data Manager Library - (SQL but in Minecraft)"
 
 output = "build"

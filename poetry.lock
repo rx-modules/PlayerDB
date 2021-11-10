@@ -8,7 +8,7 @@ python-versions = "*"
 
 [[package]]
 name = "allay"
-version = "1.0.1"
+version = "1.0.3"
 description = "A parser to convert a descriptive text format into minecraft text components"
 category = "main"
 optional = false
@@ -67,7 +67,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 name = "attrs"
 version = "21.2.0"
 description = "Classes Without Boilerplate"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
@@ -417,7 +417,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
 name = "importlib-metadata"
-version = "4.8.1"
+version = "4.8.2"
 description = "Read metadata from Python packages"
 category = "dev"
 optional = false
@@ -429,7 +429,7 @@ zipp = ">=0.5"
 [package.extras]
 docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
 perf = ["ipython"]
-testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-cov", "pytest-enabler (>=1.0.1)", "packaging", "pep517", "pyfakefs", "flufl.flake8", "pytest-perf (>=0.9.2)", "pytest-black (>=0.3.7)", "pytest-mypy", "importlib-resources (>=1.3)"]
+testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-cov", "pytest-enabler (>=1.0.1)", "packaging", "pep517", "pyfakefs", "flufl.flake8", "pytest-perf (>=0.9.2)", "pytest-black (>=0.3.7)", "pytest-mypy", "importlib-resources (>=1.3)"]
 
 [[package]]
 name = "iniconfig"
@@ -529,7 +529,7 @@ test = ["pytest (>=3.6.0)", "pytest-cov", "mock"]
 
 [[package]]
 name = "isort"
-version = "5.10.0"
+version = "5.10.1"
 description = "A Python utility / library to sort Python imports."
 category = "dev"
 optional = false
@@ -784,14 +784,14 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 
 [[package]]
 name = "lectern"
-version = "0.16.1"
+version = "0.17.1"
 description = "Literate Minecraft data packs and resource packs."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.8,<4.0"
 
 [package.dependencies]
-beet = ">=0.40.1"
+beet = ">=0.44.2"
 click = ">=8.0.1,<9.0.0"
 markdown-it-py = ">=1.1.0,<2.0.0"
 
@@ -811,7 +811,7 @@ tornado = {version = "*", markers = "python_version > \"2.7\""}
 name = "markdown-it-py"
 version = "1.1.0"
 description = "Python port of markdown-it. Markdown parsing, done right!"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "~=3.6"
 
@@ -863,15 +863,15 @@ testing = ["coverage", "pytest (>=3.6,<4)", "pytest-cov", "pytest-regressions"]
 
 [[package]]
 name = "mecha"
-version = "0.5.11"
+version = "0.8.2"
 description = "A powerful Minecraft command library"
 category = "main"
 optional = false
 python-versions = ">=3.8,<4.0"
 
 [package.dependencies]
-beet = ">=0.41.9"
-tokenstream = ">=1.2.2,<2.0.0"
+beet = ">=0.44.5"
+tokenstream = ">=1.2.3,<2.0.0"
 
 [[package]]
 name = "mistune"
@@ -1961,7 +1961,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "435b5580d52caecc80fb907d4d4e5fcb0e9073a08940c64f1fa766ed1dadcfdb"
+content-hash = "69313b0a235c1b7c0589675bfeb52482b8d21a5f384c8b4aa0967a5136b81090"
 
 [metadata.files]
 alabaster = [
@@ -1969,8 +1969,8 @@ alabaster = [
     {file = "alabaster-0.7.12.tar.gz", hash = "sha256:a661d72d58e6ea8a57f7a86e37d86716863ee5e92788398526d58b26a4e4dc02"},
 ]
 allay = [
-    {file = "allay-1.0.1-py3-none-any.whl", hash = "sha256:b41d7091465c7524d14ab587e0d1e345ab2e0e4ff5b2939126e30c849fad4373"},
-    {file = "allay-1.0.1.tar.gz", hash = "sha256:71b002ba623f5d9f379c1c5dedea67441a6a712b26293321d086407d8319c4ee"},
+    {file = "allay-1.0.3-py3-none-any.whl", hash = "sha256:7f2be2ed4f4dc2fcd1b2cfdc80280bdd7e0aa32f6abd2f4d4af03c7b42682517"},
+    {file = "allay-1.0.3.tar.gz", hash = "sha256:d04e2e5b175bd60fa5adf29fd3014fb8e855344c37cd244e771d868e8fbb9252"},
 ]
 anyio = [
     {file = "anyio-3.3.4-py3-none-any.whl", hash = "sha256:4fd09a25ab7fa01d34512b7249e366cd10358cdafc95022c7ff8c8f8a5026d66"},
@@ -2249,8 +2249,8 @@ imagesize = [
     {file = "imagesize-1.2.0.tar.gz", hash = "sha256:b1f6b5a4eab1f73479a50fb79fcf729514a900c341d8503d62a62dbc4127a2b1"},
 ]
 importlib-metadata = [
-    {file = "importlib_metadata-4.8.1-py3-none-any.whl", hash = "sha256:b618b6d2d5ffa2f16add5697cf57a46c76a56229b0ed1c438322e4e95645bd15"},
-    {file = "importlib_metadata-4.8.1.tar.gz", hash = "sha256:f284b3e11256ad1e5d03ab86bb2ccd6f5339688ff17a4d797a0fe7df326f23b1"},
+    {file = "importlib_metadata-4.8.2-py3-none-any.whl", hash = "sha256:53ccfd5c134223e497627b9815d5030edf77d2ed573922f7a0b8f8bb81a1c100"},
+    {file = "importlib_metadata-4.8.2.tar.gz", hash = "sha256:75bdec14c397f528724c1bfd9709d660b33a4d2e77387a3358f20b848bb5e5fb"},
 ]
 iniconfig = [
     {file = "iniconfig-1.1.1-py2.py3-none-any.whl", hash = "sha256:011e24c64b7f47f6ebd835bb12a743f2fbe9a26d4cecaa7f53bc4f35ee9da8b3"},
@@ -2278,8 +2278,8 @@ ipywidgets = [
     {file = "ipywidgets-7.6.5.tar.gz", hash = "sha256:00974f7cb4d5f8d494c19810fedb9fa9b64bffd3cda7c2be23c133a1ad3c99c5"},
 ]
 isort = [
-    {file = "isort-5.10.0-py3-none-any.whl", hash = "sha256:1a18ccace2ed8910bd9458b74a3ecbafd7b2f581301b0ab65cfdd4338272d76f"},
-    {file = "isort-5.10.0.tar.gz", hash = "sha256:e52ff6d38012b131628cf0f26c51e7bd3a7c81592eefe3ac71411e692f1b9345"},
+    {file = "isort-5.10.1-py3-none-any.whl", hash = "sha256:6f62d78e2f89b4500b080fe3a81690850cd254227f27f75c3a0c491a1f351ba7"},
+    {file = "isort-5.10.1.tar.gz", hash = "sha256:e8443a5e7a020e9d7f97f1d7d9cd17c88bcb3bc7e218bf9cf5095fe550be2951"},
 ]
 jedi = [
     {file = "jedi-0.18.0-py2.py3-none-any.whl", hash = "sha256:18456d83f65f400ab0c2d3319e48520420ef43b23a086fdc05dff34132f0fb93"},
@@ -2341,8 +2341,8 @@ keyring = [
     {file = "keyring-23.2.1.tar.gz", hash = "sha256:6334aee6073db2fb1f30892697b1730105b5e9a77ce7e61fca6b435225493efe"},
 ]
 lectern = [
-    {file = "lectern-0.16.1-py3-none-any.whl", hash = "sha256:524a33e1b0c2aec70e282d721bdd45ece887afe2e651ad222def19cbe1187705"},
-    {file = "lectern-0.16.1.tar.gz", hash = "sha256:c55c063d1ed720fe2cb00ef5079b27a4832cb5cb9209d5b38bfc92a0fef95a14"},
+    {file = "lectern-0.17.1-py3-none-any.whl", hash = "sha256:c38be8d61ecbd6dd50c5aa728f8ee30c8d314fc601aced8295019ca2179d2621"},
+    {file = "lectern-0.17.1.tar.gz", hash = "sha256:2813a8e804fe9704315440af75e2b5e7ce24a0db5a1b2c8e0ebfc34d8e400468"},
 ]
 livereload = [
     {file = "livereload-2.6.3.tar.gz", hash = "sha256:776f2f865e59fde56490a56bcc6773b6917366bce0c267c60ee8aaf1a0959869"},
@@ -2431,8 +2431,8 @@ mdit-py-plugins = [
     {file = "mdit_py_plugins-0.2.8-py3-none-any.whl", hash = "sha256:1833bf738e038e35d89cb3a07eb0d227ed647ce7dd357579b65343740c6d249c"},
 ]
 mecha = [
-    {file = "mecha-0.5.11-py3-none-any.whl", hash = "sha256:80b3ad0eabfcc4cba1be61d87f38c999b618afcb8811d753601c0c77a36fe98d"},
-    {file = "mecha-0.5.11.tar.gz", hash = "sha256:4b76358d68aafb8fbf87af40ae2a070d7177851d869c41397e6fd75c9353d9aa"},
+    {file = "mecha-0.8.2-py3-none-any.whl", hash = "sha256:9d7ec864e562f84a2da02aeeba903cd8cc32e69f73e249fd81316dbc01d5bbcd"},
+    {file = "mecha-0.8.2.tar.gz", hash = "sha256:5aed040d80e69273ea0e7cc6c8871853fdcf583448cdcff64a97e9f483eb9774"},
 ]
 mistune = [
     {file = "mistune-0.8.4-py2.py3-none-any.whl", hash = "sha256:88a1051873018da288eee8538d476dffe1262495144b33ecb586c4ab266bb8d4"},

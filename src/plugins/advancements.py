@@ -15,7 +15,7 @@ def beet_default(ctx: Context):
                 "show_toast": False,
                 "announce_to_chat": False,
             },
-            "criteria": {"trigger": {"trigger": "minecraft:tick"}},
+            "criteria": {"requirement": {"trigger": "minecraft:tick"}},
         }
     )
 
@@ -32,7 +32,7 @@ def beet_default(ctx: Context):
                 "announce_to_chat": False,
             },
             "parent": "global:root",
-            "criteria": {"trigger": {"trigger": "minecraft:tick"}},
+            "criteria": {"requirement": {"trigger": "minecraft:tick"}},
         }
     )
 
@@ -46,7 +46,7 @@ def beet_default(ctx: Context):
                 "announce_to_chat": False,
                 "show_toast": False,
             },
-            "parent": "global:rx",
-            "criteria": {"trigger": {"trigger": "minecraft:tick"}},
+            "parent": "global:rx97",
+            "criteria": {"requirement": {"trigger": "minecraft:tick"}},
         }
     )

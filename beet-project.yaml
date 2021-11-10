@@ -1,5 +1,7 @@
 require:
   - beet.contrib.messages
+  - mecha.contrib.messages
+  - mecha.contrib.relative_location
   - beet.contrib.auto_yaml
   - allay
   - src.plugins.misc.globals
@@ -11,20 +13,27 @@ require:
   - lectern.contrib.relative_location
   - lectern.contrib.yaml_to_json
   - lectern.contrib.plugin
+  - beet.contrib.dbg
 
 pipeline:
   - lectern
   - src.plugins.advancements
   - beet.contrib.render
   - beet.contrib.hangman
-  - beet.contrib.relative_function_path
+  - mecha
   - src.plugins.misc.function_headers
-  - beet.contrib.yellow_shulker_box
-  # - mecha
+  # - beet.contrib.yellow_shulker_box
+  - require:
+      - lectern.contrib.plugin
+    pipeline:
+      - lectern
+    meta:
+      lectern:
+        load: ["test/*.md"]
 
 meta:
   lectern:
-    load: ["src/**/*.md", "test/*.md"]
+    load: ["src/**/*.md"]
 
   hangman:
     match: ["*"]
@@ -34,6 +43,7 @@ meta:
       functions: ["*"]
       loot_tables: ["*"]
       item_modifiers: ["*"]
+      advancements: ["*"]
 
   format_json:
     indent: 2

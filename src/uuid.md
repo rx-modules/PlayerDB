@@ -7,9 +7,6 @@
 ```mcfunction
 # @function uuid/select
 
-#> Quickly migrate has entry
-execute if data storage rx.playerdb:main meta.upgrade{has_entry:1b} run scoreboard players operation @s rx.playerdb.has_entry = @s rx.pdb.hasEntry
-
 #> Select an entry in the UUID db
 #> input -> $uid, output -> $found
 
@@ -37,11 +34,12 @@ scoreboard players set $size rx.temp 0
 execute if score $bit rx.temp matches {{ node.range }}
 	run function {{ node.children }}
 #!else
-#!set path = "playerdb.uuid[{selected:1b, bits:{b" ~ i ~ ":" ~ node.value ~ "b}}]"
+#!set path = "uuid[{selected:1b, bits:{b" ~ i ~ ":" ~ node.value ~ "b}}]"
 execute
 	if score $bit rx.temp matches {{ node.range }}
-	if data storage rx:global {{ path }}
-	run data modify storage rx:global {{ path }}.bits.select set value 1b
+	if data storage rx.playerdb:main {{ path }}
+	store result score $size rx.temp
+	run data modify storage rx.playerdb:main {{ path }}.bits.select set value 1b
 #!endif
 #!endfunction
 #!endfor
@@ -50,7 +48,7 @@ execute if data storage rx.playerdb:main uuid[{bits:{select:0b}}]
 	run data modify storage rx.playerdb:main uuid[{bits:{select:0b}}].selected set value 0b
 
 #!if not loop.last
-scoreboard players operation $uid rx.temp /= 64 rx.int
+scoreboard players operation $uid rx.temp /= $64 rx.int
 execute if data storage rx.playerdb:main uuid[{selected:1b}] run function ./bit{{ i + 1 }}
 #!endif
 
@@ -199,7 +197,7 @@ function ../utils/get_name
 #> other info
 data modify storage rx.playerdb:main uuid[{selected:1b}].entries append value {}
 execute store result storage rx.playerdb:main uuid[{selected:1b}].entries[-1].uid int 1 run scoreboard players get @s rx.uid
-execute store result storage rx.playerdb:main uuid[{selected:1b}].entries[-1].hasEntry byte 1 run scoreboard players get @s rx.playerdb.has_entry
+execute store result storage rx.playerdb:main uuid[{selected:1b}].entries[-1].has_entry byte 1 run scoreboard players get @s rx.playerdb.has_entry
 data modify storage rx.playerdb:main uuid[{selected:1b}].entries[-1].name set from storage rx.playerdb:temp player_name 
 data modify storage rx.playerdb:main uuid[{selected:1b}].entries[-1].UUID set from storage rx.playerdb:temp UUID
 
@@ -263,25 +261,26 @@ execute if score $found rx.temp matches 1 run
 execute store result score $cache.uid rx.temp run
 	data get storage rx.playerdb:main uuid[{selected:1b}].entries[-1].uid
 execute store result score $cache.HasEntry rx.temp run
-	data get storage rx.playerdb:main uuid[{selected:1b}].entries[-1].hasEntry
+	data get storage rx.playerdb:main uuid[{selected:1b}].entries[-1].has_entry
 
 #> apply cache
 scoreboard players operation @s rx.uid = $cache.uid rx.temp
 scoreboard players operation @s rx.playerdb.has_entry = $cache.HasEntry rx.temp
 
+data modify storage rx.playerdb:io old_name set from storage rx.playerdb:main uuid[{selected:1b}].entries[-1].name
+
 #> update name
 execute if score @s rx.playerdb.has_entry matches 1 run sequentially
 	function ../get/self
 	function ../utils/get_name
-	data modify storage rx.playerdb:io old_name set from storage rx.playerdb:main players[{selected:1b}].info.name
 	data modify storage rx.playerdb:main players[{selected:1b}].info.name set from storage rx.playerdb:temp player_name 
-	function ./self
+	function ../save/self
 
 #> update name in uuid db
 data modify storage rx.playerdb:main uuid[{selected:1b}].entries[-1].name set from storage rx.playerdb:temp player_name
 
 #> admin :P
-tellraw @a[tag=rx.admin] [{"text": "", "color": "gray"}, {"nbt": "playerdb.pretty_name", "storage": "rx:info", "interpret": true}, ": ", {"storage": "rx:io", "nbt": "playerdb.old_name"}, " has changed their name to ", {"selector": "@s"}]
+tellraw @a[tag=rx.admin] from rx.playerdb:api/name_change
 
 #> api
 execute if score @s rx.playerdb.has_entry matches 1 run data modify storage rx.playerdb:io player set from storage rx.playerdb:main players[{selected:1b}]

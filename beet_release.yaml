@@ -1,5 +1,5 @@
 extend:
-  - pyproject.yaml
+  - pyproject.toml
 output: dist
 data_pack:
   zipped: true
