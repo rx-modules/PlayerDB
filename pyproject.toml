@@ -22,7 +22,7 @@ keywords = [
 
 [tool.poetry.dependencies]
 python = "^3.9"
-PyYAML = "^5.4.1"
+PyYAML = "^6.0"
 mecha = ">=0.8.0"
 allay = ">=1.0.3"
 beet = ">=0.44.2"
