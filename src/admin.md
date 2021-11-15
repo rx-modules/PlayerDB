@@ -14,7 +14,7 @@
 execute unless score @s rx.uid < $uid.next rx.uid
 	run tellraw @a[tag=rx.admin] from rx.playerdb:admin/impossible_uid
 execute if score @s rx.uid < $uid.next rx.uid run commands logic
-	scoreboard players operation $in.uid rx.playerdb.io = @s rx.uid
+	scoreboard players operation $in.uid rx.pdb.io = @s rx.uid
 	function rx.playerdb:admin/remove_entry/logic
 	execute if score $size rx.temp matches 1
 		run scoreboard players reset @s rx.playerdb.has_entry
@@ -24,22 +24,22 @@ execute if score @s rx.uid < $uid.next rx.uid run commands logic
 # @function rx.playerdb:admin/remove_entry
 
 #> Removes storage entry only.
-#> input: $in.uid rx.playerdb.io
+#> input: $in.uid rx.pdb.io
 #> MUST RESET @s rx.playerdb.has_entry manually!
 
 #!set major = ctx.meta.version.major
 
-execute unless score $in.uid rx.playerdb.io < $uid.next rx.uid
+execute unless score $in.uid rx.pdb.io < $uid.next rx.uid
 	run tellraw @a[tag=rx.admin] from rx.playerdb:admin/impossible_uid
-execute if score $in.uid rx.playerdb.io < $uid.next rx.uid run commands logic
+execute if score $in.uid rx.pdb.io < $uid.next rx.uid run commands logic
 	#> Removes storage entry only.
-	#> input: $in.uid rx.playerdb.io
+	#> input: $in.uid rx.pdb.io
 	#> MUST RESET @s rx.playerdb.has_entry manually!
 
 	#> perform select as long as input is less than $uid.next
-	execute if score $in.uid rx.playerdb.io < $uid.next rx.uid
+	execute if score $in.uid rx.pdb.io < $uid.next rx.uid
 		run function #rx.playerdb:api/v{{major ~ '/select'}}
-	execute unless score $in.uid rx.playerdb.io < $uid.next rx.uid
+	execute unless score $in.uid rx.pdb.io < $uid.next rx.uid
 		run scoreboard players set $size rx.temp 0
 
 	#> if $size = 1, this means an entry was found
@@ -111,7 +111,7 @@ execute if score $found rx.temp matches 1 run commands found_acc
 
 	#> nuke our current entry if it exists
 	execute if score @s rx.playerdb.has_entry matches 1.. run sequentially
-		scoreboard players operation $in.uid rx.playerdb.io = @s rx.uid
+		scoreboard players operation $in.uid rx.pdb.io = @s rx.uid
 		function #rx.playerdb:api/v2/select
 		data remove storage rx.playerdb:main players[{selected:1b}]
 
@@ -157,7 +157,7 @@ scoreboard players reset * rx.uuid1
 scoreboard players reset * rx.uuid2
 scoreboard players reset * rx.uuid3
 scoreboard players reset * rx.temp
-scoreboard players reset * rx.playerdb.io
+scoreboard players reset * rx.pdb.io
 scoreboard players reset * rx.playerdb.has_entry
 scoreboard players set $uid.next rx.uid 1
 

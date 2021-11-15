@@ -77,7 +77,7 @@ data modify storage rx:info playerdb.pretty_version
 scoreboard objectives add rx.uid dummy
 scoreboard objectives add rx.int dummy
 
-scoreboard objectives add rx.playerdb.io dummy
+scoreboard objectives add rx.pdb.io dummy
 scoreboard objectives add rx.playerdb.list_page dummy
 scoreboard objectives add rx.playerdb.has_entry dummy
 

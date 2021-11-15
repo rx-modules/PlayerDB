@@ -1,7 +1,7 @@
-# PlayerDB - 1.18+
+# PlayerDB - 1.17+
 An NBT Custom Player Database
 
-> Hello everyone! The most recent 1.18 update was pretty large and changed almost every single name throughout the pack. While your data will be migrated, you will have to update your API calls etc.
+> Hello everyone! The most recent v2.0.0 update was pretty large and changed almost every single name throughout the pack. While your data will be migrated, you will have to update your API calls etc.
 > 
 > This is due to a brand new feature called bundling which I discuss later on. Please join my [Discord]((https://discord.gg/zhadd6GHWJ) if you have any questions!
 
@@ -44,221 +44,11 @@ There are a couple of alternative implementations of player-specific nbt storage
 
 As previously mentioned, this solution is designed to be very well optimized. To be specific, at worst, it is O(log(n)) which while not at O(1) like a normal array, is pretty damn close. In terms of Minecraft, you can think of this being about 50% less laggy than getting the player nbt via `data get entity @s` (which has been moderately tested, so do try yourself). More technical bits on lag will be discussed in a later section.
 
-## How to use
-
-Before you start using this pack, you should consider what you are using this pack for. New, in v2.0, there is now an easy way to distribute this datapack, by bundling it with your own datapack! This makes it very easy to depend on this datapack, since you don't need to have your users install a separate zip. Even if other packs in the world use PlayerDB, the latest version will only leave one instance of the pack actively running!
-
-<details>
-<summary><b>How to bundle PlayerDB v2.0+ with your datapack</b></summary>
-<br>
-
-First, head over to the [releases](https://github.com/rx-modules/PlayerDB/releases) tab, download the latest release, then unzip.
-
-Grab all the contents, except the minecraft folder, inside the `data` folder, and plop them inside your own datapack's `data`. Nothing should collide here (if `global` collides, you can keep either `global/advancements/root`).
-
-To properly merge the `minecraft` namespace, you'll have to pay a bit of attention. For `minecraft/loot_tables/block/yellow_shulker_box.json`, you will likely not be overriding this loot table. This loot table is apart of a widely used standard which is used in technical inventory manipulation. If you do have a loot table here, it is likely the same one.
-
-For `tags/functions/load.json`, you will see the following contents:
-```json
-{
-    "values": [
-        "#load:_private/load"
-    ]
-}
-```
-This odd looking setup is known as lantern load and helps manage load order with inconsistent `/datapack list` order. Instead of placing your pack inside the `#minecraft:load` tag file, you can instead use the `load` tag from PlayerDB (which is the Lantern Load convention) and place your `load` tag inside the `#load:load` function tag. For example:
-
-```json
-{
-    "values": [
-        "#rx.playerdb:load",
-        "your_pack_here:load"
-    ]
-}
-```
-
-This will ensure that my pack will run it's load function before your pack, which will ensure proper usecase with the library. If you are using a `tick.json`, you should also migrate to a schedule loop system as well. Essentially, your main ticking loop can run `schedule function your_pack_here:tick 1t replace` at the end of the function. This allows PlayerDB's ticking loops to run before yours.
-
-After these steps, you should be ready to go! If you wish to update your PlayerDB to a new version, you only need to update the `rx` and `rx.playerdb` namespaces!
-
-
-<br>
-</details>
-
-This datapack assigns a unique id to each player via a scoreboard: `rx.uid`. To access the data, you need an uid to search the database with. Secondly, the database only creates an entry when it is requested or explicitly created. I've listed some examples ranging from easy to complex.
-
-<details>
-<summary><b>Storing simple data</b></summary>
-<br>
-
-This will get `@s`'s database entry. If it does not exist, it'll dynamically create it.
-
-    function #rx.playerdb:api/v2/get/self
-
-Our data is available at `rx.playerdb:io player.data`. We should write some data, notice how we organized our data by `author.cool_pack`.
-
-    data modify storage rx.playerdb:io player.data.author.cool_pack set value {eggs: 3b}
-
-Note that we stored our data in `author.cool_pack`. Namespacing our data allows us to have better compatibility with other packs!
-
-Finally, let's save our data!
-
-    function rx.playerdb:api/save_self
-
-<br>
-</details>
-
-<details>
-<summary><b>Getting some previously stored data</b></summary>
-<br>
-
-    function rx.playerdb:api/get_self
-    execute store result score @s eggs run data get storage rx.playerdb:io player.data.author.cool_pack.eggs
-
-    # No need to save, we are just reading
-
-<br>
-</details>
-
-<details>
-<summary><b>Getting someone else's data</b></summary>
-<br>
-    
-Sometimes, we don't want to get our own data, but someone else's. Let's say that we have someone else's id stored in `author.obj`.
-
-    scoreboard players operation $in.uid rx.playerdb.io = @s author.obj
-
-    # Note that we are using `api/get` here, `get` will **not** make a new entry on the fly
-    function rx.playerdb:api/get
-
-    # Let's hope they had some eggs stored, I was running out
-    execute store result score @s eggs run data get storage rx.playerdb:io player.data.author.cool_pack.eggs
-
-    # No need to save, we are just reading someone else's data ;)
-    # If we were to... steal some eggs, we could save that change via:
-    #     function rx.playerdb:api/save
-
-<br>
-</details>
-
-<details>
-<summary><b>Misc Things</b></summary>
-<br>
-    
-We can manually add a player entry for `@s` via:
-    
-    function rx.playerdb:api/add_entry
-
-We can also 'select' our data for `$in.uid rx:io`
-This exposing some internal logic, essentially outputs an entry @ `rx.playerdb:main players[{selected:1b}]`. This does interface with the live database, so you'll wanna be careful if you are using this.
-
-    scoreboard players operation $in.uid rx.playerdb.io = @s rx.uid
-    function rx.playerdb:api/select
-
-    # (Note: select is much faster than a `get`/`save` which is why I've included in the api)
-
-We can check whether or not a player has a database entry. This incentivizes not creating a db entry for every player, but rather creating them dynamically when you need them. You can hook into the `#api/on_entry_add` function tag which is talked about in a later section.
-
-    execute if score @s rx.playerdb.has_entry matches 1 run ...
-
-Finally, if you want to see some debug info..
-
-    tag @s add rx.admin
-
-This will provide more debug information and a cool load message (*Note that I use this for all my packs*)!
-
-<br>
-</details>
-
-<details>
-<summary><b>Listing all the players stored in the database</b></summary>
-<br>
-    
-This just pulls up a clickable tellraw menu for player `@s` in chat.
-
-    function rx.playerdb:admin/list
-
-Note that anyone can click these buttons, but only an operator can run this function.
-
-<br>
-</details>
-
-<details>
-<summary><b>Admin tools for testing and for servers</b></summary>
-<br>
-    
-    function rx.playerdb:admin/reset_all       # This will nuke the database and all ids, no warning!
-    function rx.playerdb:admin/delete_player   # This will remove `@s`'s entry from the database
-    function rx.playerdb:admin/remove_entry    # This will remove `$in.uid rx.playerdb.io`'s entry from the database
-    
-    function rx.playerdb:admin/migrate_account
-    # This will take the data stored at rx.playerdb:temp admin.migrate.UUID
-    #  and 'migrate' the data to the entity called as @s
-
-<br>
-</details>
-
-<details>
-<summary><b>Dynamically prepping entries when they are added</b></summary>
-<br>
-    
-The function tag, `#rx.playerdb:api/on_entry_add`, allows a function to be run when an entry is added. Just plop a function tag with the function you want to fire. This function will fire before a `api/get_self` completes allowing you to intercept the creation ;)
-
-The player data will already be stored in rx.playerdb:io player.data and will automatically save for you. Do **not** call `api/save_self`, just modify the data!
-    
-    data modify storage rx.playerdb:io player.data.author.cool_pack set value {eggs: 0b}  # No eggs :(
-
-<br>
-</details>
-
-<details>
-<summary><b>Name changes: how to handle them</b></summary>
-<br>
-    
-PlayerDB has a nifty feature of having data persist on a name change (no leftover data, etc), This allows you to cache your scoreboard scores, which are name specific, in the database. 
-
-There are two great ways of doing this:
-1. Caching scores on a slow clock (maybe every 5 minutes)
-2. Caching scores when they change
-
-I prefer 2 since it leaves little to no room for error. If you wish to see an example of this, check out [Enderchest+](https://github.com/rx-modules/EnderChestPlus/blob/master/data/rx.ec/functions/setup.mcfunction).
-
-    # I like to store the scores in a specific `scores` object so they are easy to identify
-    function rx.playerdb:api/get_self
-    execute store result storage rx.playerdb:io player.data.author.cool_pack.scores.eggs int 1 run scoreboard players get @s eggs
-
-Once we implement this system, we have to implement a system to retrieve these scores when a name is changed. 
-The function tag, `#rx.playerdb:api/on_name_change`, allows a function to be ran when a player changes their name. This allows you to access the old name, `rx.playerdb:io old_name` and the data **if it has been created**.
-
-    execute if score @s rx.playerdb.has_entry matches 1 store result score @s eggs run data get storage rx.playerdb:io player.data.author.cool_pack.eggs
-    tellraw @a ["Yo, ", {"selector": "@s"}, " changed their name from ", {"storage": "rx:io", "nbt": "playerdb.old_name"}]
-
-Make sure you prepend `execute if score @s rx.playerdb.has_entry matches 1` to any `data get` you perform otherwise, you might just be getting null data (*which automatically gives 0 in Minecraft*).
-
-<br>
-</details>
-
 
 ## Lantern Load
 
-This project uses [Lantern Load](https://github.com/LanternMC/Load). This allows you to ensure your datapack loads after library to ensure you can use everything this datapack provides. You can also detect whether this library is loaded by checking `if score PlayerDB load matches 1..`.
+This project uses [Lantern Load](https://github.com/LanternMC/Load). This allows you to ensure your datapack loads after library to ensure you can use everything this datapack provides. You can also detect whether this library is loaded by checking `if score PlayerDB load.status matches 1..`. Check out the Usage tab for more details on how this convention helps!
 
-### Do I have to use this?
-
-Maybe. If you create an entry for every player that joins, there's a tick where your `api/*` command will run before any of PlayerDB's ticking commands. This will cause an inconsistency where PlayerDB has not yet set up the player (`rx.uid` + `UUID Storage`). There are ways to avoid this, but the best solution is to use Lantern Load in your project.
-
-### Example
-
-Once you've copied `Load` into your datapack, navigate to the `#load:load` function tag. This should simulate the contents of the function tag (note, you can add more dependencies if you have them):
-
-    {
-        "values": [
-            "#load:rx/playerdb",
-            "#load:<namespace>/<datapack>"
-        ]
-    }
-
-Then, make sure you have defined an empty `#load:rx/playerdb` and in your own `#load` tag, you should define your personal load function. This will ensure PlayerDB's load will occur before yours. If PlayerDB does not exist, load will continue and you can detect this by checking the `PlayerDB load` score. For an example of all of this, checkout [EnderChest+](https://github.com/rx-modules/EnderChestPlus/tree/master/data/load) as an example of a datapack relying on PlayerDB.
 
 ### Versioning
 
@@ -274,16 +64,6 @@ b) As of V1.0.1, the version is also available in the `load` scoreboard under `r
 [EnderChest+](https://github.com/rx-modules/EnderChestPlus)
 This datapack allows for expandable EnderChests with complete multiplayer compatibility!
 
-## Technical bits
-
-Every player is given a unique id scoreboard, `rx.uid`. This is a number that starts counting from 1, `$uid.next rx.uid`, and every player gets an incrementing number. When a player wants to create a new entry via `api/add_entry` or `api/get_self` (which creates an entry for you), a new nbt compound is added a list located at `rx.playerdb:main players`. Each player data is organized as so: `{selected: 0b, info:{name: '<player name>', uid: <scoreboard uid>, UUID: <player UUID>}, data:{...}, bit0: xb, bit1: xb, ..., bitn: xb}`. When a player is given a uid, bits will be generated inside the entry `bit0: xb` based on the binary breakdown of the uid. This is used for the selection/filtering algorithm.
-
-When a `get` or `save` operation is called, the program will filter down the database to select the correct entry to the input uid via `@s rx.uid` or `$in.uid rx.playerdb.io`. The filtering process is really unique and this is the crux of the entire library so I'll describe it in more detail.
-
-When you run a `get` or `save`, you will most likely trigger a selection algorithm (`impl/select`). Essentially, this modifies every entry's `selected` nbt to 1b. The system will then call the `bit0` filtering function which determines the first bit of the `uid` and modifies all entries `selected` nbt to 0b if they don't match. If there are more than 1 entries with `selected:1b`, it will continue to the next bit, else it will short-circuit and stop. At the end of the selection process, there should be either 0 or 1 entries in the database with `selected:1b` which u can select via `rx.playerdb:main players[{selected:1b}]`.
-
-Saving will usually filter (although there are some optimizations to skip that if you perform a get and a save right next to each other) and then just replace the entry while get just copies the entry into `rx:io`.
-
 
 ## Shoutouts
 
@@ -293,6 +73,7 @@ Saving will usually filter (although there are some optimizations to skip that i
 * nphhpn#0575 - Gave me some advice on optimizations!
 * AmberW#4615 - She threw out the initial idea and I've built on from that.
 * vdvman1#9510 - For helping me figure out some of the nbt manipulation nonsense (and some optimizations).
+* [fizzy](https://github.com/vberlier) - Helpful in my migration to `beet`
 * [r/minecraftcommands discord](https://discord.gg/QAFXFtZ) - Pretty helpful w/ feedback and a great community, check it out!
 
 

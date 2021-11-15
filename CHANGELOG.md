@@ -14,8 +14,8 @@
 		* **Example**: `rx.playerdb:io player.data`
 		
 	* **Scoreboards**:
-		* `rx.pdb.hasEntry` -> `rx.playerdb.has_entry`
-		* `rx.pdb.LT` -> `rx.playerdb.list_trigger`
+		* `rx.pdb.hasEntry` -> `rx.pdb.has_entry`
+		* `rx.pdb.LT` -> `rx.pdb.list_trigger`
 		* (..etc)
 		
 	* **API**, note the `#` indicating function tags:

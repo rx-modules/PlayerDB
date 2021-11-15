@@ -63,7 +63,7 @@ for call in api_calls:
 #> Get Data: Output in rx:io out.player
 #> TODO: make tellraws referenced from a file
 
-execute if score $in.uid rx.playerdb.io < $uid.next rx.uid run sequentially
+execute if score $in.uid rx.pdb.io < $uid.next rx.uid run sequentially
 	function ../select/main
 	function ./logic
 
@@ -79,11 +79,11 @@ execute if score $size rx.temp matches ..0 run
 # sanity check, output -> playerdb.player
 execute store result score $uid rx.temp run
 	data get storage rx.playerdb:io player.info.uid
-execute unless score $uid rx.temp = $in.uid rx.playerdb.io run
+execute unless score $uid rx.temp = $in.uid rx.pdb.io run
 	data modify storage rx.playerdb:io player set value {}
 #!endfunction
 
-execute if score $in.uid rx.playerdb.io >= $uid.next rx.uid run sequentially
+execute if score $in.uid rx.pdb.io >= $uid.next rx.uid run sequentially
 	data remove storage rx.playerdb:io player
 	tellraw @a[tag=rx.admin] from rx.playerdb:error/impossible_uid
 ```
@@ -98,7 +98,7 @@ execute if score $in.uid rx.playerdb.io >= $uid.next rx.uid run sequentially
 #> api add_entry, won't add unless we need to. $entry: 1: we have entry, 0: we don't have entry
 execute unless score $disable.api rx.temp matches 1.. run sequentially
 	function ../../add_entry/main
-	scoreboard players operation $in.uid rx.playerdb.io = @s rx.uid
+	scoreboard players operation $in.uid rx.pdb.io = @s rx.uid
 	function ../../get/main
 ```
 
@@ -127,10 +127,10 @@ execute store result score $uid.check rx.temp
 execute unless data storage rx.playerdb:io player
 	run tellraw @a[tag=rx.admin] from rx.playerdb:error/no_data
 execute if data storage rx.playerdb:io player
-	unless score $uid.check rx.temp = $in.uid rx.playerdb.io
+	unless score $uid.check rx.temp = $in.uid rx.pdb.io
 	run tellraw @a[tag=rx.admin] from rx.playerdb:error/bad_uid
 execute if data storage rx.playerdb:io player
-	if score $uid.check rx.temp = $in.uid rx.playerdb.io
+	if score $uid.check rx.temp = $in.uid rx.pdb.io
 	run function ./logic
 data remove storage rx.playerdb:io player
 ```
@@ -153,7 +153,7 @@ data modify storage rx.playerdb:main players[{selected:1b}].data set from storag
 #> Save @s Data
 
 execute unless score $disable.api rx.temp matches 1.. run sequentially
-	scoreboard players operation $in.uid rx.playerdb.io = @s rx.uid
+	scoreboard players operation $in.uid rx.pdb.io = @s rx.uid
 	function ../../save/main
 ```
 
@@ -171,17 +171,17 @@ execute unless score $disable.api rx.temp matches 1.. run sequentially
 #> Select Data: Output selected:1b
 
 # set input
-scoreboard players operation $uid rx.temp = $in.uid rx.playerdb.io
+scoreboard players operation $uid rx.temp = $in.uid rx.pdb.io
 
 function ./logic
 #!function generate_path('select/logic')
 
 # verification
-scoreboard players operation $verify.uid rx.playerdb.io = $uid rx.temp
+scoreboard players operation $verify.uid rx.pdb.io = $uid rx.temp
 function ../verify/main
 
 # selection
-execute if score $verified rx.playerdb.io matches 0 run sequentially
+execute if score $verified rx.pdb.io matches 0 run sequentially
 	execute unless data storage rx.playerdb:main players[]
 		run tellraw @a[tag=rx.admin] from rx.playerdb:error/empty_database
 	execute if data storage rx.playerdb:main players[] run sequentially
@@ -295,8 +295,8 @@ data modify storage rx.playerdb:main players[{selected:1b}].data set from storag
 # @function verify/main
 
 #> Verify selected is 1 and correct uid
-#> input: $verify.uid rx.playerdb.io
-#> output: $verified rx.playerdb.io 0/1 (0: failed, 1: success)
+#> input: $verify.uid rx.pdb.io
+#> output: $verified rx.pdb.io 0/1 (0: failed, 1: success)
 
 #> get size
 execute store result score $size rx.temp
@@ -309,9 +309,9 @@ execute store result score $uid.check rx.temp
 #> stores 1 in $verified if:
 #> - $size == 1
 #> - $uid == $uid.check
-execute store result score $verified rx.playerdb.io if score $size rx.temp matches 1
-execute if score $verified rx.playerdb.io matches 1
-	store result score $verified rx.playerdb.io if score $verify.uid rx.playerdb.io = $uid.check rx.temp
+execute store result score $verified rx.pdb.io if score $size rx.temp matches 1
+execute if score $verified rx.pdb.io matches 1
+	store result score $verified rx.pdb.io if score $verify.uid rx.pdb.io = $uid.check rx.temp
 
 #> clean up
 scoreboard players reset $uid.check rx.temp

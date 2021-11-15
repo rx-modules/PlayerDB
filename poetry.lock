@@ -8,7 +8,7 @@ python-versions = "*"
 
 [[package]]
 name = "allay"
-version = "1.0.3"
+version = "1.1.0"
 description = "A parser to convert a descriptive text format into minecraft text components"
 category = "main"
 optional = false
@@ -1969,8 +1969,8 @@ alabaster = [
     {file = "alabaster-0.7.12.tar.gz", hash = "sha256:a661d72d58e6ea8a57f7a86e37d86716863ee5e92788398526d58b26a4e4dc02"},
 ]
 allay = [
-    {file = "allay-1.0.3-py3-none-any.whl", hash = "sha256:7f2be2ed4f4dc2fcd1b2cfdc80280bdd7e0aa32f6abd2f4d4af03c7b42682517"},
-    {file = "allay-1.0.3.tar.gz", hash = "sha256:d04e2e5b175bd60fa5adf29fd3014fb8e855344c37cd244e771d868e8fbb9252"},
+    {file = "allay-1.1.0-py3-none-any.whl", hash = "sha256:e25db569380c1ec3dad519ab1cc49fa081c0d9ad7ca9e1e39f6f9c3394b672a9"},
+    {file = "allay-1.1.0.tar.gz", hash = "sha256:cde24637062c41cc568bbaead9ca790b622a4dad291db4f1dcd2380ab4733183"},
 ]
 anyio = [
     {file = "anyio-3.3.4-py3-none-any.whl", hash = "sha256:4fd09a25ab7fa01d34512b7249e366cd10358cdafc95022c7ff8c8f8a5026d66"},
