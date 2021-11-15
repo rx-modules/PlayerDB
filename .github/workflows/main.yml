@@ -23,6 +23,8 @@ jobs:
         uses: snok/install-poetry@v1.2.1
         with:
           virtualenvs-in-project: true
+      - name: Install Pyright
+        run: npm install
       - name: Setup cache
         id: cached-poetry-dependencies
         uses: actions/cache@v2

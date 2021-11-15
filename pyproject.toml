@@ -67,7 +67,7 @@ build_command = "poetry run beet -c beet-release.yaml build && poetry run mudkip
 preset = "furo"
 
 [tool.mudkip.override]
-html_title = "playerdb"
+html_title = "PlayerDB"
 suppress_warnings = ["myst.header"]
 
 [build-system]
