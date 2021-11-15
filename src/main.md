@@ -137,7 +137,7 @@ execute as @a run commands player
 
     # on login, chk name change
     execute unless score @s rx.pdb.counter = $global rx.pdb.counter run function ../uuid/check
-    scoreboard players operation @s rx.playedb.counter = $global rx.pdb.counter
+    scoreboard players operation @s rx.pdb.counter = $global rx.pdb.counter
 
     # list trigger
     execute unless score @s rx.pdb.list matches 0 run function rx.playerdb:admin/list
