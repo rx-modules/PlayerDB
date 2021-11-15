@@ -78,11 +78,11 @@ scoreboard objectives add rx.uid dummy
 scoreboard objectives add rx.int dummy
 
 scoreboard objectives add rx.pdb.io dummy
-scoreboard objectives add rx.playerdb.list_page dummy
-scoreboard objectives add rx.playerdb.has_entry dummy
+scoreboard objectives add rx.pdb.list_page dummy
+scoreboard objectives add rx.pdb.has_entry dummy
 
-scoreboard objectives add rx.playerdb.list trigger
-scoreboard objectives add rx.playerdb.counter dummy
+scoreboard objectives add rx.pdb.list trigger
+scoreboard objectives add rx.pdb.counter dummy
 
 #> 0.8+: uuid storage
 scoreboard objectives add rx.uuid0 dummy
@@ -96,7 +96,7 @@ execute unless score $uid.next rx.uid matches -2147483648..
 
 # global counter to keep track of logins
 #  also works for server crashes ;)
-scoreboard players set $global rx.playerdb.counter 0
+scoreboard players set $global rx.pdb.counter 0
 
 scoreboard players set $2 rx.int 2
 scoreboard players set $3 rx.int 3
@@ -127,22 +127,22 @@ tellraw @a[tag=rx.admin] from rx.playerdb:load
 
 ```mcfunction
 # @function tick
-# scoreboard players enable @a rx.playerdb.list
+# scoreboard players enable @a rx.pdb.list
 execute as @a run commands player
     # check upgrade advancements
-    execute unless score @s rx.playerdb.counter = $global rx.playerdb.counter run function ../upgrade/player
+    execute unless score @s rx.pdb.counter = $global rx.pdb.counter run function ../upgrade/player
 
     # check if uuid0 has been set
     execute unless score @s rx.uuid0 = @s rx.uuid0 run function ../uuid/set
 
     # on login, chk name change
-    execute unless score @s rx.playerdb.counter = $global rx.playerdb.counter run function ../uuid/check
-    scoreboard players operation @s rx.playedb.counter = $global rx.playerdb.counter
+    execute unless score @s rx.pdb.counter = $global rx.pdb.counter run function ../uuid/check
+    scoreboard players operation @s rx.playedb.counter = $global rx.pdb.counter
 
     # list trigger
-    execute unless score @s rx.playerdb.list matches 0 run function rx.playerdb:admin/list
+    execute unless score @s rx.pdb.list matches 0 run function rx.playerdb:admin/list
 
-execute store result score @a rx.playerdb.counter run scoreboard players add $global rx.playerdb.counter 1
+execute store result score @a rx.pdb.counter run scoreboard players add $global rx.pdb.counter 1
 
 schedule function {{ ctx.generate.path('tick') }} 1t replace
 ```

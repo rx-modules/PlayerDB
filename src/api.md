@@ -243,7 +243,7 @@ execute if score $size rx.temp matches 2.. run function ./bit{{ i + 1 }}
 function ../tick/player
 
 #> Only run if @s doesn't have an entry
-execute unless score @s rx.playerdb.has_entry matches 1 run function ./logic
+execute unless score @s rx.pdb.has_entry matches 1 run function ./logic
 
 #!function generate_path('add_entry/logic')
 execute if data storage rx.playerdb:main players[]
@@ -274,7 +274,7 @@ data modify storage rx.playerdb:main players[-1].bits set from storage rx.player
 data modify storage rx.playerdb:temp UUID set from storage rx.playerdb:main players[-1].info.UUID
 function ../uuid/select
 data modify storage rx.playerdb:main uuid[{selected:1b}].entries[-1].has_entry set value 1b
-scoreboard players set @s rx.playerdb.has_entry 1
+scoreboard players set @s rx.pdb.has_entry 1
 
 #> api
 data modify storage rx.playerdb:io player set from storage rx.playerdb:main players[{selected:1b}]

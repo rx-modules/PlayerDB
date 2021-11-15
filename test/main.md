@@ -24,7 +24,7 @@ for count in [10, 25, 50, 100]:
 # @function rx.playerdb:test/utils/reset_self
 #> Note this increments the uid counter w/o resetting it ;)
 scoreboard players reset @s rx.uid
-scoreboard players reset @s rx.playerdb.has_entry
+scoreboard players reset @s rx.pdb.has_entry
 function ./utils/new_uid
 function #rx.playerdb:api/v2/add_entry
 ```

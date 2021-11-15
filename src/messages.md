@@ -45,7 +45,7 @@
 ```
 {nbt="playerdb.name", storage="rx:info"} [Removal Success: Removed {nbt="players[{selected:1b}.info.name]", storage="rx.playerdb:main"}'s entry](#1DF368)
 
-[→ Don't forget to reset their rx.playerdb.has_entry score \(unless you ran admin/delete_player\)](gold)
+[→ Don't forget to reset their rx.pdb.has_entry score \(unless you ran admin/delete_player\)](gold)
 ```
 
 `@allay_message rx.playerdb:admin/non_existent_entry`

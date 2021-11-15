@@ -132,7 +132,7 @@ function #rx.playerdb:api/v2/select
 We can check whether or not a player has a database entry. This incentivizes not creating a database entry for every player, but rather creating them dynamically when you need them. You can hook into the `#api/v2/on_entry_add` function tag which is talked about in a later section.
 
 ```mcfunction
-execute if score @s rx.playerdb.has_entry matches 1 run ...
+execute if score @s rx.pdb.has_entry matches 1 run ...
 ```
 
 ## Some admin features (for testing or for servers)
@@ -201,10 +201,10 @@ Once we implement this system, we have to implement a system to retrieve these s
 The function tag, `#rx.playerdb:api/v2/on_name_change`, allows a function to be ran when a player changes their name. This allows you to access the old name, `rx.playerdb:io old_name` and the data **if it has been created**.
 
 ```mcfunction
-execute if score @s rx.playerdb.has_entry matches 1 store result score @s eggs run data get storage rx.playerdb:io player.data.author.cool_pack.eggs
+execute if score @s rx.pdb.has_entry matches 1 store result score @s eggs run data get storage rx.playerdb:io player.data.author.cool_pack.eggs
 tellraw @a ["Yo, ", {"selector": "@s"}, " changed their name from ", {"storage": "rx:io", "nbt": "playerdb.old_name"}]
 ```
 
-Make sure you prepend `execute if score @s rx.playerdb.has_entry matches 1` to any `data get` you perform otherwise, you might just be getting null data (*which automatically gives 0 in Minecraft*).
+Make sure you prepend `execute if score @s rx.pdb.has_entry matches 1` to any `data get` you perform otherwise, you might just be getting null data (*which automatically gives 0 in Minecraft*).
 
 Also, be sure not run to any `api` calls in here as well, since the datapack will again nag you ;)

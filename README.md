@@ -3,7 +3,7 @@ An NBT Custom Player Database
 
 > Hello everyone! The most recent v2.0.0 update was pretty large and changed almost every single name throughout the pack. While your data will be migrated, you will have to update your API calls etc.
 > 
-> This is due to a brand new feature called bundling which I discuss later on. Please join my [Discord]((https://discord.gg/zhadd6GHWJ) if you have any questions!
+> This is due to a brand new feature called bundling which I discuss later on. Please join my [Discord](https://discord.gg/zhadd6GHWJ) if you have any questions!
 
 PlayerDB is a database solution which allows you to store more data per player. *What does this mean?* Let me explain:
 
@@ -56,7 +56,10 @@ You can detect the version of the datapack via two methods:
 
 a) The version is stored in `storage`. `rx:info playerdb.version` as `major`, `minor`, and `patch`.
 
-b) As of V1.0.1, the version is also available in the `load` scoreboard under `rx.pdb.major`, `rx.pdb.minor`, `rx.pdb.patch`
+b) The version is also available in the `load.status` scoreboard under:
+    - `#rx.playerdb.major`
+    - `#rx.playerdb.minor`
+    - `#rx.playerdb.patch`
 
 
 ## Some examples
@@ -83,4 +86,4 @@ This datapack was a calling to one of the more annoying issues with custom nbt i
 
 The smart folk over at [r/minecraftcommands discord](https://discord.gg/QAFXFtZ) came up with various solutions to solve this problem and this datapack is one solution that I've grown quite fond over. While I like the usefulness of this library, I've mostly been wanting to understand some of the weird problems that Minecraft throws at us.
 
-This stuff is pretty hard to work through and somewhat hard to envision, but essentially, this is a player database that you can easily use. It's a pretty technical thing, but hopefully, the API is not too hard to use. If you have any questions, create a GitHub issue or join my discord [here](https://discord.gg/zhadd6GHWJ)
+This stuff is pretty hard to work through and somewhat hard to envision, but essentially, this is a player database that you can easily use. It's a pretty technical thing, but hopefully, the API is not too hard to use. If you have any questions, create a GitHub issue or join my discord [here](https://discord.gg/zhadd6GHWJ).

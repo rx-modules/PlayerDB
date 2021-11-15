@@ -17,7 +17,7 @@ execute if score @s rx.uid < $uid.next rx.uid run commands logic
 	scoreboard players operation $in.uid rx.pdb.io = @s rx.uid
 	function rx.playerdb:admin/remove_entry/logic
 	execute if score $size rx.temp matches 1
-		run scoreboard players reset @s rx.playerdb.has_entry
+		run scoreboard players reset @s rx.pdb.has_entry
 ```
 
 ```mcfunction
@@ -25,7 +25,7 @@ execute if score @s rx.uid < $uid.next rx.uid run commands logic
 
 #> Removes storage entry only.
 #> input: $in.uid rx.pdb.io
-#> MUST RESET @s rx.playerdb.has_entry manually!
+#> MUST RESET @s rx.pdb.has_entry manually!
 
 #!set major = ctx.meta.version.major
 
@@ -34,7 +34,7 @@ execute unless score $in.uid rx.pdb.io < $uid.next rx.uid
 execute if score $in.uid rx.pdb.io < $uid.next rx.uid run commands logic
 	#> Removes storage entry only.
 	#> input: $in.uid rx.pdb.io
-	#> MUST RESET @s rx.playerdb.has_entry manually!
+	#> MUST RESET @s rx.pdb.has_entry manually!
 
 	#> perform select as long as input is less than $uid.next
 	execute if score $in.uid rx.pdb.io < $uid.next rx.uid
@@ -110,17 +110,17 @@ execute if score $found rx.temp matches 1 run commands found_acc
 	data remove storage rx.playerdb:main uuid[{selected:1b}].entries[-1]
 
 	#> nuke our current entry if it exists
-	execute if score @s rx.playerdb.has_entry matches 1.. run sequentially
+	execute if score @s rx.pdb.has_entry matches 1.. run sequentially
 		scoreboard players operation $in.uid rx.pdb.io = @s rx.uid
 		function #rx.playerdb:api/v2/select
 		data remove storage rx.playerdb:main players[{selected:1b}]
 
 	#> restore our old uid and data
 	scoreboard players operation @s rx.uid = $migrate.uid rx.temp
-	scoreboard players operation @s rx.playerdb.has_entry = $migrate.hasEntry rx.temp
+	scoreboard players operation @s rx.pdb.has_entry = $migrate.hasEntry rx.temp
 
 	# also update name while we are at it
-	execute if score @s rx.playerdb.has_entry matches 1.. run sequentially
+	execute if score @s rx.pdb.has_entry matches 1.. run sequentially
 		function #rx.playerdb:api/v{{major ~ '/get/self'}}
 		function {{ ctx.generate.path('utils/get_name') }}
 		data modify storage rx.playerdb:main players[{selected:1b}].info.UUID set from entity @s UUID
@@ -131,7 +131,7 @@ execute if score $found rx.temp matches 1 run commands found_acc
 	scoreboard players operation $uid rx.temp = @s rx.uuid0
 	function #rx.playerdb:api/v{{major ~ '/uuid'}}
 	execute store result storage rx.playerdb:main uuid[{selected:1b}].entries[-1].uid byte 1 run scoreboard players get @s rx.uid
-	execute store result storage rx.playerdb:main uuid[{selected:1b}].entries[-1].hasEntry byte 1 run scoreboard players get @s rx.playerdb.has_entry
+	execute store result storage rx.playerdb:main uuid[{selected:1b}].entries[-1].hasEntry byte 1 run scoreboard players get @s rx.pdb.has_entry
 
 	#> tellraw a success msg :D
 	tellraw @a[tag=rx.admin] from rx.playerdb:admin/migration/success
@@ -158,7 +158,7 @@ scoreboard players reset * rx.uuid2
 scoreboard players reset * rx.uuid3
 scoreboard players reset * rx.temp
 scoreboard players reset * rx.pdb.io
-scoreboard players reset * rx.playerdb.has_entry
+scoreboard players reset * rx.pdb.has_entry
 scoreboard players set $uid.next rx.uid 1
 
 data modify storage rx.playerdb:main players set value []
@@ -167,7 +167,7 @@ data modify storage rx.playerdb:main uuid set value []
 data remove storage rx.playerdb:io player
 data remove storage rx.playerdb:io player_name
 
-scoreboard players set @a rx.playerdb.counter 0
+scoreboard players set @a rx.pdb.counter 0
 
 tellraw @a[tag=rx.admin] from rx.playerdb:admin/reset
 ```
