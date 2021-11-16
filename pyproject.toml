@@ -24,9 +24,10 @@ keywords = [
 python = "^3.9"
 PyYAML = "^5.4.1"
 mecha = ">=0.8.0"
-allay = ">=1.0.3"
+# allay = ">=1.1.0"
 beet = ">=0.44.2"
 lectern = ">=0.17.0"
+allay = {git = "https://github.com/rx-modules/Allay", rev = "main"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"

@@ -32,6 +32,15 @@ pipeline:
         load: ["test/*.md"]
 
 meta:
+  allay:
+    templates:
+      pretty_name: '{storage="rx:info", nbt="playerdb.pretty_name", interpret}'
+    patterns:
+      normal: (gray)
+      error: (#CE4257)
+      success: (#1DF368)
+      emphasis: (gold)
+
   lectern:
     load: ["src/**/*.md"]
 

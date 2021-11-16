@@ -13,6 +13,13 @@ description = "A parser to convert a descriptive text format into minecraft text
 category = "main"
 optional = false
 python-versions = ">=3.9"
+develop = false
+
+[package.source]
+type = "git"
+url = "https://github.com/rx-modules/Allay"
+reference = "main"
+resolved_reference = "e9fd154a22a8183b6b8716c8ee4740079d34af2f"
 
 [[package]]
 name = "anyio"
@@ -1961,17 +1968,14 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "69313b0a235c1b7c0589675bfeb52482b8d21a5f384c8b4aa0967a5136b81090"
+content-hash = "8219d6b9ac54b4a8c7487e856dde1429d9a4613773d76d44ce265adbec2e1caf"
 
 [metadata.files]
 alabaster = [
     {file = "alabaster-0.7.12-py2.py3-none-any.whl", hash = "sha256:446438bdcca0e05bd45ea2de1668c1d9b032e1a9154c2c259092d77031ddd359"},
     {file = "alabaster-0.7.12.tar.gz", hash = "sha256:a661d72d58e6ea8a57f7a86e37d86716863ee5e92788398526d58b26a4e4dc02"},
 ]
-allay = [
-    {file = "allay-1.1.0-py3-none-any.whl", hash = "sha256:e25db569380c1ec3dad519ab1cc49fa081c0d9ad7ca9e1e39f6f9c3394b672a9"},
-    {file = "allay-1.1.0.tar.gz", hash = "sha256:cde24637062c41cc568bbaead9ca790b622a4dad291db4f1dcd2380ab4733183"},
-]
+allay = []
 anyio = [
     {file = "anyio-3.3.4-py3-none-any.whl", hash = "sha256:4fd09a25ab7fa01d34512b7249e366cd10358cdafc95022c7ff8c8f8a5026d66"},
     {file = "anyio-3.3.4.tar.gz", hash = "sha256:67da67b5b21f96b9d3d65daa6ea99f5d5282cb09f50eb4456f8fb51dffefc3ff"},
