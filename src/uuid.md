@@ -200,7 +200,6 @@ execute store result storage rx.playerdb:main uuid[{selected:1b}].entries[-1].ui
 execute store result storage rx.playerdb:main uuid[{selected:1b}].entries[-1].has_entry byte 1 run scoreboard players get @s rx.pdb.has_entry
 data modify storage rx.playerdb:main uuid[{selected:1b}].entries[-1].name set from storage rx.playerdb:temp player_name 
 data modify storage rx.playerdb:main uuid[{selected:1b}].entries[-1].UUID set from storage rx.playerdb:temp UUID
-
 ```
 
 </details>
