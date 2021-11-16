@@ -1,7 +1,7 @@
 <!-- Other Resources --> 
 
 ```yaml
-// @loot_table rx:player_head
+// @loot_table player_head
 ---
 type: minecraft:entity
 pools:
