@@ -791,7 +791,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 
 [[package]]
 name = "lectern"
-version = "0.17.1"
+version = "0.18.0"
 description = "Literate Minecraft data packs and resource packs."
 category = "main"
 optional = false
@@ -2345,8 +2345,8 @@ keyring = [
     {file = "keyring-23.2.1.tar.gz", hash = "sha256:6334aee6073db2fb1f30892697b1730105b5e9a77ce7e61fca6b435225493efe"},
 ]
 lectern = [
-    {file = "lectern-0.17.1-py3-none-any.whl", hash = "sha256:c38be8d61ecbd6dd50c5aa728f8ee30c8d314fc601aced8295019ca2179d2621"},
-    {file = "lectern-0.17.1.tar.gz", hash = "sha256:2813a8e804fe9704315440af75e2b5e7ce24a0db5a1b2c8e0ebfc34d8e400468"},
+    {file = "lectern-0.18.0-py3-none-any.whl", hash = "sha256:b33ca5c017077bee1de583f24a43502da6666b80cb83beacd45e7963fb3b4c2d"},
+    {file = "lectern-0.18.0.tar.gz", hash = "sha256:5c3fa58e8fe93699ea8abd151f9823863146493bdc4163dfb4c859c06128f7d2"},
 ]
 livereload = [
     {file = "livereload-2.6.3.tar.gz", hash = "sha256:776f2f865e59fde56490a56bcc6773b6917366bce0c267c60ee8aaf1a0959869"},
