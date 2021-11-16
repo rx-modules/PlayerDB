@@ -46,7 +46,7 @@ This process will ensure that the latest and greatest PlayerDB version is the on
 </details>
 
 ```mcfunction
-# @function enumerate
+# @function load/enumerate
 #!tag "rx.playerdb:load/enumerate"
 
 # adapated from lepsen_core
@@ -58,10 +58,10 @@ This process will ensure that the latest and greatest PlayerDB version is the on
 scoreboard players add {{ '#rx.playerdb.' ~ part }} load.status 0
 {% endfor %}
 
-function ./enumerate/major
+function ./major
 
 {% for part in version_parts %}
-{% function generate_path('enumerate/' ~ part) %}
+{% function generate_path('load/' ~ part) %}
 
 {% set fakeplayer = '#rx.playerdb.' ~ part %}
 {% set ver_int = version[loop.index-1] %}
@@ -73,11 +73,11 @@ function ./enumerate/major
 execute if score {{ fakeplayer }} load.status matches {{ '..' ~ ver_int }}
     run sequentially
         execute unless score {{ fakeplayer }} load.status matches {{ ver_int }}
-            run function ./enumerate/set_version
+            run function ./set_version
 {%- if not loop.last %}
         execute if score {{ fakeplayer }} load.status matches {{ ver_int }}
             unless score #rx.playerdb.set load.status matches 1
-            run function ./enumerate/ {{- loop.nextitem }}
+            run function ./ {{- loop.nextitem }}
 {% endif %}
 {% endfunction %}
 {% endfor %}
@@ -86,7 +86,7 @@ scoreboard players reset #rx.playerdb.set load.status
 ```
 
 ```mcfunction
-# @function enumerate/set_version
+# @function load/set_version
 
 {% set version = ctx.meta.version %}
 
@@ -98,7 +98,7 @@ scoreboard players set #rx.playerdb.set load.status 1
 ```
 
 ```mcfunction
-# @function resolve
+# @function load/resolve
 #!tag "rx.playerdb:load/resolve"
 
 {% set version = ctx.meta.version %}
