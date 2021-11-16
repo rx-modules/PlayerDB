@@ -10,7 +10,7 @@
 
 #> get player head
 execute in minecraft:overworld run sequentially
-	loot replace block -30000000 0 1602 container.0 loot rx:player_head
+	loot replace block -30000000 0 1602 container.0 loot {{ ctx.generate.path('player_head') }}
 	data modify storage rx.playerdb:temp player_name
 		set from block -30000000 0 1602 Items[0].tag.SkullOwner.Name
 ```
