@@ -1,0 +1,377 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="genindex/" /><link rel="search" title="Search" href="search/" /><link rel="next" title="Usage" href="usage/" />
+
+    <meta name="generator" content="sphinx-4.2.0, furo 2021.10.09"/>
+        <title>PlayerDB</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=0254c309f5cadf746f1a613e7677379ac9c8cdcd" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=16fb25fabf47304eee183a5e9af80b1ba98259b1" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mudkip_furo.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style></head>
+  <body>
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" />
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="#"><div class="brand">PlayerDB</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="#">
+  
+  
+  <span class="sidebar-brand-text">PlayerDB</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search/" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="usage/">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lag/">Lag Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup/">Dev Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="technical/">Technical bits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog/">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/rx-modules/playerdb">GitHub repository</a></li>
+</ul>
+
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section class="tex2jax_ignore mathjax_ignore" id="playerdb-documentation">
+<h1>PlayerDB Documentation<a class="headerlink" href="#playerdb-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Hi all. The documentation for this library is current under construction 🏗️. If you are interested in the development for this project, please checkout my discord!</p>
+<ul>
+<li><p><strong>rx97</strong> - A place for my datapacks!</p>
+<p><a class="reference external" href="https://discord.gg/u5Xfxw8y9n"><img alt="Discord" src="https://img.shields.io/discord/400567034808762369?color=7289DA&amp;label=discord&amp;logo=discord&amp;logoColor=fff"/></a></p>
+</li>
+</ul>
+<p>These are some other discords which are relevant to this project. Check them out as well!</p>
+<ul>
+<li><p><strong>Beet</strong> - The Minecraft pack development kit</p>
+<p><a class="reference external" href="https://discord.gg/98MdSGMm8j"><img alt="Discord" src="https://img.shields.io/discord/900530660677156924?color=7289DA&amp;label=discord&amp;logo=discord&amp;logoColor=fff"/></a></p>
+</li>
+<li><p><strong>Minecraft Commands</strong> - General discussions about commands and map-making</p>
+<p><a class="reference external" href="https://discord.gg/QAFXFtZ"><img alt="Discord" src="https://img.shields.io/discord/154777837382008833?color=7289DA&amp;label=discord&amp;logo=discord&amp;logoColor=fff"/></a></p>
+</li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<p>This datapack implements a feature-rich version of the Ender Chest for the use for creators! Through a global nbt feature called <code class="docutils literal notranslate"><span class="pre">storage</span></code>, introduced in 1.15, PlayerDB stores arbitrary NBT data, such as Ender Chest items, in a really efficient manner. Each player can then be tied to a section of this “cloud” akin to how we access scores via the <code class="docutils literal notranslate"><span class="pre">scoreboard</span></code> command! You can manipulate this data however you please, and even access it offline!</p>
+<section id="why">
+<h2>Why?<a class="headerlink" href="#why" title="Permalink to this headline">¶</a></h2>
+<p>At the moment, the only thing we really have per player are scoreboards which only store numbers and Ender Chests which store items (mostly in survival). This new system adds another per player storage… custom nbt! This ranges from numbers, floats, strings, lists, and compounds of all these elements combined!</p>
+<p>This datapack has a couple main advantages to Ender Chests:</p>
+<ul class="simple">
+<li><p>Accessing Ender Chest data requires the player to be online. This datapack has offline access.</p></li>
+<li><p>The Ender Chest can be accessed in survival. <code class="docutils literal notranslate"><span class="pre">storage</span></code> is a separate thing only commands can access</p></li>
+<li><p>This datapack is <strong>much</strong> faster than accessing Ender Chest data. This is because accessing the Ender Chest requires <strong>serialization</strong> which incurs steep performance costs. The NBT <code class="docutils literal notranslate"><span class="pre">storage</span></code> does not store serialized data, only compressed in the NBT format.</p></li>
+</ul>
+<p>There are a couple of alternative implementations of player-specific nbt storage:</p>
+<ul class="simple">
+<li><p>Using a single array and iterating through all the elements until you find the player.</p></li>
+</ul>
+<blockquote>
+<div><p>This is particularly laggy and scales O(n) for the number of players in the list while
+PlayerDB scales O(log n) and it much more optimized with lower uid numbers.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Creating a custom dimension (or isolating a chunk) for an array of jukeboxes.</p></li>
+</ul>
+<blockquote>
+<div><p>Since jukeboxes are BlockEntities, they incur extra lag as well.
+This is one of the best other solutions which you can check out here: <a class="reference external" href="https://github.com/hqics/entitydb">EntityDB</a>
+From my slight testing, PlayerDB <strong>does</strong> beat out in terms of lag, but this is based off my limited testing.</p>
+</div></blockquote>
+<p><strong>New</strong></p>
+<ul class="simple">
+<li><p>Summoning a new <code class="docutils literal notranslate"><span class="pre">marker</span></code> entity per player and connecting them with a unique scoreboard score</p></li>
+</ul>
+<blockquote>
+<div><p>While this method is pretty clean since referencing entities can look very clean, there are still issues with this.</p>
+</div></blockquote>
+<ol class="simple">
+<li><p>PlayerDB stores all the data in <code class="docutils literal notranslate"><span class="pre">storage</span></code> NBT files in the <code class="docutils literal notranslate"><span class="pre">data</span></code> directory which can be easy to access with external tools esp in backing up the database specifically</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">marker</span></code> entities need to link in a specific chunk.
+a) If the chunk is always loaded, they will clog up <code class="docutils literal notranslate"><span class="pre">@e</span></code> commands, esp on servers where many new players join creating new entities.
+b) If the chunk isn’t loaded, then you have to load the chunk when you access the data which doesn’t make the data immediately available due to entity loading being asynchronous.</p></li>
+<li><p>Storing a large amount of data there could corrupt your chunk. Boq, a developer at Mojang warned about this over in the MinecraftCommands discord <a class="reference external" href="https://canary.discord.com/channels/154777837382008833/593812273164976166/831955643568619561">here</a>.</p></li>
+</ol>
+<blockquote>
+<div><p>Due to these cons, I find that PlayerDB ends up being a great solution, with a plus of having no persistent entities.</p>
+</div></blockquote>
+</section>
+<section id="lag">
+<h2>Lag?<a class="headerlink" href="#lag" title="Permalink to this headline">¶</a></h2>
+<p>As previously mentioned, this solution is designed to be very well optimized. To be specific, at worst, it is O(log(n)) which while not at O(1) like a normal array, is pretty damn close. In terms of Minecraft, you can think of this being about 50% less laggy than getting the player nbt via <code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">get</span> <span class="pre">entity</span> <span class="pre">@s</span></code> (which has been moderately tested, so do try yourself). More technical bits on lag will be discussed in a later section.</p>
+</section>
+<section id="lantern-load">
+<h2>Lantern Load<a class="headerlink" href="#lantern-load" title="Permalink to this headline">¶</a></h2>
+<p>This project uses <a class="reference external" href="https://github.com/LanternMC/Load">Lantern Load</a>. This allows you to ensure your datapack loads after library to ensure you can use everything this datapack provides. You can also detect whether this library is loaded by checking <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">score</span> <span class="pre">PlayerDB</span> <span class="pre">load.status</span> <span class="pre">matches</span> <span class="pre">1..</span></code>. Check out the Usage tab for more details on how this convention helps!</p>
+<section id="versioning">
+<h3>Versioning<a class="headerlink" href="#versioning" title="Permalink to this headline">¶</a></h3>
+<p>You can detect the version of the datapack via two methods:</p>
+<p>a) The version is stored in <code class="docutils literal notranslate"><span class="pre">storage</span></code>. <code class="docutils literal notranslate"><span class="pre">rx:info</span> <span class="pre">playerdb.version</span></code> as <code class="docutils literal notranslate"><span class="pre">major</span></code>, <code class="docutils literal notranslate"><span class="pre">minor</span></code>, and <code class="docutils literal notranslate"><span class="pre">patch</span></code>.</p>
+<p>b) The version is also available in the <code class="docutils literal notranslate"><span class="pre">load.status</span></code> scoreboard under:
+- <code class="docutils literal notranslate"><span class="pre">#rx.playerdb.major</span></code>
+- <code class="docutils literal notranslate"><span class="pre">#rx.playerdb.minor</span></code>
+- <code class="docutils literal notranslate"><span class="pre">#rx.playerdb.patch</span></code></p>
+</section>
+</section>
+<section id="some-examples">
+<h2>Some examples<a class="headerlink" href="#some-examples" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://github.com/rx-modules/EnderChestPlus">EnderChest+</a>
+This datapack allows for expandable EnderChests with complete multiplayer compatibility!</p>
+</section>
+<section id="shoutouts">
+<h2>Shoutouts<a class="headerlink" href="#shoutouts" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>You :) - For checking out my GH page :D!</p></li>
+<li><p>Speedy2025#2025 - Helped me test it to make sure I never broke it.</p></li>
+<li><p>the der discohund#8028 - Biggest boost on optimization (selection &gt; copying)</p></li>
+<li><p>nphhpn#0575 - Gave me some advice on optimizations!</p></li>
+<li><p>AmberW#4615 - She threw out the initial idea and I’ve built on from that.</p></li>
+<li><p>vdvman1#9510 - For helping me figure out some of the nbt manipulation nonsense (and some optimizations).</p></li>
+<li><p><a class="reference external" href="https://github.com/vberlier">fizzy</a> - Helpful in my migration to <code class="docutils literal notranslate"><span class="pre">beet</span></code></p></li>
+<li><p><a class="reference external" href="https://discord.gg/QAFXFtZ">r/minecraftcommands discord</a> - Pretty helpful w/ feedback and a great community, check it out!</p></li>
+</ul>
+</section>
+<section id="endnote">
+<h2>Endnote<a class="headerlink" href="#endnote" title="Permalink to this headline">¶</a></h2>
+<p>This datapack was a calling to one of the more annoying issues with custom nbt in Minecraft: dynamic list indexing. While 1.14 gave us an amazing command, <code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">modify</span></code>, allowing us to modify the deeper details of nbt, and 1.15 giving us <code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">storage</span></code> allowing us to store arbitrary nbt ‘in the cloud’, we still struggle with a couple of things, namely, indexing. There is no way to index into an NBT List based on a scoreboard value. This means if we needed to store a list of entries tied to a scoreboard, we would be forced to iterate through the entries which is an O(n) solution to a traditionally O(1) solution in most programming languages.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="usage/">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Usage</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          
+        </div>
+
+        <div class="related-information">
+              Copyright &#169; 2021 |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>. |
+            <a class="muted-link" href="_sources/index.md.txt"
+               rel="nofollow">
+              Show Source
+            </a>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">PlayerDB Documentation</a><ul>
+<li><a class="reference internal" href="#why">Why?</a></li>
+<li><a class="reference internal" href="#lag">Lag?</a></li>
+<li><a class="reference internal" href="#lantern-load">Lantern Load</a><ul>
+<li><a class="reference internal" href="#versioning">Versioning</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#some-examples">Some examples</a></li>
+<li><a class="reference internal" href="#shoutouts">Shoutouts</a></li>
+<li><a class="reference internal" href="#endnote">Endnote</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="#" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/scripts/main.js"></script>
+    <script src="_static/scripts/main.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    </body>
+</html>

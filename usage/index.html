@@ -1,0 +1,468 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="../genindex/" /><link rel="search" title="Search" href="../search/" /><link rel="next" title="Lag Testing" href="../lag/" /><link rel="prev" title="PlayerDB Documentation" href="../" />
+
+    <meta name="generator" content="sphinx-4.2.0, furo 2021.10.09"/>
+        <title>Usage - PlayerDB</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=0254c309f5cadf746f1a613e7677379ac9c8cdcd" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=16fb25fabf47304eee183a5e9af80b1ba98259b1" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mudkip_furo.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style></head>
+  <body>
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" />
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../"><div class="brand">PlayerDB</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../">
+  
+  
+  <span class="sidebar-brand-text">PlayerDB</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search/" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lag/">Lag Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../setup/">Dev Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../technical/">Technical bits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog/">Changelog</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/rx-modules/playerdb">GitHub repository</a></li>
+</ul>
+
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section class="tex2jax_ignore mathjax_ignore" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<p>The first step to using this pack is deciding how you want to use it. There are 3 general buckets that catch most folks:</p>
+<ul class="simple">
+<li><p>Shippable survival datapacs (PMC)</p></li>
+<li><p>Helper Pack to enable multiplayer for maps</p></li>
+<li><p>Public/private servers (esp for migrating name-changes)</p></li>
+</ul>
+<p>For these methods, there are 2 main ways to then utilize this pack. You can either use it as a standalone zip. This is nice and easy and works easily by just dropping it in your <code class="docutils literal notranslate"><span class="pre">datapacks</span></code> folder which you can either ship with your map or use for your server. You can use all of the features from another datapack. You should make sure that PlayerDB is loaded at the very top of your other datapacks, so verify this via the <code class="docutils literal notranslate"><span class="pre">/datapack</span> <span class="pre">list</span></code> command. Feel free to skip the bundling section!</p>
+<p>However, if you wish to ship your datapack for users in survival (like hosting on PMC), then you can consider this next section</p>
+<section id="bundling">
+<h2>Bundling<a class="headerlink" href="#bundling" title="Permalink to this headline">¶</a></h2>
+<p><em>How to bundle PlayerDB v2.0+ with your datapack</em></p>
+<blockquote>
+<div><p>While this process requires some minor changes to your datapack, it will make the use of this library seemless for your users and most likely, most won’t even know it’s existence.</p>
+</div></blockquote>
+<p>First, head over to the <a class="reference external" href="https://github.com/rx-modules/PlayerDB/releases">releases</a> tab, download the latest release, then unzip.</p>
+<p>Grab all the contents, except the minecraft folder, inside the <code class="docutils literal notranslate"><span class="pre">data</span></code> folder, and plop them inside your own datapack’s <code class="docutils literal notranslate"><span class="pre">data</span></code>. Nothing should collide here (if <code class="docutils literal notranslate"><span class="pre">global</span></code> collides, you can keep either <code class="docutils literal notranslate"><span class="pre">global/advancements/root</span></code>).</p>
+<p>To properly merge the <code class="docutils literal notranslate"><span class="pre">minecraft</span></code> namespace, you’ll have to pay a <em>bit</em> of attention.</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">tags/functions/load.json</span></code>, you will see the following contents:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">"values"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"#load:_private/load"</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This odd looking setup is known as lantern load and helps manage load order allowing PlayerDB to be ran first before other packs. You may be used to using the <code class="docutils literal notranslate"><span class="pre">#minecraft:load</span></code> and <code class="docutils literal notranslate"><span class="pre">#minecraft:tick</span></code> tags. Lantern load provides an alternative <code class="docutils literal notranslate"><span class="pre">#load:load</span></code> tag to use which allows your pack to ensure it runs after other packs.</p>
+<p>Instead of placing your pack inside the <code class="docutils literal notranslate"><span class="pre">#minecraft:load</span></code> tag file, you can instead use the <code class="docutils literal notranslate"><span class="pre">#load:load</span></code> tag and insert your load function after my <code class="docutils literal notranslate"><span class="pre">#rx.playerdb:load</span></code>. For example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">"values"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"#rx.playerdb:load"</span><span class="p">,</span>
+        <span class="s2">"your_pack_here:load"</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This will ensure that my pack will run it’s load function before your pack, which is very important for PlayerDB to run properly.</p>
+<p>If you are using the <code class="docutils literal notranslate"><span class="pre">#minecraft:tick</span></code> tag for ticking code, you will need to migrate to a schedule loop based system. While this might seem like a large change, it actually won’t alter much of how your code runs. Essentially, it’ll ensure that all of PlayerDB’s ticking code will run before your code.</p>
+<p>To do this, at the top of your functiom, run <code class="docutils literal notranslate"><span class="pre">schedule</span> <span class="pre">function</span> <span class="pre">your_pack_here:tick</span> <span class="pre">1t</span> <span class="pre">replace</span></code>. Instead of looping via the minecraft tick tag, you function will schedule it’s execution the following tick. Now in your <code class="docutils literal notranslate"><span class="pre">load</span></code> function, you can “boot” your tick loop by running the same command!</p>
+<p>After these steps, you should be ready to go! If you wish to update your PlayerDB to a new version, you only need to update the <code class="docutils literal notranslate"><span class="pre">rx</span></code> and <code class="docutils literal notranslate"><span class="pre">rx.playerdb</span></code> namespaces, unless written otherwise.</p>
+</section>
+<section id="using-the-api">
+<h2>Using the API<a class="headerlink" href="#using-the-api" title="Permalink to this headline">¶</a></h2>
+<p>Before using this pack, you should be familiar with providing unique scoreboard ids to players and some moderate experience with the <code class="docutils literal notranslate"><span class="pre">storage</span></code> space (via <code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">modify</span></code>).</p>
+<p>This datapack assigns a unique id to each player via the <code class="docutils literal notranslate"><span class="pre">rx.uid</span></code> scoreboard. To access the data stored on the data, you will need to reference a uid. Note, by default, the database will only have an entry for a player once requested / created (this allows for some performance boosts).</p>
+<p>Now, we can get started with some basic to moderate use cases 🎉!</p>
+<section id="storing-simple-data">
+<h3>Storing simple data<a class="headerlink" href="#storing-simple-data" title="Permalink to this headline">¶</a></h3>
+<p>This will get <code class="docutils literal notranslate"><span class="pre">@s</span></code>’s database entry. If it does not exist, it’ll dynamically create it.</p>
+<div class="highlight-mcfunction notranslate"><div class="highlight"><pre><span></span>function #rx.playerdb:api/v2/get/self
+</pre></div>
+</div>
+<p>Our data is available at the <code class="docutils literal notranslate"><span class="pre">storage</span></code> location <code class="docutils literal notranslate"><span class="pre">rx.playerdb:io</span> <span class="pre">player.data</span></code>. We should write some data, notice how we organized our data by <code class="docutils literal notranslate"><span class="pre">cool_pack</span></code>.</p>
+<div class="highlight-mcfunction notranslate"><div class="highlight"><pre><span></span>data modify storage rx.playerdb:io player.data.cool_pack set value {eggs: 3b}
+</pre></div>
+</div>
+<p>Note that we stored our data in <code class="docutils literal notranslate"><span class="pre">author.cool_pack</span></code>. Namespacing our data allows us to have better compatibility with other packs!</p>
+<p>Finally, let’s save our data!</p>
+<div class="highlight-mcfunction notranslate"><div class="highlight"><pre><span></span>function #rx.playerdb:api/v2/save/self
+</pre></div>
+</div>
+</section>
+<section id="getting-some-previously-stored-data">
+<h3>Getting some previously stored data<a class="headerlink" href="#getting-some-previously-stored-data" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-mcfunction notranslate"><div class="highlight"><pre><span></span>function #rx.playerdb:api/v2/get/self
+execute store result score @s eggs run data get storage rx.playerdb:io player.data.cool_pack.eggs
+
+# No need to save, we are just reading
+</pre></div>
+</div>
+<p>Note, we’ve taken some numerical data and stored it on a scoreboard. Here, we’ve used it for a simple score for how many eggs our cool_pack owns but perhaps it could hold much more!</p>
+</section>
+<section id="getting-someone-else-s-data">
+<h3>Getting someone else’s data<a class="headerlink" href="#getting-someone-else-s-data" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes, we don’t want to get our own data, but someone else’s. Let’s say that we have someone else’s id stored in <code class="docutils literal notranslate"><span class="pre">author.obj</span></code>.</p>
+<div class="highlight-mcfunction notranslate"><div class="highlight"><pre><span></span>scoreboard players operation $in.uid rx.playerdb.io = @s author.obj
+
+# Note that we are using `api/get` here, `get` will **not** make a new entry on the fly
+function #rx.playerdb:api/v2/get
+
+# Let's hope they had some eggs stored
+execute store result score @s eggs run data get storage rx.playerdb:io player.data.cool_pack.eggs
+
+# No need to save, we are just reading someone else's data ;)
+# If we were to... steal some eggs, we could save that change via:
+#     function #rx.playerdb:api/v2/save
+</pre></div>
+</div>
+</section>
+<section id="other-basic-features">
+<h3>Other Basic Features<a class="headerlink" href="#other-basic-features" title="Permalink to this headline">¶</a></h3>
+<p>We can manually add a player entry for <code class="docutils literal notranslate"><span class="pre">@s</span></code> via:</p>
+<div class="highlight-mcfunction notranslate"><div class="highlight"><pre><span></span>function #rx.playerdb:api/v2/add_entry
+</pre></div>
+</div>
+<p>You generally will never need to create a manual entry, but the api is available just incase!</p>
+<p>We can also ‘select’/filter data for a player with id: <code class="docutils literal notranslate"><span class="pre">$in.uid</span> <span class="pre">rx:io</span></code>
+This exposing some internal logic, essentially outputs an entry at <code class="docutils literal notranslate"><span class="pre">rx.playerdb:main</span> <span class="pre">players[{selected:1b}]</span></code>. This does interface with the live database, so you’ll wanna be careful if you are using this.</p>
+<div class="highlight-mcfunction notranslate"><div class="highlight"><pre><span></span>scoreboard players operation $in.uid rx.playerdb.io = @s rx.uid
+function #rx.playerdb:api/v2/select
+
+# (Note: select is much faster than a `get`/`save` which is why I've included in the api)
+</pre></div>
+</div>
+<p>We can check whether or not a player has a database entry. This incentivizes not creating a database entry for every player, but rather creating them dynamically when you need them. You can hook into the <code class="docutils literal notranslate"><span class="pre">#api/v2/on_entry_add</span></code> function tag which is talked about in a later section.</p>
+<div class="highlight-mcfunction notranslate"><div class="highlight"><pre><span></span>execute if score @s rx.pdb.has_entry matches 1 run ...
+</pre></div>
+</div>
+</section>
+</section>
+<section id="some-admin-features-for-testing-or-for-servers">
+<h2>Some admin features (for testing or for servers)<a class="headerlink" href="#some-admin-features-for-testing-or-for-servers" title="Permalink to this headline">¶</a></h2>
+<p>I recommend adding the <code class="docutils literal notranslate"><span class="pre">rx.admin</span></code> tag to you or other admins. This will provide more debug information and a cool load message (<em>Note that I use this for all my packs</em>)!</p>
+<section id="listing-all-the-players-stored-in-the-database-coming-soon">
+<h3>Listing all the players stored in the database <em>(✨ Coming Soon ✨)</em><a class="headerlink" href="#listing-all-the-players-stored-in-the-database-coming-soon" title="Permalink to this headline">¶</a></h3>
+<p>This just pulls up a clickable tellraw menu for player <code class="docutils literal notranslate"><span class="pre">@s</span></code> in chat.</p>
+<div class="highlight-mcfunction notranslate"><div class="highlight"><pre><span></span>function rx.playerdb:admin/list_players
+</pre></div>
+</div>
+<p>Note that anyone can click these buttons, but only an operator can run this function.</p>
+</section>
+<section id="admin-tools-for-testing-and-for-servers">
+<h3>Admin tools for testing and for servers<a class="headerlink" href="#admin-tools-for-testing-and-for-servers" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-mcfunction notranslate"><div class="highlight"><pre><span></span># This will nuke the database and all ids, no warning!
+function rx.playerdb:admin/reset_all
+
+# This will remove `@s`'s entry from the database
+function rx.playerdb:admin/delete_player
+
+# This will remove `$in.uid rx.playerdb.io`'s entry from the database
+function rx.playerdb:admin/remove_entry
+
+# This will take the data stored at rx.playerdb:temp admin.migrate.UUID
+#  and 'migrate' the data to the entity called as @s
+function rx.playerdb:admin/migrate_account
+</pre></div>
+</div>
+</section>
+</section>
+<section id="more-advanced-api-usage-events">
+<h2>More advanced API usage (events)<a class="headerlink" href="#more-advanced-api-usage-events" title="Permalink to this headline">¶</a></h2>
+<section id="dynamically-prepping-entries-when-they-are-added">
+<h3>Dynamically prepping entries when they are added<a class="headerlink" href="#dynamically-prepping-entries-when-they-are-added" title="Permalink to this headline">¶</a></h3>
+<p>The function tag, <code class="docutils literal notranslate"><span class="pre">#rx.playerdb:api/v2/on_entry_add</span></code>, allows a function to be run when an entry is added. Just add your function in the tag. This function will fire before a <code class="docutils literal notranslate"><span class="pre">api/v2/get/self</span></code> completes it’s execution allowing you to prep data for future use, very handy for a lean database!</p>
+<p>The player will already be located at <code class="docutils literal notranslate"><span class="pre">rx.playerdb:io</span> <span class="pre">player</span></code> and will automatically save for you. There is no need to call any <code class="docutils literal notranslate"><span class="pre">api</span></code> functions and the datapack will bug you if you do!</p>
+<div class="highlight-mcfunction notranslate"><div class="highlight"><pre><span></span>data modify storage rx.playerdb:io player.data.cool_pack set value {eggs: 0b}
+# Starting with no eggs is :(
+</pre></div>
+</div>
+</section>
+<section id="name-changes-how-to-handle-them">
+<h3>Name changes: how to handle them<a class="headerlink" href="#name-changes-how-to-handle-them" title="Permalink to this headline">¶</a></h3>
+<p>PlayerDB has a nifty feature of having data persist on a name change (no leftover data, etc), This allows you to cache your scoreboard scores, which are name specific, in the database.</p>
+<p>Essentially, there is an event which fires when a player changes their name. When this occurs, you can take the scores stored in the database, and load them in the cooresponding scoreboards! All you need to do is save those scores to the database, and keep them updated.</p>
+<p>There are two great ways of doing this:</p>
+<ol class="simple">
+<li><p>Caching scores on a slow clock (maybe every 5 minutes)</p></li>
+<li><p>Caching scores when they change</p></li>
+</ol>
+<p>I prefer 2 since it leaves little to no room for error. If you wish to see an example of this, check out <a class="reference external" href="https://github.com/rx-modules/EnderChestPlus/blob/master/data/rx.ec/functions/setup.mcfunction">Enderchest+</a>.</p>
+<div class="highlight-mcfunction notranslate"><div class="highlight"><pre><span></span># I like to store the scores in a specific `scores` object so they are easy to identify
+function #rx.playerdb:api/v2/get_self
+execute store result storage rx.playerdb:io player.data.cool_pack.scores.eggs int 1 run scoreboard players get @s eggs
+</pre></div>
+</div>
+<p>Once we implement this system, we have to implement a system to retrieve these scores when a name is changed.</p>
+<p>The function tag, <code class="docutils literal notranslate"><span class="pre">#rx.playerdb:api/v2/on_name_change</span></code>, allows a function to be ran when a player changes their name. This allows you to access the old name, <code class="docutils literal notranslate"><span class="pre">rx.playerdb:io</span> <span class="pre">old_name</span></code> and the data <strong>if it has been created</strong>.</p>
+<div class="highlight-mcfunction notranslate"><div class="highlight"><pre><span></span>execute if score @s rx.pdb.has_entry matches 1 store result score @s eggs run data get storage rx.playerdb:io player.data.author.cool_pack.eggs
+tellraw @a ["Yo, ", {"selector": "@s"}, " changed their name from ", {"storage": "rx:io", "nbt": "playerdb.old_name"}]
+</pre></div>
+</div>
+<p>Make sure you prepend <code class="docutils literal notranslate"><span class="pre">execute</span> <span class="pre">if</span> <span class="pre">score</span> <span class="pre">@s</span> <span class="pre">rx.pdb.has_entry</span> <span class="pre">matches</span> <span class="pre">1</span></code> to any <code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">get</span></code> you perform otherwise, you might just be getting null data (<em>which automatically gives 0 in Minecraft</em>).</p>
+<p>Also, be sure not run to any <code class="docutils literal notranslate"><span class="pre">api</span></code> calls in here as well, since the datapack will again nag you ;)</p>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../lag/">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Lag Testing</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Home</div>
+                
+              </div>
+            </a>
+        </div>
+
+        <div class="related-information">
+              Copyright &#169; 2021 |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>. |
+            <a class="muted-link" href="../_sources/usage.md.txt"
+               rel="nofollow">
+              Show Source
+            </a>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Usage</a><ul>
+<li><a class="reference internal" href="#bundling">Bundling</a></li>
+<li><a class="reference internal" href="#using-the-api">Using the API</a><ul>
+<li><a class="reference internal" href="#storing-simple-data">Storing simple data</a></li>
+<li><a class="reference internal" href="#getting-some-previously-stored-data">Getting some previously stored data</a></li>
+<li><a class="reference internal" href="#getting-someone-else-s-data">Getting someone else’s data</a></li>
+<li><a class="reference internal" href="#other-basic-features">Other Basic Features</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#some-admin-features-for-testing-or-for-servers">Some admin features (for testing or for servers)</a><ul>
+<li><a class="reference internal" href="#listing-all-the-players-stored-in-the-database-coming-soon">Listing all the players stored in the database <em>(✨ Coming Soon ✨)</em></a></li>
+<li><a class="reference internal" href="#admin-tools-for-testing-and-for-servers">Admin tools for testing and for servers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#more-advanced-api-usage-events">More advanced API usage (events)</a><ul>
+<li><a class="reference internal" href="#dynamically-prepping-entries-when-they-are-added">Dynamically prepping entries when they are added</a></li>
+<li><a class="reference internal" href="#name-changes-how-to-handle-them">Name changes: how to handle them</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/scripts/main.js"></script>
+    <script src="../_static/scripts/main.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    </body>
+</html>
