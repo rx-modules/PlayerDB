@@ -870,7 +870,7 @@ testing = ["coverage", "pytest (>=3.6,<4)", "pytest-cov", "pytest-regressions"]
 
 [[package]]
 name = "mecha"
-version = "0.10.0"
+version = "0.11.1"
 description = "A powerful Minecraft command library"
 category = "main"
 optional = false
@@ -2435,8 +2435,8 @@ mdit-py-plugins = [
     {file = "mdit_py_plugins-0.2.8-py3-none-any.whl", hash = "sha256:1833bf738e038e35d89cb3a07eb0d227ed647ce7dd357579b65343740c6d249c"},
 ]
 mecha = [
-    {file = "mecha-0.10.0-py3-none-any.whl", hash = "sha256:09ca26eb884ee547c7b68ea0831da2dc31532b68e8e2467109e0562ef0fea727"},
-    {file = "mecha-0.10.0.tar.gz", hash = "sha256:4cebfc45482d677a09c547cd14e89c90283f58b13e34e09508e08292a61105e5"},
+    {file = "mecha-0.11.1-py3-none-any.whl", hash = "sha256:1bd57128896d136a67d34e4cc079912d6ebd42d24bd9bba076c5b7715cf51e34"},
+    {file = "mecha-0.11.1.tar.gz", hash = "sha256:28ce2db870218c83699f7b5edcacda5f44c50205ccee67a24cd92045e63372d6"},
 ]
 mistune = [
     {file = "mistune-0.8.4-py2.py3-none-any.whl", hash = "sha256:88a1051873018da288eee8538d476dffe1262495144b33ecb586c4ab266bb8d4"},
