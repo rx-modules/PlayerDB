@@ -31,17 +31,22 @@ criteria:
 ```mcfunction
 # @function upgrade/player
 
-execute if score @s rx.uuid0 = @s rx.uuid0 unless entity @s[advancements={rx.playerdb:upgrade/v1tov2=true}] run function ./v1tov2/player
+execute if score @s rx.uuid0 = @s rx.uuid0
+    unless entity @s[advancements={rx.playerdb:upgrade/v1tov2=true}]
+    run function ./v1tov2/player
 ```
 
 ```mcfunction
 # @function upgrade/v1tov2/player
 #> Quickly migrate has entry
-execute if score @s rx.pdb.hasEntry matches 0.. run
-    scoreboard players operation @s rx.pdb.has_entry = @s rx.pdb.hasEntry
-scoreboard players operation $uid rx.temp = @s rx.uuid0
+execute if score @s rx.pdb.HasEntry matches 0.. run
+    scoreboard players operation @s rx.pdb.has_entry = @s rx.pdb.HasEntry
+
+data modify storage rx.playerdb:temp UUID set from entity @s UUID
 function {{ ctx.generate.path('uuid/select') }}
-execute store result storage rx.playerdb:main uuid[{selected:1b}].entries[-1].has_entry byte 1 run scoreboard players get @s rx.pdb.has_entry
+execute store result storage rx.playerdb:main uuid[{selected:1b}].entries[-1].has_entry byte 1
+    run scoreboard players get @s rx.pdb.has_entry
 data remove storage rx.playerdb:main uuid[{selected:1b}].entries[-1].hasEntry
+scoreboard players reset @s rx.pdb.HasEntry
 tellraw @a[tag=rx.admin] from rx.playerdb:upgrade/v1tov2/player
 ```
