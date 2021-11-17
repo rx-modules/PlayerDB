@@ -45,8 +45,8 @@ execute if score $in.uid rx.pdb.io < $uid.next rx.uid run commands logic
 	#> if $size = 1, this means an entry was found
 	execute if score $size rx.temp matches 1 run sequentially
 		data modify storage rx.playerdb:temp UUID set from storage rx.playerdb:main players[{selected:1b}].info.UUID
-		function uuid/select
-		data modify storage rx.playerdb:main uuid[{selected:1b}].entries[-1].hasEntry set value 0b
+		function {{ ctx.generate.path('uuid/select') }}
+		data modify storage rx.playerdb:main uuid[{selected:1b}].entries[-1].has_entry set value 0b
 
 	#>  success msg and remove selected player
 	execute if score $size rx.temp matches 1 run sequentially
@@ -105,7 +105,7 @@ execute if score $found rx.temp matches 1 run commands found_acc
 
 	#> grab our uid and other data then nuke
 	execute store result score $migrate.uid rx.temp run data get storage rx.playerdb:main uuid[{selected:1b}].entries[-1].uid
-	execute store result score $migrate.hasEntry rx.temp run data get storage rx.playerdb:main uuid[{selected:1b}].entries[-1].hasEntry
+	execute store result score $migrate.has_entry rx.temp run data get storage rx.playerdb:main uuid[{selected:1b}].entries[-1].has_entry
 	data modify storage rx.playerdb:temp admin.migrate.old_name set from storage rx.playerdb:main uuid[{selected:1b}].entries[-1].name
 	data remove storage rx.playerdb:main uuid[{selected:1b}].entries[-1]
 
@@ -117,7 +117,7 @@ execute if score $found rx.temp matches 1 run commands found_acc
 
 	#> restore our old uid and data
 	scoreboard players operation @s rx.uid = $migrate.uid rx.temp
-	scoreboard players operation @s rx.pdb.has_entry = $migrate.hasEntry rx.temp
+	scoreboard players operation @s rx.pdb.has_entry = $migrate.has_entry rx.temp
 
 	# also update name while we are at it
 	execute if score @s rx.pdb.has_entry matches 1.. run sequentially
@@ -131,7 +131,7 @@ execute if score $found rx.temp matches 1 run commands found_acc
 	scoreboard players operation $uid rx.temp = @s rx.uuid0
 	function #rx.playerdb:api/v{{major ~ '/uuid'}}
 	execute store result storage rx.playerdb:main uuid[{selected:1b}].entries[-1].uid byte 1 run scoreboard players get @s rx.uid
-	execute store result storage rx.playerdb:main uuid[{selected:1b}].entries[-1].hasEntry byte 1 run scoreboard players get @s rx.pdb.has_entry
+	execute store result storage rx.playerdb:main uuid[{selected:1b}].entries[-1].has_entry byte 1 run scoreboard players get @s rx.pdb.has_entry
 
 	#> tellraw a success msg :D
 	tellraw @a[tag=rx.admin] from rx.playerdb:admin/migration/success
