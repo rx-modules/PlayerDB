@@ -34,7 +34,7 @@ pytest = "^6.2.5"
 black = "^21.10b0"
 isort = "^5.10.0"
 python-semantic-release = "^7.19.2"
-mudkip = "^0.4.12"
+mudkip = "^0.4.14"
 pytest-insta = "^0.1.10"
 colour = "^0.1.5"
 
