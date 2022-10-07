@@ -31,7 +31,7 @@ allay = {git = "https://github.com/rx-modules/Allay", rev = "main"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
-black = "^21.10b0"
+black = "^22.10"
 isort = "^5.10.0"
 python-semantic-release = "^7.19.2"
 mudkip = "^0.4.12"
