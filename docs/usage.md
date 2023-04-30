@@ -2,7 +2,7 @@
 
 The first step to using this pack is deciding how you want to use it. There are 3 general buckets that catch most folks:
 
-- Shippable survival datapacs (PMC)
+- Shippable survival datapacks (PMC)
 - Helper Pack to enable multiplayer for maps
 - Public/private servers (esp for migrating name-changes)
 
