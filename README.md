@@ -3,7 +3,7 @@ An NBT Custom Player Database
 
 > Hello everyone! The most recent v2.0.0 update was pretty large and changed almost every single name throughout the pack. While your data will be migrated, you will have to update your API calls etc.
 > 
-> This is due to a brand new feature called bundling which I discuss later on. Please join my [Discord](https://discord.gg/zhadd6GHWJ) if you have any questions!
+> This is due to a brand new feature called bundling which I discuss later on. Please join my [Discord](https://discord.rx97.dev/) if you have any questions!
 
 PlayerDB is a database solution which allows you to store more data per player. *What does this mean?* Let me explain:
 
